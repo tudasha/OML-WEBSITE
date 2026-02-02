@@ -186,7 +186,7 @@ const Event = () => {
                     Inscrie-te la Open Mic pentru aceasta editie. 
                     Locurile sunt limitate!
                   </p>
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-white">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
                     Inscrie-te acum
                   </Button>
                 </>
@@ -200,7 +200,7 @@ const Event = () => {
                     Urmareste-ne pe Instagram pentru a afla cand se deschid 
                     inscrierile pentru urmatoarea editie!
                   </p>
-                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white">
+                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
                     <Link to="/contact">Contacteaza-ne pentru mai multe informatii</Link>
                   </Button>
                 </>
