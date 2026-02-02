@@ -1,17 +1,55 @@
+import { useEffect } from "react";
 import { Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// IMPORTANT: Adauga link-urile postarilor Instagram aici
-// Exemplu: "https://www.instagram.com/p/ABC123/"
+// Postarile Instagram de afisat
 const instagramPosts = [
-  // Adauga linkurile tale aici:
-  // "https://www.instagram.com/p/LINK1/",
-  // "https://www.instagram.com/p/LINK2/",
-  // "https://www.instagram.com/p/LINK3/",
+  "https://www.instagram.com/p/DUD3AQFgtkc/",
+  "https://www.instagram.com/p/DUGe8Etgh_9/",
+  "https://www.instagram.com/p/DTYOpbDDCt0/",
 ];
+
+// Extend Window interface for Instagram
+declare global {
+  interface Window {
+    instgrm?: {
+      Embeds: {
+        process: () => void;
+      };
+    };
+  }
+}
 
 const InstagramFeed = () => {
   const hasNoPosts = instagramPosts.length === 0;
+
+  useEffect(() => {
+    // Load Instagram embed script
+    const loadInstagramScript = () => {
+      if (window.instgrm) {
+        window.instgrm.Embeds.process();
+      } else {
+        const existingScript = document.querySelector('script[src="https://www.instagram.com/embed.js"]');
+        if (!existingScript) {
+          const script = document.createElement("script");
+          script.src = "https://www.instagram.com/embed.js";
+          script.async = true;
+          script.onload = () => {
+            if (window.instgrm) {
+              window.instgrm.Embeds.process();
+            }
+          };
+          document.body.appendChild(script);
+        }
+      }
+    };
+
+    if (!hasNoPosts) {
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(loadInstagramScript, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [hasNoPosts]);
 
   return (
     <section className="py-16 md:py-24 section-cream">
