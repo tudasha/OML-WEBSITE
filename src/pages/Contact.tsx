@@ -1,0 +1,195 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mail, Instagram, Send, Heart } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import Layout from "@/components/Layout";
+
+const Contact = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    toast({
+      title: "Mesaj trimis!",
+      description: "Iti multumim pentru mesaj. Te vom contacta in curand!",
+    });
+
+    setFormData({ name: "", email: "", message: "" });
+    setIsSubmitting(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <Layout>
+      {/* Hero Section */}
+      <section className="relative py-24 md:py-32 bg-hero-bg">
+        <div className="container mx-auto px-4 text-center">
+          <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">
+            Hai sa vorbim
+          </span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white">
+            Contact
+          </h1>
+          <p className="text-lg text-white/70 mt-4 max-w-xl mx-auto">
+            Ai intrebari? Vrei sa te inscrii la Open Mic? Scrie-ne!
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Content */}
+      <section className="py-16 md:py-24 section-cream">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+            {/* Contact Form */}
+            <Card className="border-0 shadow-xl">
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-display font-bold text-foreground mb-6">
+                  Trimite-ne un mesaj
+                </h2>
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Numele tau</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      placeholder="Cum te numesti?"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="bg-background"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="email@exemplu.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="bg-background"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Mesajul tau</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Ce vrei sa ne spui?"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      className="bg-background resize-none"
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full bg-primary hover:bg-primary/90 text-white"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      "Se trimite..."
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" />
+                        Trimite mesajul
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Contact Info */}
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-2xl font-display font-bold text-foreground mb-4">
+                  Informatii de contact
+                </h2>
+                <p className="text-muted-foreground leading-relaxed">
+                  Suntem mereu bucurosi sa auzim de la tineri pasionati de muzica! 
+                  Fie ca ai intrebari despre evenimentele noastre, vrei sa te 
+                  inscrii la Open Mic, sau pur si simplu vrei sa ne cunosti - 
+                  scrie-ne!
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <a
+                  href="mailto:oradeamusiclab@gmail.com"
+                  className="flex items-center gap-4 p-4 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                >
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Mail className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Email</p>
+                    <p className="font-medium text-foreground">oradeamusiclab@gmail.com</p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://www.instagram.com/oradeamusiclab/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow group"
+                >
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <Instagram className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Instagram</p>
+                    <p className="font-medium text-foreground">@oradeamusiclab</p>
+                  </div>
+                </a>
+              </div>
+
+              <Card className="bg-hero-bg text-white border-0">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Heart className="w-6 h-6 text-primary" />
+                    <h3 className="font-display font-semibold text-lg">
+                      Nu fi timid!
+                    </h3>
+                  </div>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    Suntem o echipa de tineri si intelegem perfect cum e sa fii 
+                    la inceput. Orice intrebare ai avea, oricat de mica ti s-ar 
+                    parea - suntem aici sa te ajutam!
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Layout>
+  );
+};
+
+export default Contact;
