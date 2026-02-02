@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin } from "lucide-react";
 import Layout from "@/components/Layout";
+import InstagramFeed from "@/components/InstagramFeed";
 import heroConcert from "@/assets/hero-concert.png";
 
 const Index = () => {
@@ -252,6 +253,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Instagram Feed */}
+      <InstagramFeed />
     </Layout>
   );
 };
