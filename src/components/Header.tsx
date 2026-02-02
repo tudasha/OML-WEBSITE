@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logoOml from "@/assets/logo-oml.png";
 
 const navLinks = [
   { name: "Acasa", path: "/" },
@@ -21,13 +22,12 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl md:text-3xl font-display font-bold text-foreground">
-              OML
-            </span>
-            <span className="hidden sm:inline text-sm text-muted-foreground font-medium">
-              Oradea Music Lab
-            </span>
+          <Link to="/" className="flex items-center">
+            <img 
+              src={logoOml} 
+              alt="Oradea Music Lab" 
+              className="h-12 md:h-14 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
