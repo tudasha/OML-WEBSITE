@@ -33,10 +33,10 @@ const Index = () => {
               descopera bucuria de a urca pe scena intr-un mediu sustinator.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-base px-8">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-base px-8 font-semibold shadow-lg">
                 <Link to="/eveniment">Vezi urmatorul eveniment</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 text-base px-8">
+              <Button asChild variant="outline" size="lg" className="border-2 border-white bg-white/10 text-white hover:bg-white hover:text-foreground text-base px-8 font-semibold">
                 <Link to="/contact">Contacteaza-ne</Link>
               </Button>
             </div>
