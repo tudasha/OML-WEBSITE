@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin } from "lucide-react";
 import Layout from "@/components/Layout";
 import InstagramFeed from "@/components/InstagramFeed";
+import ScrollReveal from "@/components/ScrollReveal";
 import heroConcert from "@/assets/hero-concert.png";
 
 const Index = () => {
@@ -55,45 +56,49 @@ const Index = () => {
       {/* Ce este OML Section */}
       <section className="py-20 md:py-28 section-cream">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider">
-              Descopera
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              Ce este Oradea Music Lab?
-            </h2>
-            <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
-              <p>
-                Oradea Music Lab este un eveniment lunar care aduce impreuna tineri 
-                aspiranti muzicieni si artisti consacrati din Oradea, creand o seara 
-                educativa si distractiva.
-              </p>
-              <p>
-                Nu este un concurs. Accentul cade pe <strong className="text-foreground">curaj</strong>, 
-                {" "}<strong className="text-foreground">invatare</strong> si{" "}
-                <strong className="text-foreground">evolutie</strong>. Greselile sunt 
-                acceptate ca parte fireasca a procesului artistic.
-              </p>
-              <p>
-                Fiecare tanar care urca pe scena este tratat ca o vedeta, cu sunet 
-                profesional si atentie maxima, pentru o experienta reala de concert.
-              </p>
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto text-center space-y-6">
+              <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider">
+                Descopera
+              </span>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                Ce este Oradea Music Lab?
+              </h2>
+              <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
+                <p>
+                  Oradea Music Lab este un eveniment lunar care aduce impreuna tineri 
+                  aspiranti muzicieni si artisti consacrati din Oradea, creand o seara 
+                  educativa si distractiva.
+                </p>
+                <p>
+                  Nu este un concurs. Accentul cade pe <strong className="text-foreground">curaj</strong>, 
+                  {" "}<strong className="text-foreground">invatare</strong> si{" "}
+                  <strong className="text-foreground">evolutie</strong>. Greselile sunt 
+                  acceptate ca parte fireasca a procesului artistic.
+                </p>
+                <p>
+                  Fiecare tanar care urca pe scena este tratat ca o vedeta, cu sunet 
+                  profesional si atentie maxima, pentru o experienta reala de concert.
+                </p>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Cum functioneaza Section */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 md:mb-16">
-            <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
-              Structura evenimentului
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              Cum functioneaza?
-            </h2>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-12 md:mb-16">
+              <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
+                Structura evenimentului
+              </span>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                Cum functioneaza?
+              </h2>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -122,25 +127,26 @@ const Index = () => {
                 number: "04",
               },
             ].map((item, index) => (
-              <Card 
-                key={index} 
-                className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <CardContent className="p-6 pt-8">
-                  <div className="absolute top-4 right-4 text-4xl font-display font-bold text-primary/10">
-                    {item.number}
-                  </div>
-                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                    <item.icon className="w-7 h-7 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-display font-semibold text-foreground mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {item.description}
-                  </p>
-                </CardContent>
-              </Card>
+              <ScrollReveal key={index} delay={index * 100}>
+                <Card 
+                  className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full"
+                >
+                  <CardContent className="p-6 pt-8">
+                    <div className="absolute top-4 right-4 text-4xl font-display font-bold text-primary/10">
+                      {item.number}
+                    </div>
+                    <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
+                      <item.icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-display font-semibold text-foreground mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -149,14 +155,16 @@ const Index = () => {
       {/* De ce suntem diferiti Section */}
       <section className="py-20 md:py-28 section-cream-dark">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 md:mb-16">
-            <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
-              Filozofia noastra
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              De ce suntem diferiti?
-            </h2>
-          </div>
+          <ScrollReveal>
+            <div className="text-center mb-12 md:mb-16">
+              <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
+                Filozofia noastra
+              </span>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                De ce suntem diferiti?
+              </h2>
+            </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
@@ -191,22 +199,23 @@ const Index = () => {
                 description: "Conexiuni reale intre generatii de muzicieni.",
               },
             ].map((item, index) => (
-              <div 
-                key={index}
-                className="flex items-start gap-4 p-5 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                  <item.icon className="w-6 h-6 text-primary" />
+              <ScrollReveal key={index} delay={index * 80}>
+                <div 
+                  className="flex items-start gap-4 p-5 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow h-full"
+                >
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-semibold text-foreground mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-display font-semibold text-foreground mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -215,42 +224,44 @@ const Index = () => {
       {/* Preview Urmatorul Eveniment */}
       <section className="py-20 md:py-28 bg-hero-bg text-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <Card className="bg-white/5 border-white/10 backdrop-blur overflow-hidden">
-              <CardContent className="p-8 md:p-12">
-                <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-                  <div className="shrink-0">
-                    <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
-                      <Calendar className="w-8 h-8 text-primary mb-1" />
-                      <span className="text-xs text-white/60">In curand</span>
+          <ScrollReveal>
+            <div className="max-w-4xl mx-auto">
+              <Card className="bg-white/5 border-white/10 backdrop-blur overflow-hidden">
+                <CardContent className="p-8 md:p-12">
+                  <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+                    <div className="shrink-0">
+                      <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
+                        <Calendar className="w-8 h-8 text-primary mb-1" />
+                        <span className="text-xs text-white/60">In curand</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex-1 space-y-3">
-                    <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
-                      Urmatorul eveniment
-                    </span>
-                    <h3 className="text-2xl md:text-3xl font-display font-bold">
-                      Calin Pop &amp; Marius Pop
-                    </h3>
-                    <p className="text-white/70">
-                      Membrii trupei Celelalte Cuvinte vor fi invitatii speciali ai 
-                      urmatoarei editii Oradea Music Lab.
-                    </p>
-                    <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4" /> Oradea
+                    <div className="flex-1 space-y-3">
+                      <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
+                        Urmatorul eveniment
                       </span>
+                      <h3 className="text-2xl md:text-3xl font-display font-bold">
+                        Calin Pop &amp; Marius Pop
+                      </h3>
+                      <p className="text-white/70">
+                        Membrii trupei Celelalte Cuvinte vor fi invitatii speciali ai 
+                        urmatoarei editii Oradea Music Lab.
+                      </p>
+                      <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-4 h-4" /> Oradea
+                        </span>
+                      </div>
+                    </div>
+                    <div className="shrink-0">
+                      <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto">
+                        <Link to="/eveniment">Vezi detalii</Link>
+                      </Button>
                     </div>
                   </div>
-                  <div className="shrink-0">
-                    <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto">
-                      <Link to="/eveniment">Vezi detalii</Link>
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                </CardContent>
+              </Card>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
