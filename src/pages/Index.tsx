@@ -1,13 +1,258 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin } from "lucide-react";
+import Layout from "@/components/Layout";
+import heroConcert from "@/assets/hero-concert.png";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <Layout>
+      {/* Hero Section */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroConcert})` }}
+        />
+        {/* Overlay */}
+        <div className="absolute inset-0 hero-gradient" />
+        
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+            <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30">
+              Comunitatea muzicala din Oradea
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
+              Un spatiu sigur unde tinerii isi pot exprima{" "}
+              <span className="text-primary">muzica</span>
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+              Invata din greseli, primeste sfaturi de la artisti cu experienta si 
+              descopera bucuria de a urca pe scena intr-un mediu sustinator.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-base px-8">
+                <Link to="/eveniment">Vezi urmatorul eveniment</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 text-base px-8">
+                <Link to="/contact">Contacteaza-ne</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
+            <div className="w-1.5 h-3 bg-primary rounded-full" />
+          </div>
+        </div>
+      </section>
+
+      {/* Ce este OML Section */}
+      <section className="py-20 md:py-28 section-cream">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider">
+              Descopera
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              Ce este Oradea Music Lab?
+            </h2>
+            <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
+              <p>
+                Oradea Music Lab este un eveniment lunar care aduce impreuna tineri 
+                aspiranti muzicieni si artisti consacrati din Oradea, creand o seara 
+                educativa si distractiva.
+              </p>
+              <p>
+                Nu este un concurs. Accentul cade pe <strong className="text-foreground">curaj</strong>, 
+                {" "}<strong className="text-foreground">invatare</strong> si{" "}
+                <strong className="text-foreground">evolutie</strong>. Greselile sunt 
+                acceptate ca parte fireasca a procesului artistic.
+              </p>
+              <p>
+                Fiecare tanar care urca pe scena este tratat ca o vedeta, cu sunet 
+                profesional si atentie maxima, pentru o experienta reala de concert.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cum functioneaza Section */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
+              Structura evenimentului
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              Cum functioneaza?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: Mic,
+                title: "Concert Live",
+                description: "Artisti invitati cu experienta sustin un moment muzical live.",
+                number: "01",
+              },
+              {
+                icon: MessageCircle,
+                title: "Discutie & Intrebari",
+                description: "Sesiune interactiva despre cariera, provocari si experiente.",
+                number: "02",
+              },
+              {
+                icon: Star,
+                title: "Open Mic",
+                description: "Scena Tinerilor - spatiu dedicat tinerilor sa cante live.",
+                number: "03",
+              },
+              {
+                icon: Users,
+                title: "Socializare",
+                description: "Moment de conectare si networking intre participanti.",
+                number: "04",
+              },
+            ].map((item, index) => (
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              >
+                <CardContent className="p-6 pt-8">
+                  <div className="absolute top-4 right-4 text-4xl font-display font-bold text-primary/10">
+                    {item.number}
+                  </div>
+                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
+                    <item.icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-display font-semibold text-foreground mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* De ce suntem diferiti Section */}
+      <section className="py-20 md:py-28 section-cream-dark">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
+              Filozofia noastra
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              De ce suntem diferiti?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {[
+              {
+                icon: Trophy,
+                title: "Nu este un concurs",
+                description: "Accent pe curaj si evolutie, nu pe perfectiune.",
+              },
+              {
+                icon: Star,
+                title: "Esti vedeta serii",
+                description: "Fiecare participant primeste atentie si respect maxim.",
+              },
+              {
+                icon: Music,
+                title: "Scena profesionala",
+                description: "Sunet de calitate si experienta reala de concert.",
+              },
+              {
+                icon: Lightbulb,
+                title: "Feedback constructiv",
+                description: "Sfaturi practice de la artisti cu experienta.",
+              },
+              {
+                icon: Heart,
+                title: "Public sustinator",
+                description: "Atmosfera prietenoasa si lipsita de presiune.",
+              },
+              {
+                icon: Users,
+                title: "Comunitate",
+                description: "Conexiuni reale intre generatii de muzicieni.",
+              },
+            ].map((item, index) => (
+              <div 
+                key={index}
+                className="flex items-start gap-4 p-5 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+                  <item.icon className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-display font-semibold text-foreground mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Preview Urmatorul Eveniment */}
+      <section className="py-20 md:py-28 bg-hero-bg text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <Card className="bg-white/5 border-white/10 backdrop-blur overflow-hidden">
+              <CardContent className="p-8 md:p-12">
+                <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+                  <div className="shrink-0">
+                    <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
+                      <Calendar className="w-8 h-8 text-primary mb-1" />
+                      <span className="text-xs text-white/60">In curand</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-3">
+                    <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
+                      Urmatorul eveniment
+                    </span>
+                    <h3 className="text-2xl md:text-3xl font-display font-bold">
+                      Calin Pop &amp; Marius Pop
+                    </h3>
+                    <p className="text-white/70">
+                      Membrii trupei Celelalte Cuvinte vor fi invitatii speciali ai 
+                      urmatoarei editii Oradea Music Lab.
+                    </p>
+                    <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4" /> Oradea
+                      </span>
+                    </div>
+                  </div>
+                  <div className="shrink-0">
+                    <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto">
+                      <Link to="/eveniment">Vezi detalii</Link>
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    </Layout>
   );
 };
 
