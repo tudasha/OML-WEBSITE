@@ -12,13 +12,18 @@ const Index = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroConcert})` }}
-        />
+        {/* Background Video */}
+        <div className="absolute inset-0 w-full h-full">
+          <iframe
+            className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2"
+            src="https://www.youtube.com/embed/BWAjcbLuk3A?autoplay=1&mute=1&loop=1&playlist=BWAjcbLuk3A&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+            title="Oradea Music Lab Background Video"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+        </div>
         {/* Overlay */}
-        <div className="absolute inset-0 hero-gradient" />
+        <div className="absolute inset-0 hero-gradient pointer-events-none" />
         
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
