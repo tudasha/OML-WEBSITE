@@ -58,6 +58,11 @@ const Header = () => {
             >
               <Instagram className="w-5 h-5" />
             </a>
+            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+              <a href="https://donate.stripe.com/4gMdR2esj3js2SD8BO6oo00" target="_blank" rel="noopener noreferrer">
+                Donează
+              </a>
+            </Button>
             <Button asChild className="bg-primary hover:bg-primary/90 text-white">
               <Link to="/contact">Contacteaza-ne</Link>
             </Button>
@@ -106,6 +111,14 @@ const Header = () => {
             >
               <Instagram className="w-5 h-5" />
               <span>Instagram</span>
+            </a>
+            <a
+              href="https://donate.stripe.com/4gMdR2esj3js2SD8BO6oo00"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:text-primary/80 transition-colors font-medium"
+            >
+              Donează
             </a>
           </div>
         </nav>
