@@ -189,15 +189,24 @@ const Event = () => {
                     <AlertCircle className="w-5 h-5" />
                     <span className="font-medium">Înscrierile pentru această ediție s-au încheiat</span>
                   </div>
+                  <p className="text-white/70 mb-4">
+                    Datorită cererii foarte mari, am creat o listă de așteptare pentru OML IV (Aprilie 2026).
+                  </p>
                   <p className="text-white/70 mb-6">
-                    Urmărește-ne pe Instagram pentru a afla când se deschid înscrierile pentru următoarea ediție!
+                    Selecția va prioritiza participanții noi care nu au urcat încă pe scenă.
                   </p>
                   <Button
                     asChild
                     size="lg"
                     className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg"
                   >
-                    <Link to="/contact">Contactează-ne pentru mai multe informații</Link>
+                    <a 
+                      href="https://docs.google.com/forms/d/1yuxtAXxGX3ZsG0e7_603LkUzu4FuY9XDuXb5bN1guW4/viewform" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      Înscrie-te pe lista de așteptare
+                    </a>
                   </Button>
                 </>
               )}
