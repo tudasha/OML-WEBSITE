@@ -15,7 +15,7 @@ declare global {
 }
 
 const Index = () => {
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +34,7 @@ const Index = () => {
           videoId: 'BWAjcbLuk3A',
           playerVars: {
             autoplay: 1,
-            mute: 0,
+            mute: 1,
             loop: 1,
             playlist: 'BWAjcbLuk3A',
             controls: 0,
