@@ -6,19 +6,16 @@ import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calen
 import Layout from "@/components/Layout";
 import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
-
 declare global {
   interface Window {
     YT: any;
     onYouTubeIframeAPIReady: () => void;
   }
 }
-
 const Index = () => {
   const [isMuted, setIsMuted] = useState(true);
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // Load YouTube IFrame API
     if (!window.YT) {
@@ -27,7 +24,6 @@ const Index = () => {
       const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
     }
-
     const initPlayer = () => {
       if (containerRef.current && window.YT && window.YT.Player) {
         playerRef.current = new window.YT.Player(containerRef.current, {
@@ -41,30 +37,27 @@ const Index = () => {
             showinfo: 0,
             rel: 0,
             modestbranding: 1,
-            playsinline: 1,
+            playsinline: 1
           },
           events: {
             onReady: (event: any) => {
               event.target.playVideo();
-            },
-          },
+            }
+          }
         });
       }
     };
-
     if (window.YT && window.YT.Player) {
       initPlayer();
     } else {
       window.onYouTubeIframeAPIReady = initPlayer;
     }
-
     return () => {
       if (playerRef.current) {
         playerRef.current.destroy?.();
       }
     };
   }, []);
-
   const toggleMute = () => {
     if (playerRef.current) {
       if (isMuted) {
@@ -75,27 +68,18 @@ const Index = () => {
       setIsMuted(!isMuted);
     }
   };
-
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 w-full h-full bg-hero-bg">
-          <div 
-            ref={containerRef}
-            className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2"
-          />
+          <div ref={containerRef} className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2" />
         </div>
         {/* Overlay */}
         <div className="absolute inset-0 hero-gradient pointer-events-none" />
         
         {/* Mute/Unmute Toggle */}
-        <button
-          onClick={toggleMute}
-          className="absolute bottom-24 right-6 z-20 p-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white hover:bg-white/20 transition-colors"
-          aria-label={isMuted ? "Unmute video" : "Mute video"}
-        >
+        <button onClick={toggleMute} className="absolute bottom-24 right-6 z-20 p-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white hover:bg-white/20 transition-colors" aria-label={isMuted ? "Unmute video" : "Mute video"}>
           {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
         </button>
         
@@ -107,7 +91,7 @@ const Index = () => {
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
               Un spațiu sigur unde tinerii își pot exprima{" "}
-              <span className="text-primary">muzica</span>
+              <span className="text-primary">​talentul</span>
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
               Învață din greșeli, primește sfaturi de la artiști cu experiență și 
@@ -180,36 +164,28 @@ const Index = () => {
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: Mic,
-                title: "Concert Live",
-                description: "Artiști invitați cu experiență susțin un moment muzical live.",
-                number: "01",
-              },
-              {
-                icon: MessageCircle,
-                title: "Discuție & Întrebări",
-                description: "Sesiune interactivă despre carieră, provocări și experiențe.",
-                number: "02",
-              },
-              {
-                icon: Star,
-                title: "Open Mic",
-                description: "Scena Tinerilor - spațiu dedicat tinerilor să cânte live.",
-                number: "03",
-              },
-              {
-                icon: Users,
-                title: "Socializare",
-                description: "Moment de conectare și networking între participanți.",
-                number: "04",
-              },
-            ].map((item, index) => (
-              <ScrollReveal key={index} delay={index * 100}>
-                <Card 
-                  className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full"
-                >
+            {[{
+            icon: Mic,
+            title: "Concert Live",
+            description: "Artiști invitați cu experiență susțin un moment muzical live.",
+            number: "01"
+          }, {
+            icon: MessageCircle,
+            title: "Discuție & Întrebări",
+            description: "Sesiune interactivă despre carieră, provocări și experiențe.",
+            number: "02"
+          }, {
+            icon: Star,
+            title: "Open Mic",
+            description: "Scena Tinerilor - spațiu dedicat tinerilor să cânte live.",
+            number: "03"
+          }, {
+            icon: Users,
+            title: "Socializare",
+            description: "Moment de conectare și networking între participanți.",
+            number: "04"
+          }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
+                <Card className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
                   <CardContent className="p-6 pt-8">
                     <div className="absolute top-4 right-4 text-4xl font-display font-bold text-primary/10">
                       {item.number}
@@ -225,8 +201,7 @@ const Index = () => {
                     </p>
                   </CardContent>
                 </Card>
-              </ScrollReveal>
-            ))}
+              </ScrollReveal>)}
           </div>
         </div>
       </section>
@@ -246,42 +221,32 @@ const Index = () => {
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {[
-              {
-                icon: Trophy,
-                title: "Nu este un concurs",
-                description: "Accent pe curaj și evoluție, nu pe perfecțiune.",
-              },
-              {
-                icon: Star,
-                title: "Ești vedeta serii",
-                description: "Fiecare participant primește atenție și respect maxim.",
-              },
-              {
-                icon: Music,
-                title: "Scenă profesională",
-                description: "Sunet de calitate și experiență reală de concert.",
-              },
-              {
-                icon: Lightbulb,
-                title: "Feedback constructiv",
-                description: "Sfaturi practice de la artiști cu experiență.",
-              },
-              {
-                icon: Heart,
-                title: "Public susținător",
-                description: "Atmosferă prietenoasă și lipsită de presiune.",
-              },
-              {
-                icon: Users,
-                title: "Comunitate",
-                description: "Conexiuni reale între generații de muzicieni.",
-              },
-            ].map((item, index) => (
-              <ScrollReveal key={index} delay={index * 80}>
-                <div 
-                  className="flex items-start gap-4 p-5 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow h-full"
-                >
+            {[{
+            icon: Trophy,
+            title: "Nu este un concurs",
+            description: "Accent pe curaj și evoluție, nu pe perfecțiune."
+          }, {
+            icon: Star,
+            title: "Ești vedeta serii",
+            description: "Fiecare participant primește atenție și respect maxim."
+          }, {
+            icon: Music,
+            title: "Scenă profesională",
+            description: "Sunet de calitate și experiență reală de concert."
+          }, {
+            icon: Lightbulb,
+            title: "Feedback constructiv",
+            description: "Sfaturi practice de la artiști cu experiență."
+          }, {
+            icon: Heart,
+            title: "Public susținător",
+            description: "Atmosferă prietenoasă și lipsită de presiune."
+          }, {
+            icon: Users,
+            title: "Comunitate",
+            description: "Conexiuni reale între generații de muzicieni."
+          }].map((item, index) => <ScrollReveal key={index} delay={index * 80}>
+                <div className="flex items-start gap-4 p-5 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow h-full">
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
                     <item.icon className="w-6 h-6 text-primary" />
                   </div>
@@ -294,8 +259,7 @@ const Index = () => {
                     </p>
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
+              </ScrollReveal>)}
           </div>
         </div>
       </section>
@@ -346,8 +310,6 @@ const Index = () => {
 
       {/* Instagram Feed */}
       <InstagramFeed />
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Index;
