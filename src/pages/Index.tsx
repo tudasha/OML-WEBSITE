@@ -103,22 +103,22 @@ const Index = () => {
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
             <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30">
-              Comunitatea muzicala din Oradea
+              Comunitatea muzicală din Oradea
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
-              Un spatiu sigur unde tinerii isi pot exprima{" "}
+              Un spațiu sigur unde tinerii își pot exprima{" "}
               <span className="text-primary">muzica</span>
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-              Invata din greseli, primeste sfaturi de la artisti cu experienta si 
-              descopera bucuria de a urca pe scena intr-un mediu sustinator.
+              Învață din greșeli, primește sfaturi de la artiști cu experiență și 
+              descoperă bucuria de a urca pe scenă într-un mediu susținător.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-base px-8 font-semibold shadow-lg">
-                <Link to="/eveniment">Vezi urmatorul eveniment</Link>
+                <Link to="/eveniment">Vezi următorul eveniment</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-2 border-white bg-white/10 text-white hover:bg-white hover:text-foreground text-base px-8 font-semibold">
-                <Link to="/contact">Contacteaza-ne</Link>
+                <Link to="/contact">Contactează-ne</Link>
               </Button>
             </div>
           </div>
@@ -138,26 +138,26 @@ const Index = () => {
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-6">
               <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider">
-                Descopera
+                Descoperă
               </span>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
                 Ce este Oradea Music Lab?
               </h2>
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
                 <p>
-                  Oradea Music Lab este un eveniment lunar care aduce impreuna tineri 
-                  aspiranti muzicieni si artisti consacrati din Oradea, creand o seara 
-                  educativa si distractiva.
+                  Oradea Music Lab este un eveniment lunar care aduce împreună tineri 
+                  aspiranți muzicieni și artiști consacrați din Oradea, creând o seară 
+                  educativă și distractivă.
                 </p>
                 <p>
                   Nu este un concurs. Accentul cade pe <strong className="text-foreground">curaj</strong>, 
-                  {" "}<strong className="text-foreground">invatare</strong> si{" "}
-                  <strong className="text-foreground">evolutie</strong>. Greselile sunt 
-                  acceptate ca parte fireasca a procesului artistic.
+                  {" "}<strong className="text-foreground">învățare</strong> și{" "}
+                  <strong className="text-foreground">evoluție</strong>. Greșelile sunt 
+                  acceptate ca parte firească a procesului artistic.
                 </p>
                 <p>
-                  Fiecare tanar care urca pe scena este tratat ca o vedeta, cu sunet 
-                  profesional si atentie maxima, pentru o experienta reala de concert.
+                  Fiecare tânăr care urcă pe scenă este tratat ca o vedetă, cu sunet 
+                  profesional și atenție maximă, pentru o experiență reală de concert.
                 </p>
               </div>
             </div>
@@ -165,7 +165,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Cum functioneaza Section */}
+      {/* Cum funcționează Section */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4">
           <ScrollReveal>
@@ -174,7 +174,7 @@ const Index = () => {
                 Structura evenimentului
               </span>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-                Cum functioneaza?
+                Cum funcționează?
               </h2>
             </div>
           </ScrollReveal>
@@ -184,25 +184,25 @@ const Index = () => {
               {
                 icon: Mic,
                 title: "Concert Live",
-                description: "Artisti invitati cu experienta sustin un moment muzical live.",
+                description: "Artiști invitați cu experiență susțin un moment muzical live.",
                 number: "01",
               },
               {
                 icon: MessageCircle,
-                title: "Discutie & Intrebari",
-                description: "Sesiune interactiva despre cariera, provocari si experiente.",
+                title: "Discuție & Întrebări",
+                description: "Sesiune interactivă despre carieră, provocări și experiențe.",
                 number: "02",
               },
               {
                 icon: Star,
                 title: "Open Mic",
-                description: "Scena Tinerilor - spatiu dedicat tinerilor sa cante live.",
+                description: "Scena Tinerilor - spațiu dedicat tinerilor să cânte live.",
                 number: "03",
               },
               {
                 icon: Users,
                 title: "Socializare",
-                description: "Moment de conectare si networking intre participanti.",
+                description: "Moment de conectare și networking între participanți.",
                 number: "04",
               },
             ].map((item, index) => (
@@ -231,16 +231,16 @@ const Index = () => {
         </div>
       </section>
 
-      {/* De ce suntem diferiti Section */}
+      {/* De ce suntem diferiți Section */}
       <section className="py-20 md:py-28 section-cream-dark">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-12 md:mb-16">
               <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
-                Filozofia noastra
+                Filozofia noastră
               </span>
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-                De ce suntem diferiti?
+                De ce suntem diferiți?
               </h2>
             </div>
           </ScrollReveal>
@@ -250,32 +250,32 @@ const Index = () => {
               {
                 icon: Trophy,
                 title: "Nu este un concurs",
-                description: "Accent pe curaj si evolutie, nu pe perfectiune.",
+                description: "Accent pe curaj și evoluție, nu pe perfecțiune.",
               },
               {
                 icon: Star,
-                title: "Esti vedeta serii",
-                description: "Fiecare participant primeste atentie si respect maxim.",
+                title: "Ești vedeta serii",
+                description: "Fiecare participant primește atenție și respect maxim.",
               },
               {
                 icon: Music,
-                title: "Scena profesionala",
-                description: "Sunet de calitate si experienta reala de concert.",
+                title: "Scenă profesională",
+                description: "Sunet de calitate și experiență reală de concert.",
               },
               {
                 icon: Lightbulb,
                 title: "Feedback constructiv",
-                description: "Sfaturi practice de la artisti cu experienta.",
+                description: "Sfaturi practice de la artiști cu experiență.",
               },
               {
                 icon: Heart,
-                title: "Public sustinator",
-                description: "Atmosfera prietenoasa si lipsita de presiune.",
+                title: "Public susținător",
+                description: "Atmosferă prietenoasă și lipsită de presiune.",
               },
               {
                 icon: Users,
                 title: "Comunitate",
-                description: "Conexiuni reale intre generatii de muzicieni.",
+                description: "Conexiuni reale între generații de muzicieni.",
               },
             ].map((item, index) => (
               <ScrollReveal key={index} delay={index * 80}>
@@ -300,7 +300,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Preview Urmatorul Eveniment */}
+      {/* Preview Următorul Eveniment */}
       <section className="py-20 md:py-28 bg-hero-bg text-white">
         <div className="container mx-auto px-4">
           <ScrollReveal>
@@ -311,19 +311,19 @@ const Index = () => {
                     <div className="shrink-0">
                       <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
                         <Calendar className="w-8 h-8 text-primary mb-1" />
-                        <span className="text-xs text-white/60">In curand</span>
+                        <span className="text-xs text-white/60">În curând</span>
                       </div>
                     </div>
                     <div className="flex-1 space-y-3">
                       <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
-                        Urmatorul eveniment
+                        Următorul eveniment
                       </span>
                       <h3 className="text-2xl md:text-3xl font-display font-bold">
-                        Calin Pop &amp; Marius Pop
+                        Călin Pop &amp; Marius Pop
                       </h3>
                       <p className="text-white/70">
-                        Membrii trupei Celelalte Cuvinte vor fi invitatii speciali ai 
-                        urmatoarei editii Oradea Music Lab.
+                        Membrii trupei Celelalte Cuvinte vor fi invitații speciali ai 
+                        următoarei ediții Oradea Music Lab.
                       </p>
                       <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
                         <span className="flex items-center gap-1">
