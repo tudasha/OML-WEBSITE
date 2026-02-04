@@ -26,7 +26,7 @@ const Contact = () => {
 
     toast({
       title: "Mesaj trimis!",
-      description: "Iti multumim pentru mesaj. Te vom contacta in curand!",
+      description: "Îți mulțumim pentru mesaj. Te vom contacta în curând!",
     });
 
     setFormData({ name: "", email: "", message: "" });
@@ -46,13 +46,13 @@ const Contact = () => {
       <section className="relative py-24 md:py-32 bg-hero-bg">
         <div className="container mx-auto px-4 text-center">
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">
-            Hai sa vorbim
+            Hai să vorbim
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white">
             Contact
           </h1>
           <p className="text-lg text-white/70 mt-4 max-w-xl mx-auto">
-            Ai intrebari? Vrei sa te inscrii la Open Mic? Scrie-ne!
+            Ai întrebări? Vrei să te înscrii la Open Mic? Scrie-ne!
           </p>
         </div>
       </section>
@@ -69,11 +69,11 @@ const Contact = () => {
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Numele tau</Label>
+                    <Label htmlFor="name">Numele tău</Label>
                     <Input
                       id="name"
                       name="name"
-                      placeholder="Cum te numesti?"
+                      placeholder="Cum te numești?"
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -94,11 +94,11 @@ const Contact = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="message">Mesajul tau</Label>
+                    <Label htmlFor="message">Mesajul tău</Label>
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder="Ce vrei sa ne spui?"
+                      placeholder="Ce vrei să ne spui?"
                       value={formData.message}
                       onChange={handleChange}
                       required
@@ -129,12 +129,12 @@ const Contact = () => {
             <div className="space-y-8">
               <div>
                 <h2 className="text-2xl font-display font-bold text-foreground mb-4">
-                  Informatii de contact
+                  Informații de contact
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Suntem mereu bucurosi sa auzim de la tineri pasionati de muzica! 
-                  Fie ca ai intrebari despre evenimentele noastre, vrei sa te 
-                  inscrii la Open Mic, sau pur si simplu vrei sa ne cunosti - 
+                  Suntem mereu bucuroși să auzim de la tineri pasionați de muzică! 
+                  Fie că ai întrebări despre evenimentele noastre, vrei să te 
+                  înscrii la Open Mic, sau pur și simplu vrei să ne cunoști - 
                   scrie-ne!
                 </p>
               </div>
@@ -178,9 +178,9 @@ const Contact = () => {
                     </h3>
                   </div>
                   <p className="text-white/80 text-sm leading-relaxed">
-                    Suntem o echipa de tineri si intelegem perfect cum e sa fii 
-                    la inceput. Orice intrebare ai avea, oricat de mica ti s-ar 
-                    parea - suntem aici sa te ajutam!
+                    Suntem o echipă de tineri și înțelegem perfect cum e să fii 
+                    la început. Orice întrebare ai avea, oricât de mică ți s-ar 
+                    părea - suntem aici să te ajutăm!
                   </p>
                 </CardContent>
               </Card>

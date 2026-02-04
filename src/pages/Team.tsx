@@ -32,7 +32,7 @@ const teamMembers = [
   },
   {
     name: "Boji Octavian",
-    role: "Echipa",
+    role: "Echipă",
     photo: octavianPhoto,
   },
 ];
@@ -47,10 +47,10 @@ const Team = () => {
             Cine suntem
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white">
-            Echipa Noastra
+            Echipa Noastră
           </h1>
           <p className="text-lg text-white/70 mt-4 max-w-xl mx-auto">
-            Un proiect construit de liceeni, pentru tineri pasionati de muzica.
+            Un proiect construit de liceeni, pentru tineri pasionați de muzică.
           </p>
         </div>
       </section>
@@ -110,9 +110,9 @@ const Team = () => {
           {/* Team message */}
           <div className="max-w-2xl mx-auto mt-16 text-center">
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Oradea Music Lab este construit de liceeni pasionati de muzica si 
-              comunitate. Credem ca varsta nu este o bariera pentru a face lucruri 
-              marete si ca tinerii pot inspira alti tineri sa-si urmeze visurile muzicale.
+              Oradea Music Lab este construit de liceeni pasionați de muzică și 
+              comunitate. Credem că vârsta nu este o barieră pentru a face lucruri 
+              mărețe și că tinerii pot inspira alți tineri să-și urmeze visurile muzicale.
             </p>
           </div>
         </div>

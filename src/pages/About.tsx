@@ -16,7 +16,7 @@ const About = () => {
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">
-            Povestea noastra
+            Povestea noastră
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white">
             Despre Noi
@@ -24,7 +24,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Povestea noastra */}
+      {/* Povestea noastră */}
       <section className="py-16 md:py-24 section-cream">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -34,84 +34,84 @@ const About = () => {
             
             <div className="prose prose-lg max-w-none text-muted-foreground space-y-6">
               <p className="text-lg leading-relaxed">
-                Suntem o echipa de tineri pasionati de muzica ce ne dorim sa cream o 
-                comunitate vibranta unde fiecare copil isi poate exprima talentul 
-                muzical intr-un mediu sigur si sustinator, invatand din greseli si 
-                din sfaturile celor cu experienta.
+                Suntem o echipă de tineri pasionați de muzică ce ne dorim să creăm o 
+                comunitate vibrantă unde fiecare copil își poate exprima talentul 
+                muzical într-un mediu sigur și susținător, învățând din greșeli și 
+                din sfaturile celor cu experiență.
               </p>
 
               <p className="text-lg leading-relaxed">
                 Eveniment fondat de <strong className="text-foreground">Madi Mihai</strong> cu 
                 sprijinul <strong className="text-foreground">American Councils for International Education</strong>, 
-                Oradea Music Lab are ca scop exact acest lucru: de a aduce impreuna tineri 
-                aspiranti muzicieni din Oradea si artisti consacrati pentru a crea o seara 
-                atat educativa, cat si distractiva.
+                Oradea Music Lab are ca scop exact acest lucru: de a aduce împreună tineri 
+                aspiranți muzicieni din Oradea și artiști consacrați pentru a crea o seară 
+                atât educativă, cât și distractivă.
               </p>
 
               <p className="text-lg leading-relaxed">
-                Ideea proiectului a aparut la finalul anului 2024, fiind inspirata de 
+                Ideea proiectului a apărut la finalul anului 2024, fiind inspirată de 
                 proiectul american <strong className="text-foreground">Grace Weber&apos;s Music Lab</strong>, 
-                la care Mihai a participat in cadrul anului sau cultural in Statele Unite 
+                la care Mihai a participat în cadrul anului său cultural în Statele Unite 
                 ale Americii, prin programul <strong className="text-foreground">FLEX (Future Leaders Exchange)</strong>. 
-                Acest eveniment avea loc lunar si urmarea un obiectiv similar. Observand 
-                impactul real pe care acest proiect il avea asupra tinerilor din Milwaukee, 
-                Mihai a decis sa adapteze acest concept si sa il aduca in comunitatea 
-                locala din Oradea.
+                Acest eveniment avea loc lunar și urmărea un obiectiv similar. Observând 
+                impactul real pe care acest proiect îl avea asupra tinerilor din Milwaukee, 
+                Mihai a decis să adapteze acest concept și să îl aducă în comunitatea 
+                locală din Oradea.
               </p>
 
               <p className="text-lg leading-relaxed">
-                Ce presupune Oradea Music Lab? La fiecare editie sunt invitati artisti 
-                oradeni cu experienta, care sustin un moment muzical live si participa 
-                ulterior la o discutie deschisa cu publicul. Acestia vorbesc despre 
-                parcursul lor artistic, despre provocarile din industria muzicala si 
-                despre modul in care pot fi depasite dificultatile legate de scena, 
-                creatie si cariera. Tinerii au ocazia sa adreseze intrebari si sa 
-                primeasca raspunsuri directe, bazate pe experienta reala a invitatilor.
+                Ce presupune Oradea Music Lab? La fiecare ediție sunt invitați artiști 
+                orădeni cu experiență, care susțin un moment muzical live și participă 
+                ulterior la o discuție deschisă cu publicul. Aceștia vorbesc despre 
+                parcursul lor artistic, despre provocările din industria muzicală și 
+                despre modul în care pot fi depășite dificultățile legate de scenă, 
+                creație și carieră. Tinerii au ocazia să adreseze întrebări și să 
+                primească răspunsuri directe, bazate pe experiența reală a invitaților.
               </p>
 
               <p className="text-lg leading-relaxed">
-                Structura evenimentului este impartita in mai multe etape. Prima parte 
-                consta intr-un concert sustinut de invitatii speciali. Urmeaza o discutie 
-                live pe scena, completata de o sesiune de intrebari si raspunsuri cu 
-                publicul, care reprezinta componenta educationala a proiectului. Ultima 
-                parte este open mic-ul &quot;Scena Tinerilor&quot;, un spatiu dedicat elevilor si 
-                tinerilor de pana la 21 de ani, unde acestia pot urca pe scena pentru 
-                a interpreta in fata publicului si pentru a primi feedback constructiv 
-                din partea artistilor invitati.
+                Structura evenimentului este împărțită în mai multe etape. Prima parte 
+                constă într-un concert susținut de invitații speciali. Urmează o discuție 
+                live pe scenă, completată de o sesiune de întrebări și răspunsuri cu 
+                publicul, care reprezintă componenta educațională a proiectului. Ultima 
+                parte este open mic-ul &quot;Scena Tinerilor&quot;, un spațiu dedicat elevilor și 
+                tinerilor de până la 21 de ani, unde aceștia pot urca pe scenă pentru 
+                a interpreta în fața publicului și pentru a primi feedback constructiv 
+                din partea artiștilor invitați.
               </p>
 
               <p className="text-lg leading-relaxed">
-                Un element central al Oradea Music Lab este faptul ca <strong className="text-foreground">nu este un concurs</strong>. 
-                Accentul nu cade pe performanta perfecta, ci pe curaj, invatare si evolutie. 
-                Greselile sunt acceptate ca parte fireasca a procesului artistic. Atmosfera 
-                este una prietenoasa si lipsita de presiune, astfel incat fiecare tanar 
-                sa se simta in siguranta atunci cand urca pe scena.
+                Un element central al Oradea Music Lab este faptul că <strong className="text-foreground">nu este un concurs</strong>. 
+                Accentul nu cade pe performanța perfectă, ci pe curaj, învățare și evoluție. 
+                Greșelile sunt acceptate ca parte firească a procesului artistic. Atmosfera 
+                este una prietenoasă și lipsită de presiune, astfel încât fiecare tânăr 
+                să se simtă în siguranță atunci când urcă pe scenă.
               </p>
 
               <p className="text-lg leading-relaxed">
-                Ceea ce diferentiaza Oradea Music Lab de alte evenimente este modul in 
-                care sunt tratati participantii. Fiecare tanar care urca pe scena este 
-                considerat o vedeta a serii. Scena, sunetul si atentia publicului sunt 
-                gandite astfel incat participantii sa aiba parte de o experienta reala 
-                de concert, care sa le creasca increderea in sine si dorinta de a 
-                continua drumul in muzica.
+                Ceea ce diferențiază Oradea Music Lab de alte evenimente este modul în 
+                care sunt tratați participanții. Fiecare tânăr care urcă pe scenă este 
+                considerat o vedetă a serii. Scena, sunetul și atenția publicului sunt 
+                gândite astfel încât participanții să aibă parte de o experiență reală 
+                de concert, care să le crească încrederea în sine și dorința de a 
+                continua drumul în muzică.
               </p>
 
               <p className="text-lg leading-relaxed">
-                Pentru a incuraja participarea si pentru a recompensa curajul, organizam 
-                si o tombola cu premii surpriza destinata tinerilor care participa la 
-                open mic. De asemenea, fiecare editie este insotita de un moment de 
-                socializare, care contribuie la consolidarea comunitatii create in 
+                Pentru a încuraja participarea și pentru a recompensa curajul, organizăm 
+                și o tombolă cu premii surpriză destinată tinerilor care participă la 
+                open mic. De asemenea, fiecare ediție este însoțită de un moment de 
+                socializare, care contribuie la consolidarea comunității create în 
                 jurul proiectului.
               </p>
 
               <p className="text-lg leading-relaxed">
-                Prin acest format, Oradea Music Lab isi propune sa creeze legaturi 
-                intre generatii de muzicieni, sa ofere modele autentice tinerilor si 
-                sa contribuie la dezvoltarea unei comunitati muzicale active in Oradea. 
-                Proiectul este, in esenta, un spatiu de intalnire intre educatie, 
-                experienta si pasiune, in care muzica devine un instrument de dialog 
-                si formare personala.
+                Prin acest format, Oradea Music Lab își propune să creeze legături 
+                între generații de muzicieni, să ofere modele autentice tinerilor și 
+                să contribuie la dezvoltarea unei comunități muzicale active în Oradea. 
+                Proiectul este, în esență, un spațiu de întâlnire între educație, 
+                experiență și pasiune, în care muzica devine un instrument de dialog 
+                și formare personală.
               </p>
             </div>
           </div>
@@ -130,31 +130,31 @@ const About = () => {
               {
                 icon: Heart,
                 title: "Curaj",
-                description: "Incurajam sa incerci, chiar daca nu esti perfect.",
+                description: "Încurajăm să încerci, chiar dacă nu ești perfect.",
                 emoji: "💪",
               },
               {
                 icon: BookOpen,
-                title: "Invatare",
-                description: "Fiecare experienta este o oportunitate de crestere.",
+                title: "Învățare",
+                description: "Fiecare experiență este o oportunitate de creștere.",
                 emoji: "📚",
               },
               {
                 icon: Users,
                 title: "Comunitate",
-                description: "Impreuna suntem mai puternici.",
+                description: "Împreună suntem mai puternici.",
                 emoji: "🤝",
               },
               {
                 icon: HandHeart,
                 title: "Respect",
-                description: "Tratam pe fiecare cu demnitate si sustinere.",
+                description: "Tratăm pe fiecare cu demnitate și susținere.",
                 emoji: "🙏",
               },
               {
                 icon: Music,
-                title: "Muzica autentica",
-                description: "Expresie personala, nu imitatie.",
+                title: "Muzică autentică",
+                description: "Expresie personală, nu imitație.",
                 emoji: "🎵",
               },
             ].map((item, index) => (

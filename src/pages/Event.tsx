@@ -5,13 +5,13 @@ import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users,
 import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
 
-// Configuratie eveniment - usor de editat
+// Configurație eveniment - ușor de editat
 const eventConfig = {
-  title: "Calin Pop & Marius Pop",
+  title: "Călin Pop & Marius Pop",
   subtitle: "Celelalte Cuvinte",
-  date: "In curand",
+  date: "În curând",
   time: "19:00",
-  location: "Oradea (locatia va fi anuntata)",
+  location: "Oradea (locația va fi anunțată)",
   registrationOpen: false,
 };
 
@@ -28,7 +28,7 @@ const Event = () => {
         
         <div className="relative z-10 container mx-auto px-4 text-center">
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">
-            Urmatorul eveniment
+            Următorul eveniment
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">
             {eventConfig.title}
@@ -58,19 +58,19 @@ const Event = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              Despre aceasta editie
+              Despre această ediție
             </h2>
             <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
               <p>
-                Ne bucuram sa-i avem ca invitati speciali pe{" "}
-                <strong className="text-foreground">Calin Pop</strong> si{" "}
+                Ne bucurăm să-i avem ca invitați speciali pe{" "}
+                <strong className="text-foreground">Călin Pop</strong> și{" "}
                 <strong className="text-foreground">Marius Pop</strong>, membri ai 
                 legendarei trupe <strong className="text-foreground">Celelalte Cuvinte</strong>.
               </p>
               <p>
-                Acestia vor sustine un concert live, vor impartasi din experienta 
-                lor de peste 30 de ani in industria muzicala si vor oferi feedback 
-                constructiv tinerilor care vor urca pe scena.
+                Aceștia vor susține un concert live, vor împărtăși din experiența 
+                lor de peste 30 de ani în industria muzicală și vor oferi feedback 
+                constructiv tinerilor care vor urca pe scenă.
               </p>
             </div>
           </div>
@@ -89,19 +89,19 @@ const Event = () => {
               {
                 icon: Music,
                 title: "Concert Live",
-                description: "Calin Pop & Marius Pop vor deschide seara cu un concert memorabil.",
+                description: "Călin Pop & Marius Pop vor deschide seara cu un concert memorabil.",
                 time: "Prima parte",
               },
               {
                 icon: MessageCircle,
-                title: "Discutie & Q&A",
-                description: "Sesiune de intrebari si raspunsuri despre cariera si industrie.",
+                title: "Discuție & Q&A",
+                description: "Sesiune de întrebări și răspunsuri despre carieră și industrie.",
                 time: "A doua parte",
               },
               {
                 icon: Mic,
                 title: "Open Mic",
-                description: "Scena Tinerilor - ocazia ta de a canta live si a primi feedback.",
+                description: "Scena Tinerilor - ocazia ta de a cânta live și a primi feedback.",
                 time: "A treia parte",
               },
             ].map((item, index) => (
@@ -130,30 +130,30 @@ const Event = () => {
       <section className="py-16 md:py-24 section-cream-dark">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground text-center mb-12">
-            Ce sa astepti
+            Ce să aștepți
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
               {
                 icon: Heart,
-                title: "Curaj, nu perfectiune",
-                description: "Greselile fac parte din proces.",
+                title: "Curaj, nu perfecțiune",
+                description: "Greșelile fac parte din proces.",
               },
               {
                 icon: Users,
-                title: "Spatiu sigur",
-                description: "Atmosfera prietenoasa si sustinatoare.",
+                title: "Spațiu sigur",
+                description: "Atmosferă prietenoasă și susținătoare.",
               },
               {
                 icon: Gift,
-                title: "Tombola cu premii",
-                description: "Surprize pentru participantii la Open Mic.",
+                title: "Tombolă cu premii",
+                description: "Surprize pentru participanții la Open Mic.",
               },
               {
                 icon: Pizza,
                 title: "Socializare",
-                description: "Pizza by Enigma si networking.",
+                description: "Pizza by Enigma și networking.",
               },
             ].map((item, index) => (
               <div key={index} className="bg-background rounded-xl p-6 text-center shadow-sm">
@@ -170,38 +170,38 @@ const Event = () => {
         </div>
       </section>
 
-      {/* Inregistrare Open Mic */}
+      {/* Înregistrare Open Mic */}
       <section className="py-16 md:py-24 bg-hero-bg text-white">
         <div className="container mx-auto px-4">
           <Card className="max-w-2xl mx-auto bg-white/5 border-white/10 backdrop-blur">
             <CardContent className="p-8 md:p-12 text-center">
               <Mic className="w-16 h-16 text-primary mx-auto mb-6" />
               <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-                Vrei sa urci pe scena?
+                Vrei să urci pe scenă?
               </h2>
               
               {eventConfig.registrationOpen ? (
                 <>
                   <p className="text-white/70 mb-6">
-                    Inscrie-te la Open Mic pentru aceasta editie. 
+                    Înscrie-te la Open Mic pentru această ediție. 
                     Locurile sunt limitate!
                   </p>
                   <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
-                    Inscrie-te acum
+                    Înscrie-te acum
                   </Button>
                 </>
               ) : (
                 <>
                   <div className="flex items-center justify-center gap-2 text-primary mb-4">
                     <AlertCircle className="w-5 h-5" />
-                    <span className="font-medium">Inscrierile pentru aceasta editie s-au incheiat</span>
+                    <span className="font-medium">Înscrierile pentru această ediție s-au încheiat</span>
                   </div>
                   <p className="text-white/70 mb-6">
-                    Urmareste-ne pe Instagram pentru a afla cand se deschid 
-                    inscrierile pentru urmatoarea editie!
+                    Urmărește-ne pe Instagram pentru a afla când se deschid 
+                    înscrierile pentru următoarea ediție!
                   </p>
                   <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
-                    <Link to="/contact">Contacteaza-ne pentru mai multe informatii</Link>
+                    <Link to="/contact">Contactează-ne pentru mai multe informații</Link>
                   </Button>
                 </>
               )}

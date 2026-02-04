@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 import logoOml from "@/assets/logo-oml.png";
 
 const navLinks = [
-  { name: "Acasa", path: "/" },
-  { name: "Urmatorul Eveniment", path: "/eveniment" },
+  { name: "Acasă", path: "/" },
+  { name: "Următorul Eveniment", path: "/eveniment" },
   { name: "Despre Noi", path: "/despre" },
-  { name: "Echipa", path: "/echipa" },
+  { name: "Echipă", path: "/echipa" },
   { name: "Contact", path: "/contact" },
 ];
 
@@ -64,7 +64,7 @@ const Header = () => {
               </a>
             </Button>
             <Button asChild className="bg-primary hover:bg-primary/90 text-white">
-              <Link to="/contact">Contacteaza-ne</Link>
+              <Link to="/contact">Contactează-ne</Link>
             </Button>
           </div>
 
@@ -72,7 +72,7 @@ const Header = () => {
           <button
             className="lg:hidden text-foreground p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Inchide meniul" : "Deschide meniul"}
+            aria-label={isMenuOpen ? "Închide meniul" : "Deschide meniul"}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
