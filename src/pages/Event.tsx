@@ -201,7 +201,7 @@ const Event = () => {
                     className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg"
                   >
                     <a 
-                      href="https://docs.google.com/forms/d/1yuxtAXxGX3ZsG0e7_603LkUzu4FuY9XDuXb5bN1guW4/viewform" 
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSc2dQK9WWPGhEE5kFGl6MxZulO9hrV_CCW9ryBELST4ZFd5Fg/viewform" 
                       target="_blank" 
                       rel="noopener noreferrer"
                     >
