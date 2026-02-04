@@ -9,7 +9,7 @@ import heroConcert from "@/assets/hero-concert.png";
 const eventConfig = {
   title: "Călin Pop & Marius Pop",
   subtitle: "Celelalte Cuvinte",
-  date: "În curând",
+  date: "7 Februarie",
   time: "19:00",
   location: "Oradea (locația va fi anunțată)",
   registrationOpen: false,
