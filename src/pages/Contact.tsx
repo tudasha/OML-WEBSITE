@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Instagram, Send, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -21,16 +22,33 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const { error } = await supabase
+        .from("contact_submissions")
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        });
 
-    toast({
-      title: "Mesaj trimis!",
-      description: "Îți mulțumim pentru mesaj. Te vom contacta în curând!",
-    });
+      if (error) throw error;
 
-    setFormData({ name: "", email: "", message: "" });
-    setIsSubmitting(false);
+      toast({
+        title: "Mesaj trimis!",
+        description: "Îți mulțumim pentru mesaj. Te vom contacta în curând!",
+      });
+
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      toast({
+        title: "Eroare",
+        description: "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
