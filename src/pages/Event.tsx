@@ -1,7 +1,19 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users, Heart, AlertCircle } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Mic,
+  Music,
+  MessageCircle,
+  Gift,
+  Pizza,
+  Users,
+  Heart,
+  AlertCircle,
+} from "lucide-react";
 import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
 
@@ -11,7 +23,7 @@ const eventConfig = {
   subtitle: "Celelalte Cuvinte",
   date: "7 Februarie",
   time: "19:00",
-  location: "Oradea (locația va fi anunțată)",
+  location: "Lokal, Oradea",
   registrationOpen: false,
 };
 
@@ -20,12 +32,12 @@ const Event = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{ backgroundImage: `url(${heroConcert})` }}
         />
         <div className="absolute inset-0 bg-hero-bg/90" />
-        
+
         <div className="relative z-10 container mx-auto px-4 text-center">
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">
             Următorul eveniment
@@ -33,9 +45,7 @@ const Event = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">
             {eventConfig.title}
           </h1>
-          <p className="text-xl md:text-2xl text-primary font-medium mb-6">
-            {eventConfig.subtitle}
-          </p>
+          <p className="text-xl md:text-2xl text-primary font-medium mb-6">{eventConfig.subtitle}</p>
           <div className="flex flex-wrap items-center justify-center gap-6 text-white/70">
             <span className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-primary" />
@@ -57,20 +67,16 @@ const Event = () => {
       <section className="py-16 md:py-24 section-cream">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              Despre această ediție
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Despre această ediție</h2>
             <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
               <p>
-                Ne bucurăm să-i avem ca invitați speciali pe{" "}
-                <strong className="text-foreground">Călin Pop</strong> și{" "}
-                <strong className="text-foreground">Marius Pop</strong>, membri ai 
-                legendarei trupe <strong className="text-foreground">Celelalte Cuvinte</strong>.
+                Ne bucurăm să-i avem ca invitați speciali pe <strong className="text-foreground">Călin Pop</strong> și{" "}
+                <strong className="text-foreground">Marius Pop</strong>, membri ai legendarei trupe{" "}
+                <strong className="text-foreground">Celelalte Cuvinte</strong>.
               </p>
               <p>
-                Aceștia vor susține un concert live, vor împărtăși din experiența 
-                lor de peste 30 de ani în industria muzicală și vor oferi feedback 
-                constructiv tinerilor care vor urca pe scenă.
+                Aceștia vor susține un concert live, vor împărtăși din experiența lor de peste 30 de ani în industria
+                muzicală și vor oferi feedback constructiv tinerilor care vor urca pe scenă.
               </p>
             </div>
           </div>
@@ -110,15 +116,9 @@ const Event = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
                     <item.icon className="w-8 h-8 text-primary" />
                   </div>
-                  <span className="text-xs text-primary font-medium uppercase tracking-wider">
-                    {item.time}
-                  </span>
-                  <h3 className="text-xl font-display font-semibold text-foreground mt-2 mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {item.description}
-                  </p>
+                  <span className="text-xs text-primary font-medium uppercase tracking-wider">{item.time}</span>
+                  <h3 className="text-xl font-display font-semibold text-foreground mt-2 mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm">{item.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -158,12 +158,8 @@ const Event = () => {
             ].map((item, index) => (
               <div key={index} className="bg-background rounded-xl p-6 text-center shadow-sm">
                 <item.icon className="w-10 h-10 text-primary mx-auto mb-4" />
-                <h3 className="font-display font-semibold text-foreground mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground text-sm">
-                  {item.description}
-                </p>
+                <h3 className="font-display font-semibold text-foreground mb-2">{item.title}</h3>
+                <p className="text-muted-foreground text-sm">{item.description}</p>
               </div>
             ))}
           </div>
@@ -176,15 +172,12 @@ const Event = () => {
           <Card className="max-w-2xl mx-auto bg-white/5 border-white/10 backdrop-blur">
             <CardContent className="p-8 md:p-12 text-center">
               <Mic className="w-16 h-16 text-primary mx-auto mb-6" />
-              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
-                Vrei să urci pe scenă?
-              </h2>
-              
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">Vrei să urci pe scenă?</h2>
+
               {eventConfig.registrationOpen ? (
                 <>
                   <p className="text-white/70 mb-6">
-                    Înscrie-te la Open Mic pentru această ediție. 
-                    Locurile sunt limitate!
+                    Înscrie-te la Open Mic pentru această ediție. Locurile sunt limitate!
                   </p>
                   <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
                     Înscrie-te acum
@@ -197,10 +190,13 @@ const Event = () => {
                     <span className="font-medium">Înscrierile pentru această ediție s-au încheiat</span>
                   </div>
                   <p className="text-white/70 mb-6">
-                    Urmărește-ne pe Instagram pentru a afla când se deschid 
-                    înscrierile pentru următoarea ediție!
+                    Urmărește-ne pe Instagram pentru a afla când se deschid înscrierile pentru următoarea ediție!
                   </p>
-                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg"
+                  >
                     <Link to="/contact">Contactează-ne pentru mai multe informații</Link>
                   </Button>
                 </>
