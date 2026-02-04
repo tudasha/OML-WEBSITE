@@ -310,8 +310,8 @@ const Index = () => {
                   <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
                     <div className="shrink-0">
                       <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
-                        <Calendar className="w-8 h-8 text-primary mb-1" />
-                        <span className="text-xs text-white/60">În curând</span>
+                        <span className="text-2xl font-display font-bold text-primary">7</span>
+                        <span className="text-xs text-white/60">Februarie</span>
                       </div>
                     </div>
                     <div className="flex-1 space-y-3">
