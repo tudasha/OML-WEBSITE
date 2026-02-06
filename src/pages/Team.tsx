@@ -51,21 +51,64 @@ const teamMembers: TeamMember[] = [
   },
 ];
 
+interface HoveredState {
+  member: TeamMember;
+  index: number;
+}
+
 const Team = () => {
-  const [hoveredMember, setHoveredMember] = useState<TeamMember | null>(null);
-  const [lockedMember, setLockedMember] = useState<TeamMember | null>(null);
+  const [hoveredState, setHoveredState] = useState<HoveredState | null>(null);
+  const [lockedState, setLockedState] = useState<HoveredState | null>(null);
 
-  const activeMember = lockedMember || hoveredMember;
-  const isLocked = !!lockedMember;
+  const activeState = lockedState || hoveredState;
+  const activeMember = activeState?.member;
+  const activeIndex = activeState?.index ?? -1;
+  const isLocked = !!lockedState;
 
-  const handleCardClick = (member: TeamMember) => {
+  // Determine if panel should be on left or right based on card position
+  // In a 4-column grid: index 0,1 are left side, index 2,3 are right side
+  const isCardOnRight = activeIndex >= 2;
+  const panelOnLeft = isCardOnRight; // Panel on opposite side
+
+  const handleCardClick = (member: TeamMember, index: number) => {
     if (member.description) {
-      setLockedMember(member);
+      setLockedState({ member, index });
     }
   };
 
   const handleClose = () => {
-    setLockedMember(null);
+    setLockedState(null);
+  };
+
+  const handleMouseEnter = (member: TeamMember, index: number) => {
+    if (!isLocked) {
+      setHoveredState({ member, index });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isLocked) {
+      setHoveredState(null);
+    }
+  };
+
+  // Get panel position classes
+  const getPanelPositionClasses = () => {
+    if (isLocked) {
+      // Centered on screen when locked
+      return "inset-0 flex items-center justify-center";
+    }
+    // Dynamic positioning based on card position
+    if (panelOnLeft) {
+      return "left-6 xl:left-12 top-1/2 -translate-y-1/2";
+    }
+    return "right-6 xl:right-12 top-1/2 -translate-y-1/2";
+  };
+
+  // Get animation direction
+  const getAnimationX = () => {
+    if (isLocked) return 0;
+    return panelOnLeft ? -30 : 30;
   };
 
   return (
@@ -100,21 +143,20 @@ const Team = () => {
           )}
         </AnimatePresence>
 
-        {/* Panel - Left side on hover, centered when locked */}
-        <AnimatePresence>
+        {/* Panel - Dynamic positioning */}
+        <AnimatePresence mode="wait">
           {activeMember && activeMember.description && (
             <motion.div
-              initial={{ opacity: 0, x: isLocked ? 0 : -30, scale: isLocked ? 0.95 : 1 }}
+              key={isLocked ? "locked" : `hover-${activeIndex}`}
+              initial={{ opacity: 0, x: getAnimationX(), scale: isLocked ? 0.95 : 1 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: isLocked ? 0 : -30, scale: isLocked ? 0.95 : 1 }}
+              exit={{ opacity: 0, x: getAnimationX(), scale: isLocked ? 0.95 : 1 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className={`hidden lg:block fixed z-50 transition-all duration-300 ${
-                isLocked 
-                  ? "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px]" 
-                  : "left-8 xl:left-16 top-1/2 -translate-y-1/2 w-[380px]"
-              }`}
+              className={`hidden lg:flex fixed z-50 ${getPanelPositionClasses()}`}
             >
-              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-border/50 max-h-[80vh]">
+              <div className={`bg-white rounded-2xl shadow-2xl overflow-hidden border border-border/50 max-h-[80vh] ${
+                isLocked ? "w-[480px]" : "w-[380px]"
+              }`}>
                 {/* Close button when locked */}
                 {isLocked && (
                   <button
@@ -183,9 +225,9 @@ const Team = () => {
                 className={`overflow-hidden border-0 shadow-lg group hover:shadow-xl transition-all duration-300 ${
                   member.description ? "cursor-pointer" : ""
                 } ${activeMember?.name === member.name ? "ring-2 ring-primary ring-offset-2" : ""}`}
-                onMouseEnter={() => !isLocked && setHoveredMember(member)}
-                onMouseLeave={() => !isLocked && setHoveredMember(null)}
-                onClick={() => handleCardClick(member)}
+                onMouseEnter={() => handleMouseEnter(member, index)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCardClick(member, index)}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
@@ -214,7 +256,7 @@ const Team = () => {
 
           {/* Mobile description panel */}
           <AnimatePresence>
-            {lockedMember && lockedMember.description && (
+            {lockedState && lockedState.member.description && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -235,17 +277,17 @@ const Team = () => {
                   </button>
                   <div className="flex items-center gap-3 mb-4">
                     <img
-                      src={lockedMember.photo}
-                      alt={lockedMember.name}
+                      src={lockedState.member.photo}
+                      alt={lockedState.member.name}
                       className="w-16 h-16 rounded-full object-cover"
                     />
                     <div>
-                      <h4 className="font-display font-semibold text-lg">{lockedMember.name}</h4>
-                      <span className="text-sm text-primary">{lockedMember.role}</span>
+                      <h4 className="font-display font-semibold text-lg">{lockedState.member.name}</h4>
+                      <span className="text-sm text-primary">{lockedState.member.role}</span>
                     </div>
                   </div>
                   <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {lockedMember.description}
+                    {lockedState.member.description}
                   </p>
                 </div>
               </motion.div>
@@ -257,7 +299,7 @@ const Team = () => {
             <p className="text-muted-foreground text-lg leading-relaxed">
               Oradea Music Lab este construit de liceeni pasionați de muzică și 
               comunitate. Credem că vârsta nu este o barieră pentru a face lucruri 
-              mărețe și că tinerii pot inspira alți tineri să-își urmeze visurile muzicale.
+              mărețe și că tinerii pot inspira alți tineri să-și urmeze visurile muzicale.
             </p>
           </div>
         </div>
