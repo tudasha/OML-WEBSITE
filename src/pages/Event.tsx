@@ -172,7 +172,7 @@ const Event = () => {
           <Card className="max-w-2xl mx-auto bg-white/5 border-white/10 backdrop-blur">
             <CardContent className="p-8 md:p-12 text-center">
               <Mic className="w-16 h-16 text-primary mx-auto mb-6" />
-              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">Vrei să urci pe scenă?</h2>
+              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 text-white">Vrei să urci pe scenă?</h2>
 
               {eventConfig.registrationOpen ? (
                 <>
