@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Heart, Music, Users, Coffee, ExternalLink } from "lucide-react";
+import { Heart, Music, Users, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import donateHeroImage from "@/assets/donate-hero.jpg";
 
@@ -115,26 +115,6 @@ const Donate = () => {
               </ul>
             </Card>
           </div>
-
-          {/* Fun Note */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="max-w-2xl mx-auto mb-12"
-          >
-            <Card className="p-6 border-0 shadow-lg bg-amber-50/50">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Coffee className="w-6 h-6 text-amber-600" />
-                </div>
-                <p className="text-amber-800 text-sm">
-                  <strong>Disclaimer onest:</strong> O mică parte din donații se poate duce și pe berea Soft Developer-ului care a construit acest site. 
-                  Promitem că lucrează mai bine după o bere rece! 🍺
-                </p>
-              </div>
-            </Card>
-          </motion.div>
 
           {/* CTA */}
           <div className="text-center">
