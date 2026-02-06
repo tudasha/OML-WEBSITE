@@ -37,7 +37,8 @@ const Index = () => {
             showinfo: 0,
             rel: 0,
             modestbranding: 1,
-            playsinline: 1
+            playsinline: 1,
+            start: 2
           },
           events: {
             onReady: (event: any) => {
