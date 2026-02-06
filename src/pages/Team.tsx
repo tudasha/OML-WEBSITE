@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 
 // Import team photos
 import madiPhoto from "@/assets/team/madi-mihai.jpg";
@@ -52,6 +53,20 @@ const teamMembers: TeamMember[] = [
 
 const Team = () => {
   const [hoveredMember, setHoveredMember] = useState<TeamMember | null>(null);
+  const [lockedMember, setLockedMember] = useState<TeamMember | null>(null);
+
+  const activeMember = lockedMember || hoveredMember;
+  const isLocked = !!lockedMember;
+
+  const handleCardClick = (member: TeamMember) => {
+    if (member.description) {
+      setLockedMember(member);
+    }
+  };
+
+  const handleClose = () => {
+    setLockedMember(null);
+  };
 
   return (
     <Layout>
@@ -72,36 +87,62 @@ const Team = () => {
 
       {/* Team Grid */}
       <section className="py-16 md:py-24 section-cream relative">
-        {/* Hover Panel - Left side, vertically centered */}
+        {/* Backdrop when locked */}
         <AnimatePresence>
-          {hoveredMember && hoveredMember.description && (
+          {isLocked && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/40 z-40"
+              onClick={handleClose}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Panel - Left side, vertically centered */}
+        <AnimatePresence>
+          {activeMember && activeMember.description && (
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="hidden lg:block fixed left-8 xl:left-16 top-1/2 -translate-y-1/2 z-50"
+              className={`hidden lg:block fixed left-8 xl:left-16 top-1/2 -translate-y-1/2 z-50 transition-all duration-300 ${
+                isLocked ? "w-[450px]" : "w-[380px]"
+              }`}
             >
-              <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-border/50 w-[380px] max-h-[75vh]">
-                <div className="relative h-52 overflow-hidden">
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-border/50 max-h-[80vh]">
+                {/* Close button when locked */}
+                {isLocked && (
+                  <button
+                    onClick={handleClose}
+                    className="absolute top-3 right-3 z-10 p-2 bg-white/90 rounded-full shadow-md hover:bg-white transition-colors"
+                  >
+                    <X className="w-4 h-4 text-muted-foreground" />
+                  </button>
+                )}
+                <div className={`relative overflow-hidden ${isLocked ? "h-64" : "h-52"}`}>
                   <img
-                    src={hoveredMember.photo}
-                    alt={hoveredMember.name}
+                    src={activeMember.photo}
+                    alt={activeMember.name}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-4 left-5 text-white">
                     <span className="inline-block px-3 py-1 bg-primary rounded-full text-xs font-medium mb-2">
-                      {hoveredMember.role}
+                      {activeMember.role}
                     </span>
-                    <h3 className="text-xl font-display font-bold">
-                      {hoveredMember.name}
+                    <h3 className={`font-display font-bold ${isLocked ? "text-2xl" : "text-xl"}`}>
+                      {activeMember.name}
                     </h3>
                   </div>
                 </div>
-                <div className="p-5 max-h-[calc(75vh-13rem)] overflow-y-auto">
-                  <p className="text-[15px] text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {hoveredMember.description}
+                <div className={`max-h-[calc(80vh-16rem)] overflow-y-auto ${isLocked ? "p-6" : "p-5"}`}>
+                  <p className={`text-muted-foreground leading-relaxed whitespace-pre-line ${
+                    isLocked ? "text-base" : "text-[15px]"
+                  }`}>
+                    {activeMember.description}
                   </p>
                 </div>
               </div>
@@ -139,9 +180,10 @@ const Team = () => {
                 key={index} 
                 className={`overflow-hidden border-0 shadow-lg group hover:shadow-xl transition-all duration-300 ${
                   member.description ? "cursor-pointer" : ""
-                } ${hoveredMember?.name === member.name ? "ring-2 ring-primary ring-offset-2" : ""}`}
-                onMouseEnter={() => setHoveredMember(member)}
-                onMouseLeave={() => setHoveredMember(null)}
+                } ${activeMember?.name === member.name ? "ring-2 ring-primary ring-offset-2" : ""}`}
+                onMouseEnter={() => !isLocked && setHoveredMember(member)}
+                onMouseLeave={() => !isLocked && setHoveredMember(null)}
+                onClick={() => handleCardClick(member)}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
@@ -158,8 +200,8 @@ const Team = () => {
                       {member.name}
                     </h3>
                     {member.description && (
-                      <span className="text-xs text-white/60 mt-1 block lg:hidden">
-                        Apasă pentru detalii
+                      <span className="text-xs text-white/60 mt-1 block">
+                        Click pentru detalii
                       </span>
                     )}
                   </div>
@@ -170,28 +212,38 @@ const Team = () => {
 
           {/* Mobile description panel */}
           <AnimatePresence>
-            {hoveredMember && hoveredMember.description && (
+            {lockedMember && lockedMember.description && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3 }}
-                className="lg:hidden mt-8 max-w-md mx-auto"
+                className="lg:hidden fixed inset-0 z-50 flex items-center justify-center p-4"
               >
-                <div className="bg-white rounded-xl shadow-lg p-5 border border-border/50">
-                  <div className="flex items-center gap-3 mb-3">
+                <div 
+                  className="absolute inset-0 bg-black/50"
+                  onClick={handleClose}
+                />
+                <div className="relative bg-white rounded-xl shadow-lg p-5 max-w-md w-full max-h-[80vh] overflow-y-auto">
+                  <button
+                    onClick={handleClose}
+                    className="absolute top-3 right-3 p-2 bg-muted rounded-full hover:bg-muted/80 transition-colors"
+                  >
+                    <X className="w-4 h-4 text-muted-foreground" />
+                  </button>
+                  <div className="flex items-center gap-3 mb-4">
                     <img
-                      src={hoveredMember.photo}
-                      alt={hoveredMember.name}
-                      className="w-12 h-12 rounded-full object-cover"
+                      src={lockedMember.photo}
+                      alt={lockedMember.name}
+                      className="w-16 h-16 rounded-full object-cover"
                     />
                     <div>
-                      <h4 className="font-display font-semibold">{hoveredMember.name}</h4>
-                      <span className="text-xs text-primary">{hoveredMember.role}</span>
+                      <h4 className="font-display font-semibold text-lg">{lockedMember.name}</h4>
+                      <span className="text-sm text-primary">{lockedMember.role}</span>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {hoveredMember.description}
+                  <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {lockedMember.description}
                   </p>
                 </div>
               </motion.div>
@@ -203,7 +255,7 @@ const Team = () => {
             <p className="text-muted-foreground text-lg leading-relaxed">
               Oradea Music Lab este construit de liceeni pasionați de muzică și 
               comunitate. Credem că vârsta nu este o barieră pentru a face lucruri 
-              mărețe și că tinerii pot inspira alți tineri să-și urmeze visurile muzicale.
+              mărețe și că tinerii pot inspira alți tineri să-își urmeze visurile muzicale.
             </p>
           </div>
         </div>
