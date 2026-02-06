@@ -278,7 +278,7 @@ const Index = () => {
                       <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
                         Următorul eveniment
                       </span>
-                      <h3 className="text-2xl md:text-3xl font-display font-bold">
+                      <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
                         Călin Pop &amp; Marius Pop
                       </h3>
                       <p className="text-white/70">
