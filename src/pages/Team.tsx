@@ -47,7 +47,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Boji Octavian",
-    role: "Echipă",
+    role: "Software Developer",
     photo: octavianPhoto,
   },
 ];
