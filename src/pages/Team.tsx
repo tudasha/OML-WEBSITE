@@ -72,35 +72,35 @@ const Team = () => {
 
       {/* Team Grid */}
       <section className="py-16 md:py-24 section-cream relative">
-        {/* Hover Panel - Fixed on left side */}
+        {/* Hover Panel - Centered overlay */}
         <AnimatePresence>
           {hoveredMember && hoveredMember.description && (
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="hidden lg:block fixed left-8 top-1/2 -translate-y-1/2 z-50 w-80 max-h-[70vh]"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="hidden lg:flex fixed inset-0 z-50 items-center justify-center pointer-events-none"
             >
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-border/50">
-                <div className="relative h-48 overflow-hidden">
+              <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-border/50 w-[420px] max-h-[75vh] pointer-events-auto">
+                <div className="relative h-56 overflow-hidden">
                   <img
                     src={hoveredMember.photo}
                     alt={hoveredMember.name}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-3 left-4 text-white">
-                    <span className="inline-block px-2 py-0.5 bg-primary rounded-full text-xs font-medium mb-1">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-5 text-white">
+                    <span className="inline-block px-3 py-1 bg-primary rounded-full text-xs font-medium mb-2">
                       {hoveredMember.role}
                     </span>
-                    <h3 className="text-lg font-display font-bold">
+                    <h3 className="text-xl font-display font-bold">
                       {hoveredMember.name}
                     </h3>
                   </div>
                 </div>
-                <div className="p-4 max-h-[calc(70vh-12rem)] overflow-y-auto">
-                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                <div className="p-6 max-h-[calc(75vh-14rem)] overflow-y-auto">
+                  <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line">
                     {hoveredMember.description}
                   </p>
                 </div>
