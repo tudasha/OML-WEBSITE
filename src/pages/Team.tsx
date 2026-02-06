@@ -72,18 +72,18 @@ const Team = () => {
 
       {/* Team Grid */}
       <section className="py-16 md:py-24 section-cream relative">
-        {/* Hover Panel - Centered overlay */}
+        {/* Hover Panel - Left side, vertically centered */}
         <AnimatePresence>
           {hoveredMember && hoveredMember.description && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="hidden lg:flex fixed inset-0 z-50 items-center justify-center pointer-events-none"
+              className="hidden lg:block fixed left-8 xl:left-16 top-1/2 -translate-y-1/2 z-50"
             >
-              <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-border/50 w-[420px] max-h-[75vh] pointer-events-auto">
-                <div className="relative h-56 overflow-hidden">
+              <div className="bg-white/98 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-border/50 w-[380px] max-h-[75vh]">
+                <div className="relative h-52 overflow-hidden">
                   <img
                     src={hoveredMember.photo}
                     alt={hoveredMember.name}
@@ -99,8 +99,8 @@ const Team = () => {
                     </h3>
                   </div>
                 </div>
-                <div className="p-6 max-h-[calc(75vh-14rem)] overflow-y-auto">
-                  <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line">
+                <div className="p-5 max-h-[calc(75vh-13rem)] overflow-y-auto">
+                  <p className="text-[15px] text-muted-foreground leading-relaxed whitespace-pre-line">
                     {hoveredMember.description}
                   </p>
                 </div>
