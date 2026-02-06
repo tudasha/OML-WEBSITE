@@ -121,7 +121,7 @@ const Team = () => {
             Cine suntem
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white">
-            Echipa Noastră
+            Echipa OML
           </h1>
           <p className="text-lg text-white/70 mt-4 max-w-xl mx-auto">
             Un proiect construit de liceeni, pentru tineri pasionați de muzică.
