@@ -280,7 +280,7 @@ const Index = () => {
                       <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
                         Călin Pop &amp; Marius Pop
                       </h3>
-                      <p className="text-white/70">Doi dintre membrii trupei Celelalte Cuvinte vor fi invitații speciali ai următoarei ediții Oradea Music Lab.</p>
+                      <p className="text-white/70">Cu o experiență vastă acumulată de-alungul anilor în formația Celelalte Cuvinte, duo-ul tată-fiu este gata să ne încânte cu un concert live și o discuție captivantă.</p>
                       <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
                         <span className="flex items-center gap-1">
                           <MapPin className="w-4 h-4" /> Oradea
