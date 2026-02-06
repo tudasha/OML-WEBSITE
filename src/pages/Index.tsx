@@ -87,9 +87,7 @@ const Index = () => {
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
-            <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30">
-              Comunitatea muzicală din Oradea
-            </span>
+            <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30">Comunitatea muzicală din Oradea</span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
               Un spațiu sigur unde tinerii își pot exprima{" "}
               <span className="text-primary">​talentul</span>
