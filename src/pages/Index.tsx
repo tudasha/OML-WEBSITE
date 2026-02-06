@@ -176,7 +176,7 @@ const Index = () => {
             number: "03"
           }, {
             icon: Users,
-            title: "Socializare",
+            title: "Socializare & Pizza",
             description: "Moment de conectare și networking între participanți.",
             number: "04"
           }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
