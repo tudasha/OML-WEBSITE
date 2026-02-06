@@ -16,7 +16,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-white/70 text-sm leading-relaxed">
-              Un spațiu sigur unde tinerii își pot exprima muzica, învățând din 
+              Un spațiu sigur unde tinerii își pot exprima talentele muzicale, învățând din 
               greșeli și din sfaturile celor cu experiență.
             </p>
             <div className="flex items-center gap-4 pt-2">
