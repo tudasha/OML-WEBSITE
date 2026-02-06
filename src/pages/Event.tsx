@@ -187,7 +187,6 @@ const Event = () => {
                 <>
                   <div className="flex items-center justify-center gap-2 text-primary mb-4">
                     <AlertCircle className="w-5 h-5" />
-                    <span className="font-medium">Înscrierile pentru această ediție s-au încheiat</span>
                   </div>
                   <p className="text-white/70 mb-4">
                     Datorită cererii foarte mari, am creat o listă de așteptare pentru OML IV (Aprilie 2026).
