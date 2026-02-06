@@ -100,16 +100,18 @@ const Team = () => {
           )}
         </AnimatePresence>
 
-        {/* Panel - Left side, vertically centered */}
+        {/* Panel - Left side on hover, centered when locked */}
         <AnimatePresence>
           {activeMember && activeMember.description && (
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: isLocked ? 0 : -30, scale: isLocked ? 0.95 : 1 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: isLocked ? 0 : -30, scale: isLocked ? 0.95 : 1 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className={`hidden lg:block fixed left-8 xl:left-16 top-1/2 -translate-y-1/2 z-50 transition-all duration-300 ${
-                isLocked ? "w-[450px]" : "w-[380px]"
+              className={`hidden lg:block fixed z-50 transition-all duration-300 ${
+                isLocked 
+                  ? "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px]" 
+                  : "left-8 xl:left-16 top-1/2 -translate-y-1/2 w-[380px]"
               }`}
             >
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-border/50 max-h-[80vh]">
