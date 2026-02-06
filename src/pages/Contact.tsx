@@ -8,6 +8,23 @@ import { Mail, Instagram, Send, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+// Validation schema for contact form
+const contactSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(1, { message: "Numele este obligatoriu" })
+    .max(100, { message: "Numele trebuie să aibă maximum 100 de caractere" }),
+  email: z.string()
+    .trim()
+    .email({ message: "Adresa de email nu este validă" })
+    .max(255, { message: "Email-ul trebuie să aibă maximum 255 de caractere" }),
+  message: z.string()
+    .trim()
+    .min(10, { message: "Mesajul trebuie să aibă cel puțin 10 caractere" })
+    .max(5000, { message: "Mesajul trebuie să aibă maximum 5000 de caractere" })
+});
 
 const Contact = () => {
   const { toast } = useToast();
@@ -22,13 +39,26 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Client-side validation
+    const validationResult = contactSchema.safeParse(formData);
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0];
+      toast({
+        title: "Date invalide",
+        description: firstError.message,
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from("contact_submissions")
         .insert({
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
+          name: validationResult.data.name,
+          email: validationResult.data.email,
+          message: validationResult.data.message,
         });
 
       if (error) throw error;
@@ -40,7 +70,10 @@ const Contact = () => {
 
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("Error submitting contact form:", error);
+      // Only log generic message - avoid exposing sensitive error details
+      if (import.meta.env.DEV) {
+        console.error("Contact form submission failed");
+      }
       toast({
         title: "Eroare",
         description: "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
