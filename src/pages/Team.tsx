@@ -1,5 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import { Card } from "@/components/ui/card";
 import Layout from "@/components/Layout";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Import team photos
 import madiPhoto from "@/assets/team/madi-mihai.jpg";
@@ -8,7 +10,15 @@ import alexiaPhoto from "@/assets/team/alexia-mateas.jpeg";
 import claudiuPhoto from "@/assets/team/claudiu-rostas.jpeg";
 import octavianPhoto from "@/assets/team/octavian-boji.png";
 
-const teamMembers = [
+interface TeamMember {
+  name: string;
+  role: string;
+  photo: string;
+  featured?: boolean;
+  description?: string;
+}
+
+const teamMembers: TeamMember[] = [
   {
     name: "Madi Mihai",
     role: "Fondator",
@@ -19,16 +29,19 @@ const teamMembers = [
     name: "Alessio Zoica",
     role: "Marketing",
     photo: alessioPhoto,
+    description: "Ciaoo, sunt Alessio! 🤝\n\nMisiunea mea ca motion & graphic designer la Oradea Music Lab este sa traduc sunetul in limbaj vizual. Okay, design-ul este pasiunea mea, dar muzica este motorul: playlist-urile mele haotice alterneaza intre rock, jazz si muzica house. Ne vedem la Lab🍷",
   },
   {
     name: "Mateas Alexia",
     role: "Marketing",
     photo: alexiaPhoto,
+    description: "Hellooo, sunt Alexia! 👋\n\nMă ocup de tot ce înseamnă Digital Marketing la Oradea Music Lab. Scopul meu e să ducem talentul din Oradea pe ecranele tuturor și să creștem această comunitate minunată. Dar dincolo de cifre, strategii și postări, iubesc muzica la fel de mult ca și voi. Uneori, las telefonul deoparte și urc pe scenă la Open Mic. Ne vedem pe fyp sau la microfon✨️",
   },
   {
     name: "Rostas Claudiu",
     role: "Marketing",
     photo: claudiuPhoto,
+    description: "Hellooo, sunt Claudiu!\n\nSunt bassist şi director de campanii la Oradea Music Lab. Am intrat în OML din dorința de a ajuta muzicienii din Oradea să se unească, să colaboreze și să aibă o voce comună.\n\nMă ocup de campanii, concepte şi direcția proiectelor, dar totul pornește din muzică. Când nu construiesc idei şi planuri, sunt cu bass-ul în mână sau prin sălile de repetiții.\n\nCred în comunitate, în colaborare şi în faptul că scena locală devine mai puternică atunci când creștem împreună.\n\nNe vedem online, la evenimente sau pe scenă",
   },
   {
     name: "Boji Octavian",
@@ -38,6 +51,8 @@ const teamMembers = [
 ];
 
 const Team = () => {
+  const [hoveredMember, setHoveredMember] = useState<TeamMember | null>(null);
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -56,7 +71,44 @@ const Team = () => {
       </section>
 
       {/* Team Grid */}
-      <section className="py-16 md:py-24 section-cream">
+      <section className="py-16 md:py-24 section-cream relative">
+        {/* Hover Panel - Fixed on left side */}
+        <AnimatePresence>
+          {hoveredMember && hoveredMember.description && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="hidden lg:block fixed left-8 top-1/2 -translate-y-1/2 z-50 w-80 max-h-[70vh]"
+            >
+              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-border/50">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={hoveredMember.photo}
+                    alt={hoveredMember.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-3 left-4 text-white">
+                    <span className="inline-block px-2 py-0.5 bg-primary rounded-full text-xs font-medium mb-1">
+                      {hoveredMember.role}
+                    </span>
+                    <h3 className="text-lg font-display font-bold">
+                      {hoveredMember.name}
+                    </h3>
+                  </div>
+                </div>
+                <div className="p-4 max-h-[calc(70vh-12rem)] overflow-y-auto">
+                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {hoveredMember.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="container mx-auto px-4">
           {/* Founder - Featured */}
           <div className="max-w-md mx-auto mb-12">
@@ -85,7 +137,11 @@ const Team = () => {
             {teamMembers.slice(1).map((member, index) => (
               <Card 
                 key={index} 
-                className="overflow-hidden border-0 shadow-lg group hover:shadow-xl transition-shadow"
+                className={`overflow-hidden border-0 shadow-lg group hover:shadow-xl transition-all duration-300 ${
+                  member.description ? "cursor-pointer" : ""
+                } ${hoveredMember?.name === member.name ? "ring-2 ring-primary ring-offset-2" : ""}`}
+                onMouseEnter={() => setHoveredMember(member)}
+                onMouseLeave={() => setHoveredMember(null)}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
@@ -101,11 +157,46 @@ const Team = () => {
                     <h3 className="text-lg font-display font-semibold">
                       {member.name}
                     </h3>
+                    {member.description && (
+                      <span className="text-xs text-white/60 mt-1 block lg:hidden">
+                        Apasă pentru detalii
+                      </span>
+                    )}
                   </div>
                 </div>
               </Card>
             ))}
           </div>
+
+          {/* Mobile description panel */}
+          <AnimatePresence>
+            {hoveredMember && hoveredMember.description && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3 }}
+                className="lg:hidden mt-8 max-w-md mx-auto"
+              >
+                <div className="bg-white rounded-xl shadow-lg p-5 border border-border/50">
+                  <div className="flex items-center gap-3 mb-3">
+                    <img
+                      src={hoveredMember.photo}
+                      alt={hoveredMember.name}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    <div>
+                      <h4 className="font-display font-semibold">{hoveredMember.name}</h4>
+                      <span className="text-xs text-primary">{hoveredMember.role}</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                    {hoveredMember.description}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Team message */}
           <div className="max-w-2xl mx-auto mt-16 text-center">
