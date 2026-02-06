@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
+import eventArtists from "@/assets/event-calin-marius.jpg";
 
 // Configurație eveniment - ușor de editat
 const eventConfig = {
@@ -66,18 +67,32 @@ const Event = () => {
       {/* Despre eveniment */}
       <section className="py-16 md:py-24 section-cream">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Despre această ediție</h2>
-            <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
-              <p>
-                Ne bucurăm să-i avem ca invitați speciali pe <strong className="text-foreground">Călin Pop</strong> și{" "}
-                <strong className="text-foreground">Marius Pop</strong>, membri ai legendarei trupe{" "}
-                <strong className="text-foreground">Celelalte Cuvinte</strong>.
-              </p>
-              <p>
-                Aceștia vor susține un concert live, vor împărtăși din experiența lor de peste 30 de ani în industria
-                muzicală și vor oferi feedback constructiv tinerilor care vor urca pe scenă.
-              </p>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+              {/* Image */}
+              <div className="order-2 md:order-1">
+                <img 
+                  src={eventArtists} 
+                  alt="Călin Pop și Marius Pop - Celelalte Cuvinte" 
+                  className="rounded-2xl shadow-2xl w-full"
+                />
+              </div>
+              
+              {/* Text */}
+              <div className="order-1 md:order-2 text-center md:text-left space-y-6">
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Despre această ediție</h2>
+                <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+                  <p>
+                    Ne bucurăm să-i avem ca invitați speciali pe <strong className="text-foreground">Călin Pop</strong> și{" "}
+                    <strong className="text-foreground">Marius Pop</strong>, membri ai legendarei trupe{" "}
+                    <strong className="text-foreground">Celelalte Cuvinte</strong>.
+                  </p>
+                  <p>
+                    Aceștia vor susține un concert live, vor împărtăși din experiența lor de peste 30 de ani în industria
+                    muzicală și vor oferi feedback constructiv tinerilor care vor urca pe scenă.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
