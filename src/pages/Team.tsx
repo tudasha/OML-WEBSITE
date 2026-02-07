@@ -22,7 +22,8 @@ const teamMembers: TeamMember[] = [{
   name: "Madi Mihai",
   role: "Fondator",
   photo: madiPhoto,
-  featured: true
+  featured: true,
+  description: "Hello! Sunt Mihai Madi, și am fondat Oradea Music Lab pentru a oferi tinerilor artiști un loc sigur și inspirațional unde să își exprime talentele, să socializeze, și să învețe de la profesioniștii din industrie.\n\nStudiez chitara încă de la 7 ani, iubesc muzica și antreprenoriatul, deci pot spune că proiectul acesta este cea mai nouă și mai frumoasă pasiune a mea. Fiind și elev, este greu să mă focusez în ambele direcții, însă dau tot ce am eu mai bun pentru a-mi lăsa amprenta în comunitatea orădeană.\n\nDacă vrei să ne cunoaștem, nu ezita să-mi dai un mesaj pe insta! ;) @mihai.madi"
 }, {
   name: "Alessio Zoica",
   role: "Marketing",
