@@ -63,11 +63,7 @@ const Event = () => {
               <div className="order-1 md:order-2 text-center md:text-left space-y-6">
                 <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Despre această ediție</h2>
                 <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
-                  <p>
-                    Ne bucurăm să-i avem ca invitați speciali pe <strong className="text-foreground">Călin Pop</strong> și{" "}
-                    <strong className="text-foreground">Marius Pop</strong>, membri ai legendarei trupe{" "}
-                    <strong className="text-foreground">Celelalte Cuvinte</strong>.
-                  </p>
+                  
                   <p>
                 </p>
                 </div>
