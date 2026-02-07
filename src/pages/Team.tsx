@@ -107,8 +107,15 @@ const Team = () => {
   };
   return <Layout>
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-hero-bg">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${teamBackground})` }}
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">Cine suntem?</span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white">
             Echipa OML
@@ -116,15 +123,6 @@ const Team = () => {
           <p className="text-lg text-white/70 mt-4 max-w-xl mx-auto">
             Un proiect construit de liceeni, pentru tineri pasionați de muzică.
           </p>
-          
-          {/* Team Photo */}
-          <div className="mt-10 max-w-4xl mx-auto">
-            <img 
-              src={teamBackground} 
-              alt="Echipa Oradea Music Lab" 
-              className="w-full rounded-2xl shadow-2xl"
-            />
-          </div>
         </div>
       </section>
 
