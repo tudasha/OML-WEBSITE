@@ -110,7 +110,7 @@ const Team = () => {
       <section className="relative py-24 md:py-32 overflow-hidden">
         {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-top bg-no-repeat"
           style={{ backgroundImage: `url(${teamBackground})` }}
         />
         <div className="absolute inset-0 bg-black/60" />
