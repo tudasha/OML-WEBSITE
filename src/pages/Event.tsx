@@ -66,9 +66,9 @@ const Event = () => {
                   <p>
                     Ne bucurăm să îi avem ca invitați speciali pe <strong>CĂLIN POP</strong> și <strong>MARIUS POP</strong>! Duo-ul tată-fiu din formația Celelalte Cuvinte ne va încânta cu un concert live, urmat de o discuție și sesiune de Q&A despre industria muzicală.
                   </p>
-                  <p>
-                    Seara continuă cu Open Mic-ul „Scena Tinerilor" — nu o competiție, ci un spațiu sigur unde greșelile sunt binevenite și fiecare tânăr este tratat ca o vedetă. La final, tombolă cu premii și pizza de la Enigma!
-                  </p>
+                  <p>Ne bucurăm să îi avem de data aceasta ca invitați speciali pe CĂLIN POP și MARIUS POP! Cu o experiență vastă acumulată de-alungul anilor în formația Celelalte Cuvinte, duo-ul tată-fiu este gata să ne încânte cu un concert live și să ne împărtășească din cunoștințele lor din industria muzicală.
+Mai departe, vom continua evenimentul cu o discuție live alături de ei, care va fi completată de o sesiune de întrebări și răspunsuri cu publicul. Aceasta este partea educațională a evenimentului, unde tinerii sunt încurajați să pună întrebări și să își dezvolte cunoștințele scenă.
+Partea mult așteptată a serii este Open Mic-ul „Scena Tinerilor”, unde 10 tineri/trupe vor urca pe scenă să își exprime talentele muzicale. Ceea ce diferențiază Oradea Music Lab de orice alt eveniment este trecerea cu vederea a greșelilor. Nu este o competiție, ci mai degrabă un loc care să te pregătească pentru a fi un muzician adevărat, un loc plin de oameni prietenoși care te vor susține. Aici, fiecare tânăr ce pășește pe scenă este o vedetă și trebuie tratat ca atare pentru a crea condiții optime pentru dezvoltare.</p>
                 </div>
               </div>
             </div>
