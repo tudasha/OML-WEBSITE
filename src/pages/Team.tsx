@@ -11,6 +11,7 @@ import alexiaPhoto from "@/assets/team/alexia-mateas.jpeg";
 import claudiuPhoto from "@/assets/team/claudiu-rostas.jpeg";
 import octavianPhoto from "@/assets/team/octavian-boji.png";
 import voluntariiPhoto from "@/assets/team/voluntarii.jpeg";
+import teamBackground from "@/assets/team/team-background.jpg";
 interface TeamMember {
   name: string;
   role: string;
@@ -119,7 +120,13 @@ const Team = () => {
       </section>
 
       {/* Team Grid */}
-      <section className="py-16 md:py-24 section-cream relative">
+      <section className="py-16 md:py-24 relative">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${teamBackground})` }}
+        />
+        <div className="absolute inset-0 bg-black/70" />
         {/* Backdrop when locked */}
         <AnimatePresence>
           {isLocked && <motion.div initial={{
@@ -175,7 +182,7 @@ const Team = () => {
             </motion.div>}
         </AnimatePresence>
 
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 relative z-10">
           {/* Founder & Volunteers - Featured */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
             {/* Volunteers Card */}
@@ -275,7 +282,7 @@ const Team = () => {
 
           {/* Team message */}
           <div className="max-w-2xl mx-auto mt-16 text-center">
-            <p className="text-muted-foreground text-lg leading-relaxed">
+            <p className="text-white/80 text-lg leading-relaxed">
               Oradea Music Lab este construit de liceeni pasionați de muzică și 
               comunitate. Credem că vârsta nu este o barieră pentru a face lucruri 
               mărețe și că tinerii pot inspira alți tineri să-și urmeze visurile muzicale.
