@@ -195,7 +195,12 @@ const Team = () => {
             </Card>
 
             {/* Founder Card */}
-            <Card className="overflow-hidden border-0 shadow-xl group">
+            <Card 
+              className={`overflow-hidden border-0 shadow-xl group cursor-pointer ${activeMember?.name === teamMembers[0].name ? "ring-2 ring-primary ring-offset-2" : ""}`}
+              onMouseEnter={() => handleMouseEnter(teamMembers[0], 3)}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => handleCardClick(teamMembers[0], 3)}
+            >
               <div className="relative aspect-[4/5] overflow-hidden">
                 <img src={teamMembers[0].photo} alt={teamMembers[0].name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -206,6 +211,9 @@ const Team = () => {
                   <h3 className="text-2xl font-display font-bold">
                     {teamMembers[0].name}
                   </h3>
+                  <span className="text-xs text-white/60 mt-1 block">
+                    Click pentru detalii
+                  </span>
                 </div>
               </div>
             </Card>
