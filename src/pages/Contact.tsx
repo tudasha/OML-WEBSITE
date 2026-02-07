@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import contactHero from "@/assets/contact-hero.jpg";
 
 // Validation schema for contact form
 const contactSchema = z.object({
@@ -94,8 +95,15 @@ const Contact = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 bg-hero-bg">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${contactHero})` }}
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">
             Hai să vorbim
           </span>
