@@ -19,7 +19,7 @@ const Event = () => {
   return <Layout>
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+        <div className="absolute inset-0 bg-cover bg-top bg-no-repeat" style={{
         backgroundImage: `url(${heroConcert})`
       }} />
         <div className="absolute inset-0 bg-black/70" />
