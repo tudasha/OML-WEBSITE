@@ -116,17 +116,20 @@ const Team = () => {
           <p className="text-lg text-white/70 mt-4 max-w-xl mx-auto">
             Un proiect construit de liceeni, pentru tineri pasionați de muzică.
           </p>
+          
+          {/* Team Photo */}
+          <div className="mt-10 max-w-4xl mx-auto">
+            <img 
+              src={teamBackground} 
+              alt="Echipa Oradea Music Lab" 
+              className="w-full rounded-2xl shadow-2xl"
+            />
+          </div>
         </div>
       </section>
 
       {/* Team Grid */}
-      <section className="py-16 md:py-24 relative">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${teamBackground})` }}
-        />
-        <div className="absolute inset-0 bg-black/70" />
+      <section className="py-16 md:py-24 section-cream relative">
         {/* Backdrop when locked */}
         <AnimatePresence>
           {isLocked && <motion.div initial={{
@@ -182,7 +185,7 @@ const Team = () => {
             </motion.div>}
         </AnimatePresence>
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4">
           {/* Founder & Volunteers - Featured */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
             {/* Volunteers Card */}
@@ -282,7 +285,7 @@ const Team = () => {
 
           {/* Team message */}
           <div className="max-w-2xl mx-auto mt-16 text-center">
-            <p className="text-white/80 text-lg leading-relaxed">
+            <p className="text-muted-foreground text-lg leading-relaxed">
               Oradea Music Lab este construit de liceeni pasionați de muzică și 
               comunitate. Credem că vârsta nu este o barieră pentru a face lucruri 
               mărețe și că tinerii pot inspira alți tineri să-și urmeze visurile muzicale.
