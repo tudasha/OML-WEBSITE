@@ -41,8 +41,7 @@ const About = () => {
               </p>
 
               <p className="text-lg leading-relaxed">
-                Eveniment fondat de <strong className="text-foreground">Madi Mihai</strong> cu 
-                sprijinul <strong className="text-foreground">American Councils for International Education</strong>, 
+                Eveniment fondat de <strong className="text-foreground">Madi Mihai</strong>, 
                 Oradea Music Lab are ca scop exact acest lucru: de a aduce împreună tineri 
                 aspiranți muzicieni din Oradea și artiști consacrați pentru a crea o seară 
                 atât educativă, cât și distractivă.
