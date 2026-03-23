@@ -10,6 +10,8 @@ import oml1Audience from "@/assets/oml1-audience.jpg";
 import oml2Concert from "@/assets/oml2-concert.jpg";
 import oml2Team from "@/assets/oml2-team.jpg";
 import oml2Group from "@/assets/oml2-group.jpg";
+import oml2Discussion from "@/assets/oml2-discussion.jpg";
+import oml2Audience from "@/assets/oml2-audience.jpg";
 import oml1Group from "@/assets/oml1-group.jpg";
 
 const Event = () => {
