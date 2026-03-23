@@ -3,6 +3,11 @@ import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users,
 import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
 import eventArtists from "@/assets/event-calin-marius.jpg";
+import oml1Concert from "@/assets/oml1-concert.jpg";
+import oml1Discussion from "@/assets/oml1-discussion.jpg";
+import oml1Closeup from "@/assets/oml1-closeup.jpg";
+import oml1Audience from "@/assets/oml1-audience.jpg";
+import oml1Group from "@/assets/oml1-group.jpg";
 
 const Event = () => {
   return (
