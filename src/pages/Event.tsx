@@ -228,6 +228,8 @@ const Event = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { src: oml2Concert, alt: "OML II - Concert live" },
+                { src: oml2Discussion, alt: "OML II - Discuție pe scenă" },
+                { src: oml2Audience, alt: "OML II - Publicul" },
                 { src: oml2Team, alt: "OML II - Echipa pe scenă" },
                 { src: oml2Group, alt: "OML II - Foto de grup" },
               ].map((img, i) => (
