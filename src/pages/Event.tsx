@@ -222,15 +222,20 @@ const Event = () => {
               ))}
             </div>
 
-            {/* Photo Gallery Placeholder */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                <div
+            {/* Photo Gallery */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {[
+                { src: oml2Concert, alt: "OML II - Concert live" },
+                { src: oml2Team, alt: "OML II - Echipa pe scenă" },
+                { src: oml2Group, alt: "OML II - Foto de grup" },
+              ].map((img, i) => (
+                <img
                   key={i}
-                  className="aspect-square bg-muted rounded-xl flex items-center justify-center"
-                >
-                  <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
-                </div>
+                  src={img.src}
+                  alt={img.alt}
+                  className="aspect-square object-cover rounded-xl w-full"
+                  loading="lazy"
+                />
               ))}
             </div>
           </div>
