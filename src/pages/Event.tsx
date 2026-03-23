@@ -7,6 +7,9 @@ import oml1Concert from "@/assets/oml1-concert.jpg";
 import oml1Discussion from "@/assets/oml1-discussion.jpg";
 import oml1Closeup from "@/assets/oml1-closeup.jpg";
 import oml1Audience from "@/assets/oml1-audience.jpg";
+import oml2Concert from "@/assets/oml2-concert.jpg";
+import oml2Team from "@/assets/oml2-team.jpg";
+import oml2Group from "@/assets/oml2-group.jpg";
 import oml1Group from "@/assets/oml1-group.jpg";
 
 const Event = () => {
@@ -219,15 +222,20 @@ const Event = () => {
               ))}
             </div>
 
-            {/* Photo Gallery Placeholder */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                <div
+            {/* Photo Gallery */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {[
+                { src: oml2Concert, alt: "OML II - Concert live" },
+                { src: oml2Team, alt: "OML II - Echipa pe scenă" },
+                { src: oml2Group, alt: "OML II - Foto de grup" },
+              ].map((img, i) => (
+                <img
                   key={i}
-                  className="aspect-square bg-muted rounded-xl flex items-center justify-center"
-                >
-                  <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
-                </div>
+                  src={img.src}
+                  alt={img.alt}
+                  className="aspect-square object-cover rounded-xl w-full"
+                  loading="lazy"
+                />
               ))}
             </div>
           </div>
