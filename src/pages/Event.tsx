@@ -10,6 +10,8 @@ import oml1Audience from "@/assets/oml1-audience.jpg";
 import oml2Concert from "@/assets/oml2-concert.jpg";
 import oml2Team from "@/assets/oml2-team.jpg";
 import oml2Group from "@/assets/oml2-group.jpg";
+import oml2Discussion from "@/assets/oml2-discussion.jpg";
+import oml2Audience from "@/assets/oml2-audience.jpg";
 import oml1Group from "@/assets/oml1-group.jpg";
 
 const Event = () => {
@@ -226,6 +228,8 @@ const Event = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { src: oml2Concert, alt: "OML II - Concert live" },
+                { src: oml2Discussion, alt: "OML II - Discuție pe scenă" },
+                { src: oml2Audience, alt: "OML II - Publicul" },
                 { src: oml2Team, alt: "OML II - Echipa pe scenă" },
                 { src: oml2Group, alt: "OML II - Foto de grup" },
               ].map((img, i) => (
