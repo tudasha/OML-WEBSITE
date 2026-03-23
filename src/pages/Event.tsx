@@ -1,181 +1,237 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users, Heart, AlertCircle } from "lucide-react";
+import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users, Heart, CalendarX, ImageIcon } from "lucide-react";
 import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
 import eventArtists from "@/assets/event-calin-marius.jpg";
 
-// Configurație eveniment - ușor de editat
-const eventConfig = {
-  title: "Călin Pop & Marius Pop",
-  subtitle: "Celelalte Cuvinte",
-  date: "7 Februarie",
-  time: "19:00",
-  location: "Lokal, Oradea",
-  registrationOpen: false
-};
 const Event = () => {
-  return <Layout>
+  return (
+    <Layout>
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-top bg-no-repeat" style={{
-        backgroundImage: `url(${heroConcert})`
-      }} />
+        <div
+          className="absolute inset-0 bg-cover bg-top bg-no-repeat"
+          style={{ backgroundImage: `url(${heroConcert})` }}
+        />
         <div className="absolute inset-0 bg-black/70" />
 
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">
-            Următorul eveniment
-          </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">
-            {eventConfig.title}
+            Evenimente
           </h1>
-          <p className="text-xl md:text-2xl text-primary font-medium mb-6">{eventConfig.subtitle}</p>
-          <div className="flex flex-wrap items-center justify-center gap-6 text-white/70">
-            <span className="flex items-center gap-2">
-              <Calendar className="w-5 h-5 text-primary" />
-              {eventConfig.date}
-            </span>
-            <span className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-primary" />
-              {eventConfig.time}
-            </span>
-            <span className="flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-primary" />
-              {eventConfig.location}
-            </span>
+          <p className="text-xl text-white/70 max-w-2xl mx-auto">
+            Toate edițiile Oradea Music Lab — concerte, open mic și conexiuni autentice.
+          </p>
+        </div>
+      </section>
+
+      {/* Next Event - TBA */}
+      <section className="py-16 md:py-20 section-cream">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CalendarX className="w-10 h-10 text-primary" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+              Următorul eveniment
+            </h2>
+            <p className="text-lg text-muted-foreground mb-2">
+              Deocamdată nu am anunțat următorul eveniment.
+            </p>
+            <p className="text-muted-foreground">
+              Urmărește-ne pe{" "}
+              <a
+                href="https://www.instagram.com/oradeamusiclab/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline font-medium"
+              >
+                Instagram
+              </a>{" "}
+              pentru a fi primul care află!
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Despre eveniment */}
-      <section className="py-16 md:py-24 section-cream">
+      {/* Divider */}
+      <div className="container mx-auto px-4">
+        <div className="border-t border-border" />
+      </div>
+
+      {/* Past Events Header */}
+      <section className="pt-16 md:pt-20 pb-8 bg-background">
+        <div className="container mx-auto px-4 text-center">
+          <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium border border-primary/20 mb-4">
+            Istoric
+          </span>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+            Edițiile noastre
+          </h2>
+        </div>
+      </section>
+
+      {/* OML III */}
+      <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="text-center mb-10">
+              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediția III</span>
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
+                OML III — Călin Pop & Marius Pop
+              </h3>
+              <p className="text-muted-foreground mt-2">7 Februarie 2026 · Lokal, Oradea</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
               {/* Image */}
-              <div className="order-2 md:order-1">
-                <img src={eventArtists} alt="Călin Pop și Marius Pop - Celelalte Cuvinte" className="rounded-2xl shadow-2xl w-full" />
+              <div>
+                <img
+                  src={eventArtists}
+                  alt="Călin Pop și Marius Pop - Celelalte Cuvinte"
+                  className="rounded-2xl shadow-2xl w-full"
+                />
               </div>
-              
+
               {/* Text */}
-              <div className="order-1 md:order-2 text-center md:text-left space-y-6">
-                <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Despre această ediție</h2>
+              <div className="space-y-6">
                 <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
                   <p>
-                    Ne bucurăm să îi avem ca invitați speciali pe <strong>CĂLIN POP</strong> și <strong>MARIUS POP</strong>! Duo-ul tată-fiu din formația Celelalte Cuvinte ne va încânta cu un concert live, urmat de o discuție și sesiune de Q&A despre industria muzicală.
+                    Ne bucurăm să îi avem ca invitați speciali pe <strong className="text-foreground">CĂLIN POP</strong> și{" "}
+                    <strong className="text-foreground">MARIUS POP</strong>! Duo-ul tată-fiu din formația Celelalte Cuvinte
+                    ne-a încântat cu un concert live, urmat de o discuție și sesiune de Q&A despre industria muzicală.
                   </p>
-                  <p>Ne bucurăm să îi avem de data aceasta ca invitați speciali pe CĂLIN POP și MARIUS POP! Cu o experiență vastă acumulată de-alungul anilor în formația Celelalte Cuvinte, duo-ul tată-fiu este gata să ne încânte cu un concert live și să ne împărtășească din cunoștințele lor din industria muzicală.</p>
+                </div>
+
+                {/* Structure cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {[
+                    { icon: Music, title: "Concert Live", time: "Prima parte" },
+                    { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
+                    { icon: Mic, title: "Open Mic", time: "A treia parte" },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
+                      <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+                      <p className="text-sm font-medium text-foreground">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">{item.time}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
+            </div>
+
+            {/* OML III Photo Gallery Placeholder */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="aspect-square bg-muted rounded-xl flex items-center justify-center"
+                >
+                  <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Structura serii */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground text-center mb-12">
-            Structura serii
-          </h2>
+      {/* Divider */}
+      <div className="container mx-auto px-4">
+        <div className="border-t border-border" />
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[{
-            icon: Music,
-            title: "Concert Live",
-            description: "Călin Pop & Marius Pop vor deschide seara cu un concert memorabil.",
-            time: "Prima parte"
-          }, {
-            icon: MessageCircle,
-            title: "Discuție & Q&A",
-            description: "Sesiune de întrebări și răspunsuri despre carieră și industrie.",
-            time: "A doua parte"
-          }, {
-            icon: Mic,
-            title: "Open Mic",
-            description: "Scena Tinerilor - ocazia ta de a cânta live și a primi feedback.",
-            time: "A treia parte"
-          }].map((item, index) => <Card key={index} className="text-center border-0 shadow-lg">
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                    <item.icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <span className="text-xs text-primary font-medium uppercase tracking-wider">{item.time}</span>
-                  <h3 className="text-xl font-display font-semibold text-foreground mt-2 mb-3">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm">{item.description}</p>
-                </CardContent>
-              </Card>)}
+      {/* Enigma Music Night */}
+      <section className="py-12 md:py-16 section-cream">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediție specială</span>
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
+                Enigma Music Night
+              </h3>
+              <p className="text-muted-foreground mt-2">Oradea</p>
+            </div>
+
+            {/* Photo Gallery Placeholder */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="aspect-square bg-muted/70 rounded-xl flex items-center justify-center"
+                >
+                  <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Highlights */}
-      <section className="py-16 md:py-24 section-cream-dark">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground text-center mb-12">
-            Ce să aștepți
-          </h2>
+      {/* Divider */}
+      <div className="container mx-auto px-4">
+        <div className="border-t border-border" />
+      </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {[{
-            icon: Heart,
-            title: "Curaj, nu perfecțiune",
-            description: "Greșelile fac parte din proces."
-          }, {
-            icon: Users,
-            title: "Spațiu sigur",
-            description: "Atmosferă prietenoasă și susținătoare."
-          }, {
-            icon: Gift,
-            title: "Tombolă cu premii",
-            description: "Surprize pentru participanții la Open Mic."
-          }, {
-            icon: Pizza,
-            title: "Socializare",
-            description: "Pizza by Enigma și networking."
-          }].map((item, index) => <div key={index} className="bg-background rounded-xl p-6 text-center shadow-sm">
-                <item.icon className="w-10 h-10 text-primary mx-auto mb-4" />
-                <h3 className="font-display font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.description}</p>
-              </div>)}
+      {/* OML II */}
+      <section className="py-12 md:py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediția II</span>
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
+                OML II
+              </h3>
+              <p className="text-muted-foreground mt-2">Oradea</p>
+            </div>
+
+            {/* Photo Gallery Placeholder */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="aspect-square bg-muted rounded-xl flex items-center justify-center"
+                >
+                  <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Înregistrare Open Mic */}
-      <section className="py-16 md:py-24 bg-hero-bg text-white">
-        <div className="container mx-auto px-4">
-          <Card className="max-w-2xl mx-auto bg-white/5 border-white/10 backdrop-blur">
-            <CardContent className="p-8 md:p-12 text-center">
-              <Mic className="w-16 h-16 text-primary mx-auto mb-6" />
-              <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 text-white">Vrei să urci pe scenă?</h2>
+      {/* Divider */}
+      <div className="container mx-auto px-4">
+        <div className="border-t border-border" />
+      </div>
 
-              {eventConfig.registrationOpen ? <>
-                  <p className="text-white/70 mb-6">
-                    Înscrie-te la Open Mic pentru această ediție. Locurile sunt limitate!
-                  </p>
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
-                    Înscrie-te acum
-                  </Button>
-                </> : <>
-                  <p className="text-white/70 mb-4">
-                    Datorită cererii foarte mari, am creat o listă de așteptare pentru OML IV (Aprilie 2026).
-                  </p>
-                  <p className="text-white/70 mb-6">
-                    Selecția va prioritiza participanții noi care nu au urcat încă pe scenă.
-                  </p>
-                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc2dQK9WWPGhEE5kFGl6MxZulO9hrV_CCW9ryBELST4ZFd5Fg/viewform" target="_blank" rel="noopener noreferrer">
-                      Înscrie-te pe lista de așteptare
-                    </a>
-                  </Button>
-                </>}
-            </CardContent>
-          </Card>
+      {/* OML I */}
+      <section className="py-12 md:py-16 section-cream">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediția I</span>
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
+                OML I
+              </h3>
+              <p className="text-muted-foreground mt-2">Oradea</p>
+            </div>
+
+            {/* Photo Gallery Placeholder */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="aspect-square bg-muted/70 rounded-xl flex items-center justify-center"
+                >
+                  <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default Event;

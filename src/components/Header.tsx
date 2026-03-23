@@ -7,7 +7,7 @@ import logoOml from "@/assets/logo-oml.png";
 
 const navLinks = [
   { name: "Acasă", path: "/" },
-  { name: "Următorul Eveniment", path: "/eveniment" },
+  { name: "Evenimente", path: "/eveniment" },
   { name: "Despre Noi", path: "/despre" },
   { name: "Echipă", path: "/echipa" },
   { name: "Contact", path: "/contact" },
