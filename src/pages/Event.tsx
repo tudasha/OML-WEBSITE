@@ -13,6 +13,7 @@ import oml2Team from "@/assets/oml2-team.jpg";
 import oml2Group from "@/assets/oml2-group.jpg";
 import oml2Discussion from "@/assets/oml2-discussion.jpg";
 import oml2Audience from "@/assets/oml2-audience.jpg";
+import sunetPentruJasmine from "@/assets/sunet-pentru-jasmine.png";
 import oml3Concert from "@/assets/oml3-concert.jpg";
 import oml3Discussion from "@/assets/oml3-discussion.jpg";
 import oml3Group from "@/assets/oml3-group.jpg";
@@ -38,31 +39,21 @@ const Event = () => {
         </div>
       </section>
 
-      {/* Next Event - TBA */}
+      {/* Next Event */}
       <section className="py-16 md:py-20 section-cream">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CalendarX className="w-10 h-10 text-primary" />
-            </div>
+          <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               Următorul eveniment
             </h2>
-            <p className="text-lg text-muted-foreground mb-2">
-              Deocamdată nu am anunțat următorul eveniment.
-            </p>
-            <p className="text-muted-foreground">
-              Urmărește-ne pe{" "}
-              <a
-                href="https://www.instagram.com/oradeamusiclab/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline font-medium"
-              >
-                Instagram
-              </a>{" "}
-              pentru a fi primul care află!
-            </p>
+            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium border border-primary/20 mb-8">
+              Black Wolf Edition
+            </span>
+            <img
+              src={sunetPentruJasmine}
+              alt="Sunet pentru Jasmine - Black Wolf Edition - 4 Aprilie 2026"
+              className="rounded-2xl shadow-2xl w-full max-w-lg mx-auto"
+            />
           </div>
         </div>
       </section>
