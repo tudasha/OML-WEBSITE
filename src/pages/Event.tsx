@@ -207,6 +207,15 @@ const Event = () => {
               <p className="text-muted-foreground mt-2">Oradea</p>
             </div>
 
+            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
+              <p>
+                Cea de-a doua ediție Oradea Music Lab a reconfirmat succesul acestui spațiu dedicat curajului și învățării, oferind tinerilor artiști o experiență autentică de scenă, fără presiunea unei competiții. Invitații speciali, <strong className="text-foreground">Narcisa Badea</strong>, <strong className="text-foreground">Petruț Remus (Trupa X)</strong> și <strong className="text-foreground">STEFXN</strong>, au creat o atmosferă vibrantă printr-un concert live, urmat de o discuție deschisă în care și-au împărtășit experiențele acumulate la emisiuni precum Vocea României.
+              </p>
+              <p>
+                Momentul central al serii, Open Mic-ul „Scena Tinerilor", a adus în lumina reflectoarelor 10 tineri talentați care au beneficiat de susținerea întregii comunități. Evenimentul a pus accent pe evoluție și depășirea tracului, premiind curajul participanților printr-o tombolă specială. Seara s-a încheiat într-un spirit de celebrare și socializare, unde toți cei prezenți s-au bucurat de pizza oferită de partenerii de la Enigma, consolidând astfel legăturile în cadrul noii familii muzicale orădene.
+              </p>
+            </div>
+
             {/* Structure cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
               {[
