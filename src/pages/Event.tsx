@@ -61,7 +61,12 @@ const Event = () => {
                 />
               </div>
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
-                <p>Descrierea evenimentului va fi adăugată în curând.</p>
+                <p>
+                  <strong className="text-foreground">Jasmine</strong>, vocea curajoasă care ne-a încântat de atâtea ori la Open Mic, trece acum prin cel mai dificil „concert" al vieții sale. După un accident tragic, drumul ei spre recuperare este lung și costisitor. Familia Oradea Music Lab și comunitatea locală se unesc sâmbătă, pe <strong className="text-foreground">4 aprilie</strong>, pentru a-i oferi sprijinul de care are nevoie.
+                </p>
+                <p>
+                  Vino la <strong className="text-foreground">Black Wolf</strong> pentru o seară de muzică live acustică, susținută de tinerii noștri artiști. Orice donație contează și merge direct către fondul de recuperare al Jasminei.
+                </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                   {[
