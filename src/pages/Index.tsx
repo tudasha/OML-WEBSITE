@@ -269,8 +269,8 @@ const Index = () => {
                   <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
                     <div className="shrink-0">
                       <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
-                        <span className="text-2xl font-display font-bold text-primary">7</span>
-                        <span className="text-xs text-white/60">Februarie</span>
+                        <span className="text-2xl font-display font-bold text-primary">4</span>
+                        <span className="text-xs text-white/60">Aprilie</span>
                       </div>
                     </div>
                     <div className="flex-1 space-y-3">
@@ -278,12 +278,15 @@ const Index = () => {
                         Următorul eveniment
                       </span>
                       <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
-                        Călin Pop &amp; Marius Pop
+                        Sunet pentru Jasmine
                       </h3>
-                      <p className="text-white/70">Cu o experiență vastă acumulată de-alungul anilor în formația Celelalte Cuvinte, duo-ul tată-fiu este gata să ne încânte cu un concert live și o discuție captivantă.</p>
+                      <p className="text-white/70">Concert caritabil dedicat recuperării Jasminei, vocea curajoasă din comunitatea noastră. Seară de muzică live acustică susținută de tinerii noștri artiști.</p>
                       <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
                         <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" /> Oradea
+                          <MapPin className="w-4 h-4" /> Black Wolf, Oradea
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" /> 19:00
                         </span>
                       </div>
                     </div>
