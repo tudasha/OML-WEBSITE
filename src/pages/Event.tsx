@@ -13,6 +13,7 @@ import oml2Team from "@/assets/oml2-team.jpg";
 import oml2Group from "@/assets/oml2-group.jpg";
 import oml2Discussion from "@/assets/oml2-discussion.jpg";
 import oml2Audience from "@/assets/oml2-audience.jpg";
+import sunetPentruJasmine from "@/assets/sunet-pentru-jasmine.png";
 import oml3Concert from "@/assets/oml3-concert.jpg";
 import oml3Discussion from "@/assets/oml3-discussion.jpg";
 import oml3Group from "@/assets/oml3-group.jpg";
