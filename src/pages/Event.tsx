@@ -87,6 +87,17 @@ const Event = () => {
                   </div>
                 </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="bg-muted/50 rounded-xl p-4 text-center">
+                    <Music className="w-6 h-6 text-primary mx-auto mb-2" />
+                    <p className="text-sm font-medium text-foreground">Seară de muzică</p>
+                  </div>
+                  <div className="bg-muted/50 rounded-xl p-4 text-center">
+                    <Heart className="w-6 h-6 text-primary mx-auto mb-2" />
+                    <p className="text-sm font-medium text-foreground">Concert caritabil</p>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
