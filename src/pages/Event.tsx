@@ -62,6 +62,20 @@ const Event = () => {
               </div>
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
                 <p>Descrierea evenimentului va fi adăugată în curând.</p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                  {[
+                    { icon: Music, title: "Concert Live", time: "Prima parte" },
+                    { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
+                    { icon: Mic, title: "Open Mic", time: "A treia parte" },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
+                      <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+                      <p className="text-sm font-medium text-foreground">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">{item.time}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
