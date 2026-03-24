@@ -258,7 +258,16 @@ const Event = () => {
               <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
                 OML I — Frații Jdieri
               </h3>
-              <p className="text-muted-foreground mt-2">Oradea</p>
+              <p className="text-muted-foreground mt-2">17 Octombrie 2025 · Lokal, Oradea</p>
+            </div>
+
+            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
+              <p>
+                Pe 17 octombrie 2025, la Lokal Oradea, a avut loc prima ediție Oradea Music Lab, un eveniment vibrant care a marcat nașterea unei noi comunități pentru tinerii artiști locali. Invitații speciali, <strong className="text-foreground">Frații Jdieri</strong>, au oferit un concert memorabil de Transylvanian Jdier Rock și au împărtășit lecții prețioase din parcursul lor artistic într-o sesiune deschisă de Q&A.
+              </p>
+              <p>
+                Punctul culminant a fost secțiunea Open Mic „Scena Tinerilor", unde liceeni și studenți de până la 21 de ani au urcat pe scenă pentru a-și demonstra talentul și pentru a primi feedback direct de la artiștii invitați. Seara s-a încheiat într-o atmosferă plină de entuziasm, cu o tombolă cu premii și surprize pentru toți cei care au ales să susțină debutul acestui proiect dedicat muzicii.
+              </p>
             </div>
 
             {/* Structure cards */}
