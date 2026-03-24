@@ -42,18 +42,28 @@ const Event = () => {
       {/* Next Event */}
       <section className="py-16 md:py-20 section-cream">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-              Următorul eveniment
-            </h2>
-            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium border border-primary/20 mb-8">
-              Black Wolf Edition
-            </span>
-            <img
-              src={sunetPentruJasmine}
-              alt="Sunet pentru Jasmine - Black Wolf Edition - 4 Aprilie 2026"
-              className="rounded-2xl shadow-2xl w-full max-w-lg mx-auto"
-            />
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
+                Următorul eveniment
+              </h2>
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-primary">
+                Black Wolf
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div>
+                <img
+                  src={sunetPentruJasmine}
+                  alt="Sunet pentru Jasmine - Black Wolf Edition - 4 Aprilie 2026"
+                  className="rounded-2xl shadow-2xl w-full"
+                />
+              </div>
+              <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+                <p>Descrierea evenimentului va fi adăugată în curând.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
