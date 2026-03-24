@@ -158,53 +158,6 @@ const Event = () => {
         <div className="border-t border-border" />
       </div>
 
-      {/* Enigma Music Night */}
-      <section className="py-12 md:py-16 section-cream">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-10">
-              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediție specială</span>
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
-                Enigma Music Night
-              </h3>
-              <p className="text-muted-foreground mt-2">Oradea</p>
-            </div>
-
-            {/* Structure cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-              {[
-                { icon: Music, title: "Concert Live", time: "Prima parte" },
-                { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
-                { icon: Mic, title: "Open Mic", time: "A treia parte" },
-              ].map((item, i) => (
-                <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
-                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium text-foreground">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.time}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Photo Gallery Placeholder */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="aspect-square bg-muted/70 rounded-xl flex items-center justify-center"
-                >
-                  <ImageIcon className="w-8 h-8 text-muted-foreground/40" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider */}
-      <div className="container mx-auto px-4">
-        <div className="border-t border-border" />
-      </div>
-
       {/* OML II */}
       <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4">
