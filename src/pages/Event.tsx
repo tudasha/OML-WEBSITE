@@ -52,12 +52,12 @@ const Event = () => {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-center">
               <div className="md:col-span-3">
                 <img
                   src={sunetPentruJasmine}
                   alt="Sunet pentru Jasmine - Black Wolf Edition - 4 Aprilie 2026"
-                  className="rounded-2xl shadow-2xl w-full max-w-md mx-auto"
+                  className="rounded-2xl shadow-2xl w-full"
                 />
               </div>
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
