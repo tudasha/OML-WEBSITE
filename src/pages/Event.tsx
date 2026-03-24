@@ -68,6 +68,25 @@ const Event = () => {
                   Vino la <strong className="text-foreground">Black Wolf</strong> pentru o seară de muzică live acustică, susținută de tinerii noștri artiști. Orice donație contează și merge direct către fondul de recuperare al Jasminei.
                 </p>
 
+                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm pt-2">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-primary shrink-0" />
+                    <span>Sâmbătă, 4 Aprilie 2026</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-primary shrink-0" />
+                    <span>Ora 19:00</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-primary shrink-0" />
+                    <span>Black Wolf (Str. Ștefan Octavian Iosif nr. 7)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Gift className="w-4 h-4 text-primary shrink-0" />
+                    <span>Donație liberă</span>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                   {[
                     { icon: Music, title: "Concert Live", time: "Prima parte" },
