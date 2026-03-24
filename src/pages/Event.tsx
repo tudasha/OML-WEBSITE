@@ -60,7 +60,7 @@ const Event = () => {
                   className="rounded-2xl shadow-2xl w-full"
                 />
               </div>
-              <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
+              <div className="md:col-span-2 space-y-4 text-muted-foreground text-lg leading-relaxed">
                 <p>
                   <strong className="text-foreground">Jasmine</strong>, vocea curajoasă care ne-a încântat de atâtea ori la Open Mic, trece acum prin cel mai dificil „concert" al vieții sale. După un accident tragic, drumul ei spre recuperare este lung și costisitor. Familia Oradea Music Lab și comunitatea locală se unesc sâmbătă, pe <strong className="text-foreground">4 aprilie</strong>, pentru a-i oferi sprijinul de care are nevoie.
                 </p>
