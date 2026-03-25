@@ -17,43 +17,53 @@ const Index = () => {
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    // Load YouTube IFrame API
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-    }
-    const initPlayer = () => {
-      if (containerRef.current && window.YT && window.YT.Player) {
-        playerRef.current = new window.YT.Player(containerRef.current, {
-          videoId: 'BWAjcbLuk3A',
-          playerVars: {
-            autoplay: 1,
-            mute: 1,
-            loop: 1,
-            playlist: 'BWAjcbLuk3A',
-            controls: 0,
-            showinfo: 0,
-            rel: 0,
-            modestbranding: 1,
-            playsinline: 1,
-            start: 2
-          },
-          events: {
-            onReady: (event: any) => {
-              event.target.playVideo();
+    // Defer YouTube loading until after page paint
+    const timer = setTimeout(() => {
+      const loadAPI = () => {
+        if (!window.YT) {
+          const tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          const firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+        }
+      };
+
+      const initPlayer = () => {
+        if (containerRef.current && window.YT && window.YT.Player) {
+          playerRef.current = new window.YT.Player(containerRef.current, {
+            videoId: 'BWAjcbLuk3A',
+            playerVars: {
+              autoplay: 1,
+              mute: 1,
+              loop: 1,
+              playlist: 'BWAjcbLuk3A',
+              controls: 0,
+              showinfo: 0,
+              rel: 0,
+              modestbranding: 1,
+              playsinline: 1,
+              start: 2
+            },
+            events: {
+              onReady: (event: any) => {
+                event.target.playVideo();
+              }
             }
-          }
-        });
+          });
+        }
+      };
+
+      loadAPI();
+
+      if (window.YT && window.YT.Player) {
+        initPlayer();
+      } else {
+        window.onYouTubeIframeAPIReady = initPlayer;
       }
-    };
-    if (window.YT && window.YT.Player) {
-      initPlayer();
-    } else {
-      window.onYouTubeIframeAPIReady = initPlayer;
-    }
+    }, 100); // Defer to let critical content render first
+
     return () => {
+      clearTimeout(timer);
       if (playerRef.current) {
         playerRef.current.destroy?.();
       }
