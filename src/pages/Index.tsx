@@ -1,98 +1,35 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin, Volume2, VolumeX } from "lucide-react";
+import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin } from "lucide-react";
 import Layout from "@/components/Layout";
 import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
+
+const HERO_VIDEO_URL = `https://gdtraodrfhxcqrrbakac.supabase.co/storage/v1/object/public/videos/hero.mp4`;
+
 const Index = () => {
-  const [isMuted, setIsMuted] = useState(true);
-  const playerRef = useRef<any>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    // Defer YouTube loading until after page paint
-    const timer = setTimeout(() => {
-      const loadAPI = () => {
-        if (!window.YT) {
-          const tag = document.createElement('script');
-          tag.src = 'https://www.youtube.com/iframe_api';
-          const firstScriptTag = document.getElementsByTagName('script')[0];
-          firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-        }
-      };
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-      const initPlayer = () => {
-        if (containerRef.current && window.YT && window.YT.Player) {
-          playerRef.current = new window.YT.Player(containerRef.current, {
-            videoId: 'BWAjcbLuk3A',
-            playerVars: {
-              autoplay: 1,
-              mute: 1,
-              loop: 1,
-              playlist: 'BWAjcbLuk3A',
-              controls: 0,
-              showinfo: 0,
-              rel: 0,
-              modestbranding: 1,
-              playsinline: 1,
-              start: 2
-            },
-            events: {
-              onReady: (event: any) => {
-                event.target.playVideo();
-              }
-            }
-          });
-        }
-      };
-
-      loadAPI();
-
-      if (window.YT && window.YT.Player) {
-        initPlayer();
-      } else {
-        window.onYouTubeIframeAPIReady = initPlayer;
-      }
-    }, 100); // Defer to let critical content render first
-
-    return () => {
-      clearTimeout(timer);
-      if (playerRef.current) {
-        playerRef.current.destroy?.();
-      }
-    };
-  }, []);
-  const toggleMute = () => {
-    if (playerRef.current) {
-      if (isMuted) {
-        playerRef.current.unMute?.();
-      } else {
-        playerRef.current.mute?.();
-      }
-      setIsMuted(!isMuted);
-    }
-  };
   return <Layout>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 w-full h-full bg-hero-bg">
-          <div ref={containerRef} className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2" />
+          <video
+            ref={videoRef}
+            className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
+            src={HERO_VIDEO_URL}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
         </div>
         {/* Overlay */}
         <div className="absolute inset-0 hero-gradient pointer-events-none" />
-        
-        {/* Mute/Unmute Toggle */}
-        <button onClick={toggleMute} className="absolute bottom-24 right-6 z-20 p-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white hover:bg-white/20 transition-colors" aria-label={isMuted ? "Unmute video" : "Mute video"}>
-          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-        </button>
         
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
