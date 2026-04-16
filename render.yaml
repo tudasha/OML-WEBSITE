@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: oml-website
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    branch: main
+    envVars:
+      - key: VITE_API_URL
+        value: https://event-backend.onrender.com

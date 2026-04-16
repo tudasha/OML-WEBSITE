@@ -7,7 +7,8 @@ import Layout from "@/components/Layout";
 import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
 
-const HERO_VIDEO_URL = `https://gdtraodrfhxcqrrbakac.supabase.co/storage/v1/object/public/videos/hero.mp4`;
+// Hero video — upload to your own CDN and update this URL after deployment
+const HERO_VIDEO_URL = ``;
 
 const Index = () => {
   const videoRef = useRef<HTMLVideoElement>(null);

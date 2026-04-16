@@ -7,7 +7,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Instagram, Send, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
-import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 import contactHero from "@/assets/contact-hero.jpg";
 
@@ -54,30 +53,23 @@ const Contact = () => {
     }
 
     try {
-      const { error } = await supabase
-        .from("contact_submissions")
-        .insert({
-          name: validationResult.data.name,
-          email: validationResult.data.email,
-          message: validationResult.data.message,
-        });
-
-      if (error) throw error;
+      // Send via mailto as a fallback (no backend contact endpoint yet)
+      const subject = encodeURIComponent(`Mesaj de la ${validationResult.data.name}`);
+      const body = encodeURIComponent(
+        `Nume: ${validationResult.data.name}\nEmail: ${validationResult.data.email}\n\n${validationResult.data.message}`
+      );
+      window.open(`mailto:oradeamusiclab@gmail.com?subject=${subject}&body=${body}`, "_blank");
 
       toast({
-        title: "Mesaj trimis!",
-        description: "Îți mulțumim pentru mesaj. Te vom contacta în curând!",
+        title: "Mesaj pregătit!",
+        description: "Clientul tău de email s-a deschis cu mesajul pregătit. Trimite-l de acolo!",
       });
 
       setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      // Only log generic message - avoid exposing sensitive error details
-      if (import.meta.env.DEV) {
-        console.error("Contact form submission failed");
-      }
+    } catch {
       toast({
         title: "Eroare",
-        description: "Nu am putut trimite mesajul. Te rugăm să încerci din nou.",
+        description: "Nu am putut trimite mesajul. Te rugăm să ne contactezi direct pe email.",
         variant: "destructive",
       });
     } finally {
@@ -172,7 +164,7 @@ const Contact = () => {
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
-                      "Se trimite..."
+                      "Se pregătește..."
                     ) : (
                       <>
                         <Send className="w-4 h-4 mr-2" />
