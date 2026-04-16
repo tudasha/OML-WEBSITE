@@ -72,20 +72,33 @@ const Register = () => {
         hasCheckedIn: false,
       };
 
+      console.log("Starting registration request...");
+      console.log("API_URL target:", API_URL);
+      console.log("Full endpoint:", `${API_URL}/api/attendees`);
+      console.log("Payload:", payload);
+
       const res = await fetch(`${API_URL}/api/attendees`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      console.log("Response status:", res.status);
+      if (!res.ok) {
+        const errorText = await res.text().catch(() => "N/A");
+        console.error("Response body:", errorText);
+        throw new Error(`Server error: ${res.status} - ${errorText}`);
+      }
 
+      console.log("Registration successful!");
       setIsSuccess(true);
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      console.error("Catch block triggered:", err);
+      // Capture detailed error info
+      const errorMsg = err?.message || String(err) || "Unknown error";
       toast({
         title: "Eroare la înregistrare",
-        description: "Nu am putut procesa înregistrarea. Încearcă din nou.",
+        description: `Error: ${errorMsg}\nAPI target: ${API_URL}`,
         variant: "destructive",
       });
     } finally {
