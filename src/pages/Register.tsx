@@ -11,6 +11,7 @@ import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
+const STRIPE_DONATION_LINK = "https://donate.stripe.com/4gMdR2esj3js2SD8BO6oo00";
 
 interface FormData {
   fullName: string;
@@ -26,6 +27,7 @@ const Register = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [wantsToDonate, setWantsToDonate] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     age: "",
@@ -95,7 +97,14 @@ const Register = () => {
         throw new Error(`Server error: ${res.status} - ${errorText}`);
       }
 
-      console.log("Registration successful!");
+      const resData = await res.json();
+      console.log("Registration successful!", resData);
+
+      if (wantsToDonate && resData.id) {
+         window.location.href = `${STRIPE_DONATION_LINK}?client_reference_id=${resData.id}`;
+         return; // Oprim procesul aici, userul e trimis pe platforma de plati
+      }
+
       setIsSuccess(true);
     } catch (err: any) {
       clearTimeout(timeoutId);
@@ -330,6 +339,24 @@ const Register = () => {
                           </Label>
                         </div>
                       )}
+                      
+                      {/* Optional Stripe Donation */}
+                      <div className="flex items-start gap-3 p-4 mt-2 bg-primary/10 rounded-lg border border-primary/20">
+                        <Checkbox
+                          id="wantsToDonate"
+                          checked={wantsToDonate}
+                          onCheckedChange={(checked) => setWantsToDonate(checked === true)}
+                          className="mt-1"
+                        />
+                        <Label htmlFor="wantsToDonate" className="font-normal leading-snug cursor-pointer text-foreground">
+                          <span className="font-bold flex items-center gap-1 mb-1">
+                            <Heart className="w-4 h-4 text-primary" fill="currentColor" /> Doresc să susțin OML cu o donație online acum
+                          </span>
+                          <span className="text-sm text-muted-foreground block">
+                            Dacă bifezi, vei fi redirecționat automat către Stripe după înregistrare. Mulțumim mult pentru susținere!
+                          </span>
+                        </Label>
+                      </div>
                     </div>
 
                     <Button
