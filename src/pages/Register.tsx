@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CheckCircle, Loader2, Ticket, User, Mail, Utensils, Map, Camera, ShieldCheck } from "lucide-react";
+import { CheckCircle, Loader2, Ticket, User, Mail, Utensils, Map, Camera, ShieldCheck, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
