@@ -58,6 +58,11 @@ const Register = () => {
     }
 
     setIsSubmitting(true);
+
+    // Setăm un timeout de 15 secunde deoarece serverul gratuit Render intră în stand-by
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     try {
       const payload = {
         fullName: formData.fullName.trim(),
@@ -74,31 +79,43 @@ const Register = () => {
 
       console.log("Starting registration request...");
       console.log("API_URL target:", API_URL);
-      console.log("Full endpoint:", `${API_URL}/api/attendees`);
-      console.log("Payload:", payload);
 
       const res = await fetch(`${API_URL}/api/attendees`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
 
       console.log("Response status:", res.status);
       if (!res.ok) {
         const errorText = await res.text().catch(() => "N/A");
-        console.error("Response body:", errorText);
         throw new Error(`Server error: ${res.status} - ${errorText}`);
       }
 
       console.log("Registration successful!");
       setIsSuccess(true);
     } catch (err: any) {
+      clearTimeout(timeoutId);
       console.error("Catch block triggered:", err);
-      // Capture detailed error info
-      const errorMsg = err?.message || String(err) || "Unknown error";
+
+      let errorMsg = err?.message || String(err) || "Unknown error";
+      let errorTitle = "Eroare la înregistrare";
+      let errorDescription = "Nu am putut procesa înregistrarea. Încearcă din nou.";
+
+      // Dacă este eroare de la timeout (serverul de pe render era adormit)
+      if (err.name === 'AbortError') {
+        errorTitle = "Serverul se trezește...";
+        errorDescription = "Sistemul a intrat în modul repaus. Te rugăm să mai aștepți câteva momente și să apeși din nou butonul de Înregistrare!";
+      } else {
+        errorDescription = `Error: ${errorMsg}\nAPI target: ${API_URL}`;
+      }
+
       toast({
-        title: "Eroare la înregistrare",
-        description: `Error: ${errorMsg}\nAPI target: ${API_URL}`,
+        title: errorTitle,
+        description: errorDescription,
         variant: "destructive",
       });
     } finally {
