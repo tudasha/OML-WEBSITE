@@ -30,6 +30,12 @@ const Register = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+
+  const handleAcceptTerms = () => {
+    setFormData((p) => ({ ...p, hasAcceptedTerms: true, mediaConsent: true }));
+    setIsTermsOpen(false);
+  };
   const [wantsToDonate, setWantsToDonate] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
@@ -332,7 +338,7 @@ const Register = () => {
                         />
                         <Label htmlFor="hasAcceptedTerms" className="font-normal leading-snug cursor-pointer flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                          <span>Am citit și sunt de acord cu <a onClick={(e) => { e.preventDefault(); e.stopPropagation(); document.getElementById('terms-dialog-trigger')?.click(); }} className="text-primary underline pointer-events-auto">Regulamentul Evenimentului și Protecția Datelor (GDPR)</a> *</span>
+                          <span>Am citit și sunt de acord cu <a onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsTermsOpen(true); }} className="text-primary underline pointer-events-auto cursor-pointer">Regulamentul Evenimentului și Protecția Datelor (GDPR)</a> *</span>
                         </Label>
                       </div>
 
@@ -348,7 +354,7 @@ const Register = () => {
                         />
                         <Label htmlFor="mediaConsent" className="font-normal leading-snug cursor-pointer flex items-start gap-2">
                           <Camera className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                          <span>Sunt de acord să fiu fotografiat/filmat în cadrul evenimentului (<a onClick={(e) => { e.preventDefault(); e.stopPropagation(); document.getElementById('terms-dialog-trigger')?.click(); }} className="text-primary underline pointer-events-auto">detalii regulament</a>) *</span>
+                          <span>Sunt de acord să fiu fotografiat/filmat în cadrul evenimentului (<a onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsTermsOpen(true); }} className="text-primary underline pointer-events-auto cursor-pointer">detalii regulament</a>) *</span>
                         </Label>
                       </div>
 
@@ -419,18 +425,19 @@ const Register = () => {
         </div>
       </section>
 
-      {/* GDPR Modal Dialog */}
-      <Dialog>
-        <DialogTrigger id="terms-dialog-trigger" className="hidden" />
-        <DialogContent className="max-w-3xl max-h-[85vh] flex flex-col p-6">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-display">Regulament Eveniment & Politica GDPR</DialogTitle>
-            <DialogDescription>
+      {/* GDPR Modal Dialog — controlled */}
+      <Dialog open={isTermsOpen} onOpenChange={setIsTermsOpen}>
+        <DialogContent className="w-[95vw] max-w-2xl flex flex-col p-0 gap-0 overflow-hidden" style={{ maxHeight: '90dvh' }}>
+          <div className="px-6 pt-6 pb-3 border-b shrink-0">
+            <DialogTitle className="text-xl font-display">Regulament Eveniment & Politica GDPR</DialogTitle>
+            <DialogDescription className="text-sm mt-1">
               Informații privind prelucrarea datelor cu caracter personal de către Oradea Music Lab (OML).
             </DialogDescription>
-          </DialogHeader>
-          <ScrollArea className="max-h-[60vh] pr-4 mt-2">
-            <div className="text-sm space-y-4 text-muted-foreground pb-4">
+          </div>
+
+          {/* Scrollable content - native overflow for guaranteed mobile scroll */}
+          <div className="overflow-y-auto flex-1 px-6 py-4" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <div className="text-sm space-y-4 text-muted-foreground pb-2">
               <p>
                 În conformitate cu GDPR - Regulamentul general privind protecția datelor personale, persoana care completează acest formular are drepturi specifice în ceea ce privește protecția datelor cu caracter personal.
               </p>
@@ -443,16 +450,13 @@ const Register = () => {
               <p>
                 Aplicantul acestui formular își poate exercita oricare din drepturile menționate anterior prin transmiterea unei solicitări la adresa de e-mail: <strong className="text-foreground">oradeamusiclab@gmail.com</strong>.
               </p>
-              
               <p>
                 Datele personale pe care le furnizați în acest formular vor fi utilizate exclusiv în scopul administrării și organizării acestui eveniment. Aceste informații pot include numele, prenumele, adresa de e-mail, numărul de telefon etc. Datele dvs. personale vor fi stocate și procesate în condiții de securitate, conform prevederilor GDPR, și nu vor fi distribuite sau partajate cu terți fără consimțământul dvs. explicit.
               </p>
-              
               <p>
                 Aveți dreptul de a solicita accesul, rectificarea, ștergerea sau restricționarea prelucrării datelor dvs. personale. De asemenea, aveți dreptul de a vă retrage consimțământul în orice moment, fără a afecta legalitatea prelucrării efectuate pe baza consimțământului înainte de retragere.
               </p>
-              
-              <div className="bg-primary/5 p-4 rounded-lg border border-primary/10 mt-6 mb-4">
+              <div className="bg-primary/5 p-4 rounded-lg border border-primary/10 mt-4 mb-2">
                 <h3 className="text-foreground font-semibold text-base mb-2 flex items-center gap-2">
                   <Camera className="w-5 h-5 text-primary" /> Utilizarea Materialelor Foto / Video
                 </h3>
@@ -460,12 +464,28 @@ const Register = () => {
                   În cadrul acestui eveniment, se pot realiza fotografii sau înregistrări video care pot include participanții. Aceste materiale vizuale pot fi utilizate ulterior în scopuri de promovare și comunicare legate de eveniment, cum ar fi publicarea pe site-ul web, pe rețelele de socializare sau în materialele de marketing. Prin participarea la eveniment, vă exprimați consimțământul pentru utilizarea imaginilor dvs. în aceste scopuri.
                 </p>
               </div>
-              
               <p>
                 La datele colectate prin acest formular vor avea acces doar cei implicați în organizarea înscrierilor la acest eveniment, iar acestea nu vor fi utilizate în alt scop decât cel declarat. OML va păstra datele personale atât timp cât este necesar pentru scopul declarat.
               </p>
             </div>
-          </ScrollArea>
+          </div>
+
+          {/* Sticky footer with Accept button */}
+          <div className="px-6 py-4 border-t shrink-0 flex gap-3">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() => setIsTermsOpen(false)}
+            >
+              Închide
+            </Button>
+            <Button
+              className="flex-1 bg-primary hover:bg-primary/90 text-white"
+              onClick={handleAcceptTerms}
+            >
+              <CheckCircle className="w-4 h-4 mr-2" /> Accept Termenii
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </Layout>
