@@ -429,7 +429,7 @@ const Register = () => {
               Informații privind prelucrarea datelor cu caracter personal de către Oradea Music Lab (OML).
             </DialogDescription>
           </DialogHeader>
-          <ScrollArea className="flex-1 pr-4 mt-2">
+          <ScrollArea className="max-h-[60vh] pr-4 mt-2">
             <div className="text-sm space-y-4 text-muted-foreground pb-4">
               <p>
                 În conformitate cu GDPR - Regulamentul general privind protecția datelor personale, persoana care completează acest formular are drepturi specifice în ceea ce privește protecția datelor cu caracter personal.
