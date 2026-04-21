@@ -7,6 +7,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CheckCircle, Loader2, Ticket, User, Mail, Utensils, Map, Camera, ShieldCheck, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
 
@@ -21,6 +23,7 @@ interface FormData {
   dietaryRestrictions: string;
   mediaConsent: boolean;
   hasParentalConsent: boolean;
+  hasAcceptedTerms: boolean;
 }
 
 const Register = () => {
@@ -36,6 +39,7 @@ const Register = () => {
     dietaryRestrictions: "",
     mediaConsent: false,
     hasParentalConsent: false,
+    hasAcceptedTerms: false,
   });
 
   const age = parseInt(formData.age) || 0;
@@ -56,6 +60,14 @@ const Register = () => {
     }
     if (!formData.age || age < 1 || age > 120) {
       toast({ title: "Eroare", description: "Te rugăm să introduci o vârstă validă.", variant: "destructive" });
+      return;
+    }
+    if (!formData.hasAcceptedTerms) {
+      toast({ title: "Eroare", description: "Te rugăm să accepți Regulamentul și Termenii de GDPR pentru a continua.", variant: "destructive" });
+      return;
+    }
+    if (!formData.mediaConsent) {
+      toast({ title: "Eroare", description: "Avem nevoie de acordul tău pentru foto/video la participare.", variant: "destructive" });
       return;
     }
 
@@ -142,6 +154,7 @@ const Register = () => {
       dietaryRestrictions: "",
       mediaConsent: false,
       hasParentalConsent: false,
+      hasAcceptedTerms: false,
     });
   };
 
@@ -306,7 +319,23 @@ const Register = () => {
                     </div>
 
                     {/* Checkboxes */}
-                    <div className="space-y-3 pt-1">
+                    <div className="space-y-4 pt-1">
+                      {/* GDPR / Terms Consent */}
+                      <div className="flex items-start gap-3">
+                        <Checkbox
+                          id="hasAcceptedTerms"
+                          checked={formData.hasAcceptedTerms}
+                          onCheckedChange={(checked) =>
+                            setFormData((p) => ({ ...p, hasAcceptedTerms: checked === true }))
+                          }
+                          className="mt-0.5"
+                        />
+                        <Label htmlFor="hasAcceptedTerms" className="font-normal leading-snug cursor-pointer flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                          <span>Am citit și sunt de acord cu <a onClick={(e) => { e.preventDefault(); e.stopPropagation(); document.getElementById('terms-dialog-trigger')?.click(); }} className="text-primary underline pointer-events-auto">Regulamentul Evenimentului și Protecția Datelor (GDPR)</a> *</span>
+                        </Label>
+                      </div>
+
                       {/* Media Consent */}
                       <div className="flex items-start gap-3">
                         <Checkbox
@@ -319,7 +348,7 @@ const Register = () => {
                         />
                         <Label htmlFor="mediaConsent" className="font-normal leading-snug cursor-pointer flex items-start gap-2">
                           <Camera className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                          Sunt de acord să fiu fotografiat/filmat în cadrul evenimentului
+                          <span>Sunt de acord să fiu fotografiat/filmat în cadrul evenimentului (<a onClick={(e) => { e.preventDefault(); e.stopPropagation(); document.getElementById('terms-dialog-trigger')?.click(); }} className="text-primary underline pointer-events-auto">detalii regulament</a>) *</span>
                         </Label>
                       </div>
 
@@ -389,6 +418,56 @@ const Register = () => {
           </div>
         </div>
       </section>
+
+      {/* GDPR Modal Dialog */}
+      <Dialog>
+        <DialogTrigger id="terms-dialog-trigger" className="hidden" />
+        <DialogContent className="max-w-3xl max-h-[85vh] flex flex-col p-6">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-display">Regulament Eveniment & Politica GDPR</DialogTitle>
+            <DialogDescription>
+              Informații privind prelucrarea datelor cu caracter personal de către Oradea Music Lab (OML).
+            </DialogDescription>
+          </DialogHeader>
+          <ScrollArea className="flex-1 pr-4 mt-2">
+            <div className="text-sm space-y-4 text-muted-foreground pb-4">
+              <p>
+                În conformitate cu GDPR - Regulamentul general privind protecția datelor personale, persoana care completează acest formular are drepturi specifice în ceea ce privește protecția datelor cu caracter personal.
+              </p>
+              <p>Acestea fiind:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Dreptul de a-și accesa datele personale, să le modifice, restricționeze, să își retragă acordul sau să se opună prelucrării acestora sau să solicite ștergerea acestora (dreptul de a fi uitat);</li>
+                <li>Dreptul de a depune o reclamație la autoritatea de supraveghere competentă;</li>
+                <li>Dreptul de a solicita Oradea Music Lab (OML) corectarea oricărei inexactități din datele personale.</li>
+              </ul>
+              <p>
+                Aplicantul acestui formular își poate exercita oricare din drepturile menționate anterior prin transmiterea unei solicitări la adresa de e-mail: <strong className="text-foreground">oradeamusiclab@gmail.com</strong>.
+              </p>
+              
+              <p>
+                Datele personale pe care le furnizați în acest formular vor fi utilizate exclusiv în scopul administrării și organizării acestui eveniment. Aceste informații pot include numele, prenumele, adresa de e-mail, numărul de telefon etc. Datele dvs. personale vor fi stocate și procesate în condiții de securitate, conform prevederilor GDPR, și nu vor fi distribuite sau partajate cu terți fără consimțământul dvs. explicit.
+              </p>
+              
+              <p>
+                Aveți dreptul de a solicita accesul, rectificarea, ștergerea sau restricționarea prelucrării datelor dvs. personale. De asemenea, aveți dreptul de a vă retrage consimțământul în orice moment, fără a afecta legalitatea prelucrării efectuate pe baza consimțământului înainte de retragere.
+              </p>
+              
+              <div className="bg-primary/5 p-4 rounded-lg border border-primary/10 mt-6 mb-4">
+                <h3 className="text-foreground font-semibold text-base mb-2 flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-primary" /> Utilizarea Materialelor Foto / Video
+                </h3>
+                <p>
+                  În cadrul acestui eveniment, se pot realiza fotografii sau înregistrări video care pot include participanții. Aceste materiale vizuale pot fi utilizate ulterior în scopuri de promovare și comunicare legate de eveniment, cum ar fi publicarea pe site-ul web, pe rețelele de socializare sau în materialele de marketing. Prin participarea la eveniment, vă exprimați consimțământul pentru utilizarea imaginilor dvs. în aceste scopuri.
+                </p>
+              </div>
+              
+              <p>
+                La datele colectate prin acest formular vor avea acces doar cei implicați în organizarea înscrierilor la acest eveniment, iar acestea nu vor fi utilizate în alt scop decât cel declarat. OML va păstra datele personale atât timp cât este necesar pentru scopul declarat.
+              </p>
+            </div>
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
