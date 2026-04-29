@@ -8,7 +8,7 @@ import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
 
 // Hero video — upload to your own CDN and update this URL after deployment
-const HERO_VIDEO_URL = "/hero_1.mp4";
+const HERO_VIDEO_URL = "/hero_1_compressed.mp4";
 
 const Index = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
