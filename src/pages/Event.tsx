@@ -91,7 +91,7 @@ const Event = () => {
                 </div>
 
                 <div className="pt-4">
-                  <Link to="/register" className="inline-flex w-full justify-center items-center bg-primary text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg">
+                  <Link to="/inregistrare" className="inline-flex w-full justify-center items-center bg-primary text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg">
                     Înregistrează-te acum
                   </Link>
                 </div>
