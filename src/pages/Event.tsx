@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users, Heart, CalendarX, ImageIcon } from "lucide-react";
 import Layout from "@/components/Layout";
@@ -48,54 +49,51 @@ const Event = () => {
                 Următorul eveniment
               </h2>
               <h3 className="text-2xl md:text-3xl font-display font-bold text-primary">
-                Sunet pentru Jasmine
+                OML IV
               </h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-center">
               <div className="md:col-span-3">
                 <img
-                  src={sunetPentruJasmine}
-                  alt="Sunet pentru Jasmine - Black Wolf Edition - 4 Aprilie 2026"
+                  src="/oml_poster-1.png"
+                  alt="OML IV - 9 Mai - Lokal Oradea"
                   className="rounded-2xl shadow-2xl w-full"
                 />
               </div>
-              <div className="md:col-span-2 space-y-4 text-muted-foreground text-lg leading-relaxed">
+              <div className="md:col-span-2 space-y-4 text-muted-foreground text-sm leading-relaxed">
                 <p>
-                  <strong className="text-foreground">Jasmine</strong>, vocea curajoasă care ne-a încântat de atâtea ori la Open Mic, trece acum prin cel mai dificil „concert" al vieții sale. După un accident tragic, drumul ei spre recuperare este lung și costisitor. Familia Oradea Music Lab și comunitatea locală se unesc sâmbătă, pe <strong className="text-foreground">4 aprilie</strong>, pentru a-i oferi sprijinul de care are nevoie.
+                  Oradea Music Lab este un proiect dedicat tinerilor pasionați de muzică, ce își propune să îmbine educația muzicală și crearea unui spațiu sigur, susținător și inspirațional, unde aceștia să își poată exprima talentele muzicale.
                 </p>
                 <p>
-                  Vino la <strong className="text-foreground">Black Wolf</strong> pentru o seară de muzică live acustică, susținută de tinerii noștri artiști. Orice donație contează și merge direct către fondul de recuperare al Jasminei.
+                  Ne bucurăm să îi avem de data aceasta ca invitați speciali pe <strong className="text-foreground">Naty Loves Monday!</strong> 🎶 O trupă cu energie și personalitate aparte, gata să ne încânte cu un concert live și să ne împărtășească din experiența lor în industria muzicală. Mai departe, vom continua evenimentul cu o discuție live alături de ei, completată de o sesiune de întrebări și răspunsuri cu publicul. Aceasta este partea educațională a evenimentului, unde tinerii sunt încurajați să pună întrebări și să își dezvolte cunoștințele despre scenă.
+                </p>
+                <p>
+                  Partea mult așteptată a serii este Open Mic-ul „Scena Tinerilor", unde 10 tineri/trupe vor urca pe scenă să își exprime talentele muzicale. 🎤 Ceea ce diferențiază Oradea Music Lab de orice alt eveniment este trecerea cu vederea a greșelilor. Nu este o competiție, ci mai degrabă un loc care să te pregătească pentru a fi un muzician adevărat, un loc plin de oameni prietenoși care te vor susține. Aici, fiecare tânăr ce pășește pe scenă este o vedetă și trebuie tratat ca atare, pentru a crea condiții optime pentru dezvoltare.
+                </p>
+                <p>
+                  Știm că nu este ușor să îți învingi frica de scenă, de aceea organizăm o tombolă cu premii surpriză pentru a răsplăti tinerii pentru curajul de care au dat dovadă. Și, pentru a sărbători încă un Lab reușit, vă așteptăm cu pizza bună, italiană, pentru toți cei prezenți! 🍕
                 </p>
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm pt-2">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-primary shrink-0" />
-                    <span>Sâmbătă, 4 Aprilie 2026</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-primary shrink-0" />
-                    <span>Ora 19:00</span>
+                    <span>Sâmbătă, 9 Mai</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-primary shrink-0" />
-                    <span>Black Wolf (Str. Ștefan Octavian Iosif nr. 7)</span>
+                    <span>Lokal, Oradea</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 col-span-2">
                     <Gift className="w-4 h-4 text-primary shrink-0" />
-                    <span>Donație liberă</span>
+                    <span>Tombolă cu premii & Pizza din partea casei</span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="bg-muted/50 rounded-xl p-4 text-center">
-                    <Music className="w-6 h-6 text-primary mx-auto mb-2" />
-                    <p className="text-sm font-medium text-foreground">Seară de muzică</p>
-                  </div>
-                  <div className="bg-muted/50 rounded-xl p-4 text-center">
-                    <Heart className="w-6 h-6 text-primary mx-auto mb-2" />
-                    <p className="text-sm font-medium text-foreground">Concert caritabil</p>
-                  </div>
+                <div className="pt-4">
+                  <Link to="/register" className="inline-flex w-full justify-center items-center bg-primary text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg">
+                    Înregistrează-te acum
+                  </Link>
                 </div>
 
               </div>
