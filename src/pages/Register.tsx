@@ -13,7 +13,7 @@ import Layout from "@/components/Layout";
 import heroConcert from "@/assets/hero-concert.png";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
-const STRIPE_DONATION_LINK = "https://donate.stripe.com/4gMdR2esj3js2SD8BO6oo00";
+const STRIPE_DONATION_LINK = "https://buy.stripe.com/9B64gs97Z6vE50L4ly6oo01";
 
 interface FormData {
   fullName: string;
