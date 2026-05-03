@@ -49,7 +49,7 @@ const Event = () => {
                 Următorul eveniment
               </h2>
               <h3 className="text-2xl md:text-3xl font-display font-bold text-primary">
-                OML IV
+                Oradea Music Lab IV: Freedom 250
               </h3>
             </div>
 
@@ -63,16 +63,16 @@ const Event = () => {
               </div>
               <div className="md:col-span-2 space-y-4 text-muted-foreground text-sm leading-relaxed">
                 <p>
-                  Oradea Music Lab este un proiect dedicat tinerilor pasionați de muzică, ce își propune să îmbine educația muzicală și crearea unui spațiu sigur, susținător și inspirațional, unde aceștia să își poată exprima talentele muzicale.
+                  Oradea Music Lab revine cu a patra ediție, consolidându-și rolul de platformă dedicată tinerilor unde educația muzicală întâlnește scena într-un mediu sigur și profesionist. Obiectivul nostru rămâne acela de a oferi un context inspirațional în care tinerii artiști să își poată exprima talentul și să își dezvolte abilitățile interpretative fără presiunea unei competiții.
                 </p>
                 <p>
-                  Ne bucurăm să îi avem de data aceasta ca invitați speciali pe <strong className="text-foreground">Naty Loves Monday!</strong> 🎶 O trupă cu energie și personalitate aparte, gata să ne încânte cu un concert live și să ne împărtășească din experiența lor în industria muzicală. Mai departe, vom continua evenimentul cu o discuție live alături de ei, completată de o sesiune de întrebări și răspunsuri cu publicul. Aceasta este partea educațională a evenimentului, unde tinerii sunt încurajați să pună întrebări și să își dezvolte cunoștințele despre scenă.
+                  Această ediție este dedicată temei <strong className="text-foreground">Freedom 250</strong>, marcând aniversarea a 250 de ani de independență a Statelor Unite. Provocarea lansată participanților vizează explorarea repertoriului american, singura condiție fiind ca piesele interpretate să aparțină unor artiști sau trupe din SUA. Indiferent de genul muzical abordat, evenimentul va celebra spiritul libertății și diversitatea culturală prin muzică.
                 </p>
                 <p>
-                  Partea mult așteptată a serii este Open Mic-ul „Scena Tinerilor", unde 10 tineri/trupe vor urca pe scenă să își exprime talentele muzicale. 🎤 Ceea ce diferențiază Oradea Music Lab de orice alt eveniment este trecerea cu vederea a greșelilor. Nu este o competiție, ci mai degrabă un loc care să te pregătească pentru a fi un muzician adevărat, un loc plin de oameni prietenoși care te vor susține. Aici, fiecare tânăr ce pășește pe scenă este o vedetă și trebuie tratat ca atare, pentru a crea condiții optime pentru dezvoltare.
+                  Invitații speciali ai serii, trupa <strong className="text-foreground">Naty Loves Monday</strong>, vor susține un concert live urmat de o sesiune de discuții axată pe experiența lor în industria muzicală. Această componentă educativă pregătește terenul pentru Open Mic-ul Scena Tinerilor, unde tineri muzicieni vor urca sub reflectoare. La Oradea Music Lab, accentul cade pe susținerea comunității și pe depășirea tracului, fiecare participant fiind tratat cu respectul cuvenit unui artist, într-un spațiu care încurajează progresul în locul perfecțiunii imediate.
                 </p>
                 <p>
-                  Știm că nu este ușor să îți învingi frica de scenă, de aceea organizăm o tombolă cu premii surpriză pentru a răsplăti tinerii pentru curajul de care au dat dovadă. Și, pentru a sărbători încă un Lab reușit, vă așteptăm cu pizza bună, italiană, pentru toți cei prezenți! 🍕
+                  Evenimentul se va încheia într-o notă relaxată, cu o sesiune de networking și pizza pentru toți cei prezenți, spectatori și artiști deopotrivă. Vă invităm să descoperiți noua generație de muzicieni din Oradea și să susțineți talentele locale la această ediție aniversară!
                 </p>
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm pt-2">
