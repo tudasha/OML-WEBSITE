@@ -11,7 +11,6 @@ const navLinks = [
   { name: "Despre Noi", path: "/despre" },
   { name: "Echipă", path: "/echipa" },
   { name: "Contact", path: "/contact" },
-  { name: "Înregistrare", path: "/inregistrare" },
 ];
 
 const Header = () => {

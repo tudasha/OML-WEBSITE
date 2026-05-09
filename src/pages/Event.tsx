@@ -43,7 +43,7 @@ const Event = () => {
       {/* Next Event */}
       <section className="py-16 md:py-20 section-cream">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
                 Următorul eveniment
@@ -53,15 +53,15 @@ const Event = () => {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-center">
-              <div className="md:col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div>
                 <img
                   src="/oml_poster-1.png"
                   alt="OML IV - 9 Mai - Lokal Oradea"
                   className="rounded-2xl shadow-2xl w-full"
                 />
               </div>
-              <div className="md:col-span-2 space-y-4 text-muted-foreground text-sm leading-relaxed">
+              <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
                 <p>
                   Oradea Music Lab revine cu a patra ediție, consolidându-și rolul de platformă dedicată tinerilor unde educația muzicală întâlnește scena într-un mediu sigur și profesionist. Obiectivul nostru rămâne acela de a oferi un context inspirațional în care tinerii artiști să își poată exprima talentul și să își dezvolte abilitățile interpretative fără presiunea unei competiții.
                 </p>
