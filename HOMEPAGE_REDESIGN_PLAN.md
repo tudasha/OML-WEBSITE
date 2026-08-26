@@ -528,6 +528,19 @@ comune tuturor paginilor:
   propriu-zisă (eventual decor în spatele fiecărei secțiuni) rămâne la Faza 15, conform
   secvențierii deja stabilite, layout-ul e pregătit s-o primească. Cod net mai simplu (bundle
   JS a scăzut, nu a crescut — toată logica de poziționare a panourilor a dispărut).
+
+  **Idee discutată, NEimplementată (2026-08-27) — animație Higgsfield pe pozele echipei**:
+  clientul a întrebat dacă Higgsfield ar putea anima efectiv pozele membrilor (puppeteering/
+  motion transfer pe fața persoanei, nu doar pan/zoom static), la scroll. Am ridicat o
+  îngrijorare de consimțământ (poze ale unor persoane reale, identificabile prin nume, posibil
+  minori — site-ul are formulare cu declarație parentală pt sub 18 ani). **Clarificare de la
+  client**: toți membrii actuali ai echipei au terminat clasa a XII-a, deci sunt majori, cu
+  consimțământ deplin — nu mai e o problemă de vârstă/minori pentru echipa actuală. Clientul a
+  confirmat că o animație scurtă a pozei "nu ar fi ceva rău", **dar a cerut explicit să NU se
+  implementeze acum ("deocamdată încă nu")** — nici varianta sigură (pan/zoom static, cod, fără
+  Higgsfield), nici varianta cu animație reală Higgsfield. Rămâne o idee deschisă pt o eventuală
+  fază viitoare, nu parte din scope-ul curent — de reluat doar dacă/când clientul o repune pe
+  masă explicit.
 - [x] **14.6 — Contact (`Contact.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe butonul de
   submit. Formularul și panoul de info intră din direcții opuse (stânga/dreapta).
 - [x] **14.7 — Donează (`Donate.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe CTA. Icon-urile
