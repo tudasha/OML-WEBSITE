@@ -65,6 +65,27 @@ const Index = () => {
   const step4Opacity = useTransform(stepsProgress, [0.6, 0.85], shouldReduceMotion ? [1, 1] : [0.25, 1]);
   const stepOpacities = [step1Opacity, step2Opacity, step3Opacity, step4Opacity];
 
+  // Restul homepage-ului (Hero, "Ce este OML", cardul "Următorul eveniment") a primit doar
+  // reparații de glassmorphism/contrast la prima trecere (14.2), înainte să clarificăm că
+  // Faza 14 = layout complet pt scroll imersiv — completat acum (2026-08-27), ca homepage-ul
+  // să fie coerent, nu pe bucăți.
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroVideoScale = useTransform(heroProgress, [0, 1], shouldReduceMotion ? [1, 1] : [1, 1.15]);
+  const heroContentOpacity = useTransform(heroProgress, [0, 0.7], shouldReduceMotion ? [1, 1] : [1, 0]);
+  const heroContentY = useTransform(heroProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -80]);
+
+  const omlRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: omlProgress } = useScroll({ target: omlRef, offset: ["start 90%", "start 35%"] });
+  const omlOpacity = useTransform(omlProgress, [0, 1], shouldReduceMotion ? [1, 1] : [0, 1]);
+  const omlY = useTransform(omlProgress, [0, 1], shouldReduceMotion ? [0, 0] : [40, 0]);
+  const omlBlobY = useTransform(omlProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-20, 20]);
+
+  const previewRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: previewProgress } = useScroll({ target: previewRef, offset: ["start 90%", "start 45%"] });
+  const previewOpacity = useTransform(previewProgress, [0, 1], shouldReduceMotion ? [1, 1] : [0, 1]);
+  const previewScale = useTransform(previewProgress, [0, 1], shouldReduceMotion ? [1, 1] : [0.92, 1]);
+
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onMotionChange = (e: MediaQueryListEvent) => {
@@ -89,9 +110,9 @@ const Index = () => {
 
   return <Layout>
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Video */}
-        <div className="absolute inset-0 w-full h-full bg-hero-bg">
+      <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* Background Video — zoom lent legat de scroll (paralaxă), nu doar autoplay static */}
+        <motion.div style={{ scale: heroVideoScale }} className="absolute inset-0 w-full h-full bg-hero-bg">
           <video
             ref={videoRef}
             className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
@@ -104,12 +125,16 @@ const Index = () => {
             preload="auto"
             aria-hidden="true"
           />
-        </div>
+        </motion.div>
         {/* Overlay */}
         <div className="absolute inset-0 hero-gradient pointer-events-none" />
         
-        {/* Content */}
-        <div className="relative z-10 container mx-auto px-4 text-center">
+        {/* Content — se estompează + urcă ușor (paralaxă) pe măsură ce scrolezi în afara Hero-ului,
+            nu doar stă acolo până dispare brusc sub secțiunea următoare. */}
+        <motion.div
+          style={{ opacity: heroContentOpacity, y: heroContentY }}
+          className="relative z-10 container mx-auto px-4 text-center"
+        >
           <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
             <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30">Comunitatea muzicală din Oradea</span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
@@ -133,7 +158,7 @@ const Index = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
@@ -144,15 +169,21 @@ const Index = () => {
       </section>
 
       {/* Ce este OML Section */}
-      <section className="relative py-20 md:py-28 section-cream overflow-hidden">
-        {/* Decor flat, discret — secțiunea era doar text plat, fără niciun element vizual
-            (Faza 14.2). Nu ating cuvintele, doar adaug un accent organic în spate. */}
-        <svg viewBox="0 0 200 200" className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 translate-x-1/3 -translate-y-1/3 pointer-events-none motion-safe:animate-blob-drift" aria-hidden="true">
+      <section ref={omlRef} className="relative py-20 md:py-28 section-cream overflow-hidden">
+        {/* Decor flat, discret, cu paralaxă legată de scroll (nu doar puls CSS static) —
+            secțiunea era doar text plat, fără niciun element vizual (Faza 14.2). Nu ating
+            cuvintele, doar adaug un accent organic în spate. */}
+        <motion.svg
+          viewBox="0 0 200 200"
+          style={{ y: omlBlobY }}
+          className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 translate-x-1/3 -translate-y-1/3 pointer-events-none motion-safe:animate-blob-drift"
+          aria-hidden="true"
+        >
           <path className="fill-primary/5" d={BLOB_PATH} />
-        </svg>
+        </motion.svg>
 
         <div className="container mx-auto px-4 relative">
-          <ScrollReveal>
+          <motion.div style={{ opacity: omlOpacity, y: omlY }}>
             <div className="max-w-3xl mx-auto text-center space-y-6">
               <SectionHeading kicker="Descoperă" title="Ce este Oradea Music Lab?" />
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
@@ -169,7 +200,7 @@ const Index = () => {
                 </p>
               </div>
             </div>
-          </ScrollReveal>
+          </motion.div>
         </div>
       </section>
 
@@ -316,9 +347,9 @@ const Index = () => {
       </section>
 
       {/* Preview Următorul Eveniment */}
-      <section className="py-20 md:py-28 bg-hero-bg text-white">
+      <section ref={previewRef} className="py-20 md:py-28 bg-hero-bg text-white">
         <div className="container mx-auto px-4">
-          <ScrollReveal>
+          <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
             <div className="max-w-4xl mx-auto">
               {/* Fundal opac, fără backdrop-blur — panou flat, nu glassmorphism. Ușor mai
                   deschis decât bg-hero-bg al secțiunii, ca să se separe vizual ca un card. */}
@@ -359,7 +390,7 @@ const Index = () => {
                 </CardContent>
               </Card>
             </div>
-          </ScrollReveal>
+          </motion.div>
         </div>
       </section>
 

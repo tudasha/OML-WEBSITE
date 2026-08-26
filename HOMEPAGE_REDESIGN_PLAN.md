@@ -469,6 +469,17 @@ comune tuturor paginilor:
   fade-once) — motivul: NU e conținut secvențial (sunt valori independente, paralele), deci
   tiparul "poveste de scroll" nu i se potrivește conceptual, spre deosebire de "Cum funcționează"
   care chiar e o secvență de pași reali.
+  **Iterație 4 (2026-08-27) — audit + completare**: clientul a întrebat explicit dacă fazele
+  precedente respectau deja principiul de layout imersiv-scrolabil — răspuns onest: NU complet.
+  Hero, "Ce este OML" și cardul "Următorul eveniment" primiseră doar reparații de glassmorphism/
+  contrast la prima trecere, înainte de clarificarea graniței 14/15, fără mișcare reală legată
+  de scroll. Completat acum: Hero capătă paralaxă (video face zoom lent, conținutul se
+  estompează + urcă pe măsură ce scrolezi în afara secțiunii, nu dispare brusc); "Ce este OML"
+  (text + blob decorativ) trece de la `ScrollReveal` (fade-once) la `motion.div` cu opacitate/
+  translate legate de scroll real; cardul "Următorul eveniment" la fel, cu scale+opacity. Header
+  NU a primit mișcare suplimentară dincolo de comportamentul scroll-aware din 14.1 — decizie
+  deliberată: e chrome persistent (vizibil tot timpul), nu conținut de scroll-through, iar prea
+  multă animație acolo ar distrage, nu ar ajuta.
 - [x] **14.3 — Pagina Evenimente (`Event.tsx` + `events.ts`)** (FĂCUT 2026-08-27): "Edițiile
   noastre" (IV→III→II→I) erau 4 secțiuni JSX copiate aproape identic, cu alternanță cream/alb
   fără sens real — restructurat complet:
