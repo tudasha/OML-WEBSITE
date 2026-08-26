@@ -124,16 +124,17 @@ const Register = () => {
       }
 
       setIsSuccess(true);
-    } catch (err: any) {
+    } catch (err) {
       clearTimeout(timeoutId);
       console.error("Catch block triggered:", err);
 
-      let errorMsg = err?.message || String(err) || "Unknown error";
+      const isError = err instanceof Error;
+      const errorMsg = isError ? err.message : String(err) || "Unknown error";
       let errorTitle = "Eroare la înregistrare";
       let errorDescription = "Nu am putut procesa înregistrarea. Încearcă din nou.";
 
       // Dacă este eroare de la timeout (serverul de pe render era adormit)
-      if (err.name === 'AbortError') {
+      if (isError && err.name === 'AbortError') {
         errorTitle = "Serverul se trezește...";
         errorDescription = "Sistemul a intrat în modul repaus. Te rugăm să mai aștepți câteva momente și să apeși din nou butonul de Înregistrare!";
       } else {
@@ -214,7 +215,7 @@ const Register = () => {
                   <Button
                     variant="outline"
                     onClick={handleReset}
-                    className="border-primary text-primary hover:bg-primary hover:text-white"
+                    className="border-primary text-primary hover:bg-primary hover:text-foreground"
                   >
                     Înregistrează altă persoană
                   </Button>
@@ -397,7 +398,7 @@ const Register = () => {
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full bg-primary hover:bg-primary/90 text-white mt-2"
+                      className="w-full bg-primary hover:bg-primary/90 text-foreground mt-2"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -480,7 +481,7 @@ const Register = () => {
               Închide
             </Button>
             <Button
-              className="flex-1 bg-primary hover:bg-primary/90 text-white"
+              className="flex-1 bg-primary hover:bg-primary/90 text-foreground"
               onClick={handleAcceptTerms}
             >
               <CheckCircle className="w-4 h-4 mr-2" /> Accept Termenii
