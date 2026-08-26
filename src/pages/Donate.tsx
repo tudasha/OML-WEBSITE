@@ -2,8 +2,9 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Heart, Music, Users, ExternalLink } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import donateHeroImage from "@/assets/donate-hero.jpg";
+import { IconBlob } from "@/components/ProcessStepCard";
 const STRIPE_DONATION_LINK = "https://donate.stripe.com/4gMdR2esj3js2SD8BO6oo00";
 const reasons = [{
   icon: Music,
@@ -19,6 +20,7 @@ const reasons = [{
   description: "Sprijini următoarea generație de artiști locali și le oferi oportunitatea să crească."
 }];
 const Donate = () => {
+  const shouldReduceMotion = useReducedMotion();
   return <Layout>
       {/* Hero Section */}
       <section className="relative py-24 md:py-32">
@@ -46,18 +48,18 @@ const Donate = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {reasons.map((reason, index) => <motion.div key={index} initial={{
               opacity: 0,
-              y: 20
+              y: shouldReduceMotion ? 0 : 20
             }} whileInView={{
               opacity: 1,
               y: 0
             }} transition={{
-              delay: index * 0.1
+              delay: shouldReduceMotion ? 0 : index * 0.1
             }} viewport={{
               once: true
             }}>
                   <Card className="p-6 h-full border-0 shadow-lg hover:shadow-xl transition-shadow">
-                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                      <reason.icon className="w-6 h-6 text-primary" />
+                    <div className="mb-4">
+                      <IconBlob icon={reason.icon} rotate={index * 47} />
                     </div>
                     <h3 className="text-lg font-display font-semibold mb-2">
                       {reason.title}
@@ -107,7 +109,7 @@ const Donate = () => {
 
           {/* CTA */}
           <div className="text-center">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground px-8 py-6 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all">
               <a href={STRIPE_DONATION_LINK} target="_blank" rel="noopener noreferrer">
                 <Heart className="w-5 h-5 mr-2" />
                 Donează Acum
