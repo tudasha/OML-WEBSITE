@@ -497,6 +497,13 @@ comune tuturor paginilor:
   (următoarea secțiune, în flux normal) alunecă peste el — la finalul scrolului rămâne doar
   Instagram vizibil, cum a cerut clientul. Doar desktop; mobil degradează la fade in/out simplu
   (sticky/scroll-jacking mai puțin fiabil pe ecrane mici).
+  **Iterație 6 (2026-08-27) — video Hero rămâne vizibil (fix)**: client a cerut ca video-ul
+  din Hero să rămână vizibil cât scrolezi, nu doar în primele 90vh. Aceeași corectare
+  sticky→fixed aplicată deja la Team.tsx: video Hero → `position:fixed`, z-index negativ,
+  rămâne pe fundal prin restul paginii. "Ce este OML" își pierde fundalul opac
+  (`section-cream`) ca video-ul să rămână vizibil prin ea, text pe propriul card
+  (`bg-white/95`). "Cum funcționează" (deja opac, cu decor propriu) rămâne punctul natural
+  unde video-ul e "acoperit" — nu trebuie oprit manual.
 - [x] **14.3 — Pagina Evenimente (`Event.tsx` + `events.ts`)** (FĂCUT 2026-08-27): "Edițiile
   noastre" (IV→III→II→I) erau 4 secțiuni JSX copiate aproape identic, cu alternanță cream/alb
   fără sens real — restructurat complet:
