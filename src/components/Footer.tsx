@@ -1,18 +1,24 @@
 import { Link } from "react-router-dom";
 import { Instagram, Mail, Heart } from "lucide-react";
+import { BLOB_PATH } from "@/lib/blob-shape";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-hero-bg text-white">
-      <div className="container mx-auto px-4 py-12 md:py-16">
+    <footer className="relative bg-hero-bg text-white overflow-hidden">
+      {/* Decor organic flat, consistent cu restul site-ului (Faza 4B/14) — fără blur/glass */}
+      <svg viewBox="0 0 200 200" className="absolute -bottom-24 -right-16 w-80 h-80 pointer-events-none motion-safe:animate-blob-drift" aria-hidden="true">
+        <path className="fill-primary/10" d={BLOB_PATH} transform="translate(100 100) rotate(60)" />
+      </svg>
+
+      <div className="container mx-auto px-4 py-12 md:py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* Logo & Description */}
           <div className="space-y-4">
             <Link to="/" className="inline-block">
               <span className="text-3xl font-display font-bold text-white">
-                OML
+                O<span className="text-primary">M</span>L
               </span>
             </Link>
             <p className="text-white/70 text-sm leading-relaxed">

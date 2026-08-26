@@ -410,8 +410,28 @@ sunt clar înlocuibile fără să atingă vreun conținut. Emoji-urile din TEXTU
 că fac parte din vocea ei, nu din design. Emoji-urile cu rol funcțional (`Register.tsx`) se
 evaluează caz cu caz, nu se șterg automat doar pentru că "nu se potrivesc".
 
-**Notă**: fiind un scope mult mai mare decât Faza 15 originală, s-ar putea să merite împărțită
-în sub-faze per pagină când se ajunge efectiv la execuție — de rafinat atunci, nu acum.
+**Notă**: fiind un scope mult mai mare decât Faza 15 originală, s-a împărțit în sub-faze per
+pagină la execuție (2026-08-27), în ordinea de mai jos — Header/Footer întâi, pentru că sunt
+comune tuturor paginilor:
+
+- [x] **14.1 — Header + Footer** (FĂCUT): eliminat `backdrop-blur-md` (era oricum inert pe fundal
+  opac alb, dar contravenea regulii "fără glassmorphism"); corectat contrastul pe butoanele
+  "Donează"/"Contactează-ne" (`text-white` → `text-foreground` pe fundal `bg-primary`, conform
+  permisiunii de mai jos — rezolvă găsirea WCAG din Faza 5, ~2.24:1 → ~9.4:1, aceeași paletă);
+  header devine "scroll-aware" (umbră + înălțime ușor reduse după scroll, semnal de site viu);
+  meniul mobil are acum tranziție slide+fade (nu doar opacity toggle); footer primește un blob
+  organic flat decorativ (reosit `BLOB_PATH`) + wordmark-ul "OML" cu accent de culoare pe "M"
+  (logo-ul PNG are fundal alb copt în imagine, nu merge pe fundal închis fără o variantă nouă —
+  de generat la Faza 15 dacă se dorește logo real în footer, nu text).
+- [ ] 14.2 — Homepage (`Index.tsx`) — trecere completă (Hero, Ce este OML, Preview eveniment,
+  Instagram feed); secțiunile "Cum funcționează"/"De ce suntem diferiți" au deja stilul din
+  Faza 4B, de integrat coerent cu restul, nu neapărat refăcute de la zero.
+- [ ] 14.3 — Pagina Evenimente (`Event.tsx`)
+- [ ] 14.4 — Despre Noi (`About.tsx`)
+- [ ] 14.5 — Echipă (`Team.tsx`)
+- [ ] 14.6 — Contact (`Contact.tsx`)
+- [ ] 14.7 — Donează (`Donate.tsx`)
+- [ ] 14.8 — Înregistrare (`Register.tsx`)
 
 **Notițe de stil suplimentare de la client (2026-08-26), de urmat la execuție:**
 - **Animații la scrolare** cu ajutorul Higgsfield (asset-uri generate reacționează la scroll,
