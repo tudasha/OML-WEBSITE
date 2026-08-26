@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // Import team photos
@@ -9,6 +9,13 @@ import alexiaPhoto from "@/assets/team/alexia-mateas.jpeg";
 import claudiuPhoto from "@/assets/team/claudiu-rostas.jpeg";
 import octavianPhoto from "@/assets/team/octavian-boji.png";
 import teamBackground from "@/assets/team/team-background.jpg";
+
+// Decor Higgsfield (Faza 15) — note muzicale, panglică, granule; SVG generate cu recraft_v4_1,
+// curățate manual (fundal alb → transparent, culori în afara paletei → portocaliul de brand),
+// vezi HOMEPAGE_REDESIGN_PLAN.md. Mecanica de scroll rămâne cod (framer-motion), ca peste tot.
+import decorNotes from "@/assets/decor/notes.svg";
+import decorRibbon from "@/assets/decor/ribbon.svg";
+import decorGrains from "@/assets/decor/grains.svg";
 
 interface TeamMember {
   name: string;
@@ -53,6 +60,12 @@ const restOfTeam: TeamMember[] = [{ name: "Boji Octavian", role: "Software Devel
 
 const Team = () => {
   const shouldReduceMotion = useReducedMotion();
+  // Fără target = urmărește tot documentul, nu o singură secțiune — elementele decorative
+  // plutesc pe parcursul întregii pagini (mai multe secțiuni de membri), nu doar una.
+  const { scrollYProgress: pageProgress } = useScroll();
+  const notesY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -160]);
+  const ribbonY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [80, -80]);
+  const grainsY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-60, 60]);
 
   return (
     <Layout>
@@ -78,8 +91,36 @@ const Team = () => {
       {/* Fiecare membru = o secțiune proprie. Poza rămâne sticky (fixă) cât bio-ul scrolează pe
           lângă ea — alternând stânga/dreapta — același tipar "sticky figure" folosit deja la
           posterul din Event.tsx. Fundal alternant (cream/alb) separă vizual persoanele, fără
-          să mai fie nevoie de hover/click pentru a vedea bio-ul. */}
-      {teamStory.map((member, index) => {
+          să mai fie nevoie de hover/click pentru a vedea bio-ul.
+
+          Decor Higgsfield (note/panglică/granule) — plutește pe TOATĂ pagina (scroll-ul
+          documentului, nu al unei secțiuni), în spatele conținutului (z-index implicit,
+          pointer-events-none), cu puls CSS ambiental + paralaxă legată de scroll, ca peste tot
+          pe site. Poziții fixe (procent din înălțimea totală a wrapper-ului), nu urmăresc un
+          anumit membru. */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <motion.img
+            alt=""
+            src={decorNotes}
+            style={{ y: notesY }}
+            className="absolute top-[8%] left-4 md:left-10 w-16 md:w-20 opacity-40 motion-safe:animate-blob-drift"
+          />
+          <motion.img
+            alt=""
+            src={decorRibbon}
+            style={{ y: ribbonY }}
+            className="absolute top-[42%] right-0 w-40 md:w-56 opacity-30 motion-safe:animate-blob-drift [animation-delay:-7s]"
+          />
+          <motion.img
+            alt=""
+            src={decorGrains}
+            style={{ y: grainsY }}
+            className="absolute top-[78%] left-2 md:left-12 w-24 md:w-32 opacity-30 motion-safe:animate-blob-drift [animation-delay:-14s]"
+          />
+        </div>
+
+        {teamStory.map((member, index) => {
         const reversed = index % 2 === 1;
         return (
           <section key={member.name} className={cn("py-16 md:py-24", index % 2 === 0 ? "bg-background" : "section-cream")}>
@@ -149,6 +190,7 @@ const Team = () => {
           </div>
         </div>
       </section>
+      </div>
     </Layout>
   );
 };
