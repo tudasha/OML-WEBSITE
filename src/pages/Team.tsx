@@ -87,10 +87,18 @@ const Team = () => {
   const shouldReduceMotion = useReducedMotion();
   // Fără target = urmărește tot documentul, nu o singură secțiune — elementele decorative
   // plutesc pe parcursul întregii pagini (mai multe secțiuni de membri), nu doar una.
+  // Iterație 2 (feedback client: "mai wow, nu doar decor discret") — mișcare mai amplă
+  // (Y + rotație), opacitate crescută, mai multe instanțe repetate pe parcursul paginii.
   const { scrollYProgress: pageProgress } = useScroll();
-  const notesY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -160]);
-  const ribbonY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [80, -80]);
-  const grainsY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-60, 60]);
+  const notesY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -320]);
+  const notesRotate = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-8, 12]);
+  const ribbonY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [140, -140]);
+  const ribbonRotate = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [6, -10]);
+  const grainsY = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-120, 200]);
+  const notes2Y = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [60, -220]);
+  const ribbon2Y = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-100, 160]);
+  const ribbon2Rotate = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [180, 160]);
+  const grains2Y = useTransform(pageProgress, [0, 1], shouldReduceMotion ? [0, 0] : [100, -180]);
 
   return (
     <Layout>
@@ -128,20 +136,38 @@ const Team = () => {
           <motion.img
             alt=""
             src={decorNotes}
-            style={{ y: notesY }}
-            className="absolute top-[8%] left-4 md:left-10 w-16 md:w-20 opacity-40 motion-safe:animate-blob-drift"
+            style={{ y: notesY, rotate: notesRotate }}
+            className="absolute top-[4%] left-2 md:left-8 w-28 md:w-40 opacity-70 motion-safe:animate-blob-drift"
           />
           <motion.img
             alt=""
             src={decorRibbon}
-            style={{ y: ribbonY }}
-            className="absolute top-[42%] right-0 w-40 md:w-56 opacity-30 motion-safe:animate-blob-drift [animation-delay:-7s]"
+            style={{ y: ribbonY, rotate: ribbonRotate }}
+            className="absolute top-[28%] -right-8 md:right-0 w-64 md:w-80 opacity-60 motion-safe:animate-blob-drift [animation-delay:-7s]"
           />
           <motion.img
             alt=""
             src={decorGrains}
             style={{ y: grainsY }}
-            className="absolute top-[78%] left-2 md:left-12 w-24 md:w-32 opacity-30 motion-safe:animate-blob-drift [animation-delay:-14s]"
+            className="absolute top-[52%] left-0 md:left-6 w-40 md:w-52 opacity-50 motion-safe:animate-blob-drift [animation-delay:-14s]"
+          />
+          <motion.img
+            alt=""
+            src={decorNotes}
+            style={{ y: notes2Y }}
+            className="absolute top-[70%] right-4 md:right-16 w-20 md:w-28 opacity-50 motion-safe:animate-blob-drift [animation-delay:-4s]"
+          />
+          <motion.img
+            alt=""
+            src={decorRibbon}
+            style={{ y: ribbon2Y, rotate: ribbon2Rotate }}
+            className="absolute top-[88%] -left-10 md:left-0 w-56 md:w-72 opacity-50 motion-safe:animate-blob-drift [animation-delay:-11s]"
+          />
+          <motion.img
+            alt=""
+            src={decorGrains}
+            style={{ y: grains2Y }}
+            className="absolute top-[100%] right-2 md:right-20 w-32 md:w-44 opacity-40 motion-safe:animate-blob-drift [animation-delay:-18s]"
           />
         </div>
 
