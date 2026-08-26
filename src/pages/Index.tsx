@@ -6,6 +6,8 @@ import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calen
 import Layout from "@/components/Layout";
 import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
+import SectionHeading from "@/components/SectionHeading";
+import ProcessStepCard from "@/components/ProcessStepCard";
 import { nextEvent, getEventSummary } from "@/data/events";
 
 // Hero video — upload to your own CDN and update this URL after deployment
@@ -69,12 +71,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-6">
-              <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider">
-                Descoperă
-              </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-                Ce este Oradea Music Lab?
-              </h2>
+              <SectionHeading kicker="Descoperă" title="Ce este Oradea Music Lab?" />
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
                 <p>Oradea Music Lab este un eveniment bilunar care aduce împreună tineri aspiranți muzicieni și artiști consacrați din Oradea, creând o seară educativă și distractivă.</p>
                 <p>
@@ -98,12 +95,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-12 md:mb-16">
-              <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
-                Structura evenimentului
-              </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-                Cum funcționează?
-              </h2>
+              <SectionHeading kicker="Structura evenimentului" title="Cum funcționează?" kickerClassName="mb-3" />
             </div>
           </ScrollReveal>
 
@@ -129,22 +121,7 @@ const Index = () => {
             description: "Moment de conectare și networking între participanți.",
             number: "04"
           }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
-                <Card className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full">
-                  <CardContent className="p-6 pt-8">
-                    <div className="absolute top-4 right-4 text-4xl font-display font-bold text-primary/10">
-                      {item.number}
-                    </div>
-                    <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                      <item.icon className="w-7 h-7 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-display font-semibold text-foreground mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {item.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} />
               </ScrollReveal>)}
           </div>
         </div>
@@ -155,12 +132,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-12 md:mb-16">
-              <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">
-                Filozofia noastră
-              </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-                De ce suntem diferiți?
-              </h2>
+              <SectionHeading kicker="Filozofia noastră" title="De ce suntem diferiți?" kickerClassName="mb-3" />
             </div>
           </ScrollReveal>
 
@@ -190,19 +162,7 @@ const Index = () => {
             title: "Comunitate",
             description: "Conexiuni reale între generații de muzicieni."
           }].map((item, index) => <ScrollReveal key={index} delay={index * 80}>
-                <div className="flex items-start gap-4 p-5 bg-background rounded-xl shadow-sm hover:shadow-md transition-shadow h-full">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                    <item.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-semibold text-foreground mb-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" />
               </ScrollReveal>)}
           </div>
         </div>
