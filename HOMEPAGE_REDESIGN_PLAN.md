@@ -629,9 +629,17 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
     + puls CSS ambiental (`motion-safe:animate-blob-drift`, reosit), opacitate 30-40% ca să
     rămână decor, nu accent principal. `pointer-events-none` + `aria-hidden`. Respectă
     `prefers-reduced-motion`.
-- [ ] Restul asset-urilor discutate: blob-uri de fundal îmbunătățite (homepage + alte pagini),
-  intro/loading animation cu logo, variantă de logo pt fundal închis (footer + eventual header
-  transparent peste Hero) — de continuat.
+- [x] **Intro/logo animation la prima intrare pe site** (FĂCUT 2026-08-27): clientul a
+  generat videoclipul chiar el, pe higgsfield.ai (unde unlimited-ul chiar funcționează, spre
+  deosebire de acest MCP), și l-a predat prin `~/Downloads`. Verificat vizual (ffprobe + cadre
+  extrase) înainte de integrare — 1280x720, 4s, ~1.3MB, exact conform ideii inițiale: vinilul
+  se rotește, notele zboară, se asamblează în wordmark. `IntroOverlay.tsx` (nou) + montat în
+  `App.tsx` (rădăcină, nu `Layout.tsx`, ca să nu reapară la fiecare navigare) — implementează
+  strict cerințele scrise mai sus: o dată per sesiune, skippabil, `prefers-reduced-motion`,
+  fail-safe 5s.
+- [ ] Restul asset-urilor discutate: fundal video pt pagina Echipă (client generează, listă de
+  specificații dată), fundal video pt "Cum funcționează"/"Edițiile noastre" (opțional), variantă
+  de logo pt fundal închis (footer + eventual header transparent peste Hero) — de continuat.
 - [x] **Zoom (Ken Burns) pe pozele echipei — din COD, nu Higgsfield** (FĂCUT 2026-08-27):
   clientul a redeschis subiectul (confirmat "includem și portretele echipei acum") și a cerut
   să încercăm Seedance 2.0 Mini Unlimited pt animație video reală. **Limitare tehnică reală
