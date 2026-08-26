@@ -444,7 +444,20 @@ comune tuturor paginilor:
   Higgsfield — Higgsfield rămâne rezervat pt asset-uri vizuale generate, la Faza 15, aplicat
   coerent pe tot site-ul odată ce structura/codul tuturor paginilor e stabil (nu bucată cu
   bucată, ca să nu existe risc de neconcordanță stilistică sau regenerare irosită).
-- [ ] 14.3 — Pagina Evenimente (`Event.tsx`)
+  **Iterație 3 (2026-08-27) — refacere de LAYOUT, nu doar mișcare adăugată peste structura
+  veche**: client a cerut explicit ca layout-ul să fie compatibil cu tipul de site imersiv cu
+  scroll (nu doar animații puse peste un grid neschimbat). "Cum funcționează?" a trecut din grid
+  4 coloane (cu linie orizontală) în **parcurs vertical** (coloană unică, `max-w-2xl mx-auto`) —
+  o linie VERTICALĂ (mai natural pt o pagină ce scrolează pe verticală, spre deosebire de linia
+  orizontală de dinainte, care era un pic artificială) se umple pe măsură ce cobori
+  (`scaleY` legat de scroll), fiecare pas (icon-blob + "PASUL 0N" + titlu + descriere, rând
+  orizontal, nu card vertical) capătă opacitate deplină pe rând, decalat, în dreptul liniei care
+  avansează (4 `useTransform` fixe, unul per pas — numărul de pași e constant, respectă regulile
+  hook-urilor React). `IconBlob` a fost exportat din `ProcessStepCard.tsx` ca să fie refolosit
+  direct aici. "De ce suntem diferiți" a rămas neschimbat structural (bento + `ScrollReveal`
+  fade-once) — motivul: NU e conținut secvențial (sunt valori independente, paralele), deci
+  tiparul "poveste de scroll" nu i se potrivește conceptual, spre deosebire de "Cum funcționează"
+  care chiar e o secvență de pași reali.
 - [ ] 14.4 — Despre Noi (`About.tsx`)
 - [ ] 14.5 — Echipă (`Team.tsx`)
 - [ ] 14.6 — Contact (`Contact.tsx`)

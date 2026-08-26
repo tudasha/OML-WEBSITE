@@ -27,7 +27,9 @@ interface ProcessStepCardProps {
   blobRotate?: number;
 }
 
-const IconBlob = ({ icon: Icon, rotate = 0, size = "md" }: { icon: LucideIcon; rotate?: number; size?: "md" | "lg" }) => {
+// Exportat — refolosit direct și în afara acestui component (ex. layout-ul "parcurs vertical"
+// din Index.tsx, Faza 14.2), nu doar în interiorul ProcessStepCard.
+export const IconBlob = ({ icon: Icon, rotate = 0, size = "md" }: { icon: LucideIcon; rotate?: number; size?: "md" | "lg" }) => {
   const box = size === "lg" ? "w-14 h-14" : "w-12 h-12";
   const iconSize = size === "lg" ? "w-7 h-7" : "w-6 h-6";
   return (

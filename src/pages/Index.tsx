@@ -8,7 +8,7 @@ import Layout from "@/components/Layout";
 import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeading from "@/components/SectionHeading";
-import ProcessStepCard from "@/components/ProcessStepCard";
+import ProcessStepCard, { IconBlob } from "@/components/ProcessStepCard";
 import EventCountdown from "@/components/EventCountdown";
 import { nextEvent, getEventSummary } from "@/data/events";
 import { BLOB_PATH } from "@/lib/blob-shape";
@@ -56,6 +56,14 @@ const Index = () => {
   // apare gata desenată. Pentru reduced motion, arătăm linia completă direct (informația tot
   // trebuie să fie disponibilă, doar fără animație).
   const lineProgress = useTransform(stepsProgress, [0, 1], [0, 1]);
+  // Opacitate per-pas, decalată — fiecare pas "prinde viață" pe rând, pe măsură ce ajunge în
+  // dreptul liniei care se desenează, nu toate deodată. 4 apeluri fixe (nu într-un .map), ca să
+  // respecte regulile hook-urilor React — numărul de pași e cunoscut/constant.
+  const step1Opacity = useTransform(stepsProgress, [0, 0.25], shouldReduceMotion ? [1, 1] : [0.25, 1]);
+  const step2Opacity = useTransform(stepsProgress, [0.2, 0.45], shouldReduceMotion ? [1, 1] : [0.25, 1]);
+  const step3Opacity = useTransform(stepsProgress, [0.4, 0.65], shouldReduceMotion ? [1, 1] : [0.25, 1]);
+  const step4Opacity = useTransform(stepsProgress, [0.6, 0.85], shouldReduceMotion ? [1, 1] : [0.25, 1]);
+  const stepOpacities = [step1Opacity, step2Opacity, step3Opacity, step4Opacity];
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -197,19 +205,22 @@ const Index = () => {
             </div>
           </ScrollReveal>
 
-          {/* Layout "parcurs": cei 4 pași sunt o secvență, nu un grid generic — o linie
-              punctată îi leagă vizual (doar desktop; pe mobil rămân stivuiți simplu). Linia se
-              "desenează" pe măsură ce scrolezi prin secțiune (nu apare gata desenată) — track
-              static dedesubt (foarte discret) + progres real deasupra. */}
-          <div ref={stepsRef} className="relative mb-16 md:mb-24">
-            <div className="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5">
-              <div className="absolute inset-0 border-t-2 border-dashed border-primary/10" />
+          {/* Layout "parcurs vertical" (Faza 14.2, iterație 3) — cei 4 pași sunt o secvență
+              reală, tratați ca o poveste de scroll, nu ca un grid de carduri. O linie VERTICALĂ
+              (nu orizontală — mai natural într-o pagină care scrolează pe verticală) se umple
+              pe măsură ce cobori, iar fiecare pas capătă opacitate deplină pe rând, în dreptul
+              liniei care avansează. Pe mobil rămâne aceeași structură (nu mai are nevoie de o
+              variantă separată — coloana unică e deja tiparul mobil natural). */}
+          <div ref={stepsRef} className="relative max-w-2xl mx-auto mb-16 md:mb-24">
+            <div className="absolute left-7 md:left-8 top-2 bottom-2 w-0.5">
+              <div className="absolute inset-0 bg-primary/10 rounded-full" />
               <motion.div
-                className="absolute inset-0 border-t-2 border-primary/50 origin-left"
-                style={{ scaleX: shouldReduceMotion ? 1 : lineProgress }}
+                className="absolute inset-x-0 top-0 bg-primary rounded-full origin-top h-full"
+                style={{ scaleY: shouldReduceMotion ? 1 : lineProgress }}
               />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div className="space-y-12 md:space-y-16">
               {[{
               icon: Mic,
               title: "Concert Live",
@@ -230,9 +241,24 @@ const Index = () => {
               title: "Socializare & Pizza",
               description: "Moment de conectare și networking între participanți.",
               number: "04"
-            }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
-                  <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="flat" blobRotate={index * 47} />
-                </ScrollReveal>)}
+            }].map((item, index) => (
+                <motion.div key={index} style={{ opacity: stepOpacities[index] }} className="relative flex items-start gap-5 md:gap-6">
+                  <div className="relative z-10 shrink-0 bg-background">
+                    <IconBlob icon={item.icon} rotate={index * 47} size="lg" />
+                  </div>
+                  <div className="pt-2">
+                    <span className="text-xs font-display font-bold text-primary/50 tracking-widest">
+                      PASUL {item.number}
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-display font-bold text-foreground mt-1 mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed max-w-md">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
 
