@@ -28,15 +28,21 @@ function getTimeParts(targetDate: Date): TimeParts | null {
 }
 
 const EventCountdown = ({ event, className }: EventCountdownProps) => {
-  const target = new Date(`${event.isoDate}T00:00:00`);
-  const [parts, setParts] = useState<TimeParts | null>(() => getTimeParts(target));
+  // event.isoDate (string) e dependența stabilă pt useEffect — un `new Date(...)` reconstruit
+  // direct în corpul componentei ar fi un obiect nou la fiecare randare, declanșând efectul
+  // inutil de des (ESLint react-hooks/exhaustive-deps semnalează exact asta).
+  const [parts, setParts] = useState<TimeParts | null>(() =>
+    getTimeParts(new Date(`${event.isoDate}T00:00:00`))
+  );
 
   useEffect(() => {
+    const target = new Date(`${event.isoDate}T00:00:00`);
+    setParts(getTimeParts(target));
     // Actualizare la fiecare minut e suficient pentru un countdown pe zile/ore/minute —
     // nu are rost un interval mai des, doar consumă resurse degeaba.
     const id = setInterval(() => setParts(getTimeParts(target)), 60_000);
     return () => clearInterval(id);
-  }, [target]);
+  }, [event.isoDate]);
 
   if (!parts) {
     return <p className={className}>Urmează în curând</p>;

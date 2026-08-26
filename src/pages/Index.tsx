@@ -66,6 +66,7 @@ const Index = () => {
             loop
             playsInline
             preload="auto"
+            aria-hidden="true"
           />
         </div>
         {/* Overlay */}
