@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Instagram, Send, Heart } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import Layout from "@/components/Layout";
 import { z } from "zod";
@@ -27,6 +28,7 @@ const contactSchema = z.object({
 });
 
 const Contact = () => {
+  const shouldReduceMotion = useReducedMotion();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -112,7 +114,12 @@ const Contact = () => {
       <section className="py-16 md:py-24 section-cream">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            {/* Contact Form */}
+            {/* Contact Form — intrare din stânga (Faza 14.6) */}
+            <motion.div
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
             <Card className="border-0 shadow-xl">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-display font-bold text-foreground mb-6">
@@ -160,7 +167,7 @@ const Contact = () => {
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full bg-primary hover:bg-primary/90 text-white"
+                    className="w-full bg-primary hover:bg-primary/90 text-foreground"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -175,9 +182,15 @@ const Contact = () => {
                 </form>
               </CardContent>
             </Card>
+            </motion.div>
 
-            {/* Contact Info */}
-            <div className="space-y-8">
+            {/* Contact Info — intrare din dreapta (Faza 14.6) */}
+            <motion.div
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
               <div>
                 <h2 className="text-2xl font-display font-bold text-foreground mb-4">
                   Informații de contact
@@ -235,7 +248,7 @@ const Contact = () => {
                   </p>
                 </CardContent>
               </Card>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
