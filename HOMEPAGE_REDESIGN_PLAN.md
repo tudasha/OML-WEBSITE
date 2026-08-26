@@ -489,6 +489,14 @@ comune tuturor paginilor:
   NU a primit mișcare suplimentară dincolo de comportamentul scroll-aware din 14.1 — decizie
   deliberată: e chrome persistent (vizibil tot timpul), nu conținut de scroll-through, iar prea
   multă animație acolo ar distrage, nu ar ajuta.
+  **Iterație 5 (2026-08-27) — panoul "Următorul eveniment" se dizolvă în Instagram**: client a
+  semnalat că panoul pare "nelalocul lui" — tăietură bruscă între secțiunile luminoase din jur.
+  Rezolvat cu tipar "sticky dissolve": secțiunea devine wrapper înalt (`md:h-[170vh]`), cardul
+  rămâne `md:sticky md:top-0 md:h-screen` cât scrolezi prin el, apoi opacitate+scale (4 puncte
+  de control pe `useTransform`) îl fac să se micșoreze și să dispară exact când Instagram-ul
+  (următoarea secțiune, în flux normal) alunecă peste el — la finalul scrolului rămâne doar
+  Instagram vizibil, cum a cerut clientul. Doar desktop; mobil degradează la fade in/out simplu
+  (sticky/scroll-jacking mai puțin fiabil pe ecrane mici).
 - [x] **14.3 — Pagina Evenimente (`Event.tsx` + `events.ts`)** (FĂCUT 2026-08-27): "Edițiile
   noastre" (IV→III→II→I) erau 4 secțiuni JSX copiate aproape identic, cu alternanță cream/alb
   fără sens real — restructurat complet:
