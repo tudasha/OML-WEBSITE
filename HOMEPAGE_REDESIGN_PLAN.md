@@ -645,9 +645,24 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
   `App.tsx` (rădăcină, nu `Layout.tsx`, ca să nu reapară la fiecare navigare) — implementează
   strict cerințele scrise mai sus: o dată per sesiune, skippabil, `prefers-reduced-motion`,
   fail-safe 5s.
-- [ ] Restul asset-urilor discutate: fundal video pt pagina Echipă (client generează, listă de
-  specificații dată), fundal video pt "Cum funcționează"/"Edițiile noastre" (opțional), variantă
-  de logo pt fundal închis (footer + eventual header transparent peste Hero) — de continuat.
+- [x] **Fundal video pentru pagina Echipă** (FĂCUT 2026-08-27): client a generat singur
+  (Seedance, higgsfield.ai) — blob-uri organice portocalii care morfează, note și scântei, pe
+  fundal deschis. Verificat vizual (ffprobe + cadre) înainte de integrare: 1280x720, 5s,
+  ~1.7MB. `src/assets/decor/team-bg.mp4`.
+  **Corectare tehnică importantă (2026-08-27)**: prima încercare a folosit `sticky`, care
+  rămâne fixă DOAR în interiorul propriei secțiuni, nu peste tot cât scrolezi prin conținut —
+  greșeală reală, semnalată de client ("nu văd animația de scrolare"). Corectat cu
+  `position: fixed` (relativ la ecran, nu la pagină) — rămâne literal neclintit indiferent cât
+  scrolezi, mult mai simplu decât hack-ul anterior cu `-mb-[100vh]`. În plus, secțiunile
+  membrilor aveau fundaluri aproape opace (`/90`) peste un video la doar `opacity-10` — se
+  anulau reciproc practic complet (client: "backgroundurile actuale nu prea au rost", corect).
+  Eliminate fundalurile de secțiune; video la `opacity-25`; textul bio primește acum propriul
+  card de lizibilitate (`bg-white/95 rounded-2xl`) în loc ca toată secțiunea să fie opacă —
+  video-ul rămâne vizibil în jurul cardurilor.
+- [ ] Restul asset-urilor discutate: fundal video pt panoul "Următorul eveniment" (prompt nou
+  dat, orientat pe vibe de anticipare/scenă, nu decor ambiental calm — client generează),
+  fundal video pt "Cum funcționează"/"Edițiile noastre" (opțional), variantă de logo pt fundal
+  închis (footer + eventual header transparent peste Hero) — de continuat.
 - [x] **Zoom (Ken Burns) pe pozele echipei — din COD, nu Higgsfield** (FĂCUT 2026-08-27):
   clientul a redeschis subiectul (confirmat "includem și portretele echipei acum") și a cerut
   să încercăm Seedance 2.0 Mini Unlimited pt animație video reală. **Limitare tehnică reală
