@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import Donate from "./pages/Donate";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import IntroOverlay from "./components/IntroOverlay";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -30,6 +31,9 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      {/* Montat o singură dată la rădăcină (nu în Layout, care se remontează la fiecare
+          navigare) — apare o singură dată per sesiune de navigare, vezi IntroOverlay.tsx. */}
+      <IntroOverlay />
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
