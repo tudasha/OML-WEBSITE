@@ -383,15 +383,26 @@ migrațiile din `supabase/migrations/`, cu RLS configurat corect pentru insert p
 rândul nou apărut în `contact_submissions` (Supabase dashboard) → verifică primirea email-ului
 la `oradeamusiclab@gmail.com`.
 
-### Faza 14 — Redesign vizual complet al ÎNTREGULUI site (nu doar homepage) + curățenie emoji · *Execută: Claude (Higgsfield pt asset-uri) + Antigravity (aplicare cod), ULTERIOR*
+### Faza 14 — Refacere de LAYOUT pe ÎNTREGUL site, compatibil cu tip de site imersiv-scrolabil + curățenie emoji · *Execută: Claude (cod), ULTERIOR*
 
-**Adăugată 2026-08-26, la cererea clientului**: extinde scope-ul fostei "Faza 14 — Higgsfield"
-(acum devine Faza 15 mai jos) de la "doar decor pe homepage" la **un redesign vizual al
-întregului site** — toate paginile (`Index`, `Event`, `About`, `Team`, `Contact`, `Donate`,
-`Register`), nu doar `Index.tsx`. Direcția de stil e cea deja stabilită și confirmată explicit
-de client (vezi Faza 4B): **morfism modern + stil Kurzgesagt** (ilustrație vectorială flat,
-opacă, fără glassmorphism), cu **animații la scrolare** (extensie a `ScrollReveal.tsx` deja
-existent, posibil cu asset-uri/tranziții generate via Higgsfield).
+**Adăugată 2026-08-26, extinsă/clarificată 2026-08-27, la cererea clientului.**
+
+**Graniță explicită între Faza 14 și Faza 15 (stabilită 2026-08-27, de respectat strict)**:
+- **Faza 14 = STRUCTURĂ/LAYOUT.** Cum e organizat conținutul pe pagină, ca să funcționeze
+  pentru un site imersiv-scrolabil (secvențe verticale pt conținut secvențial, ierarhie
+  vizuală reală, fără glassmorphism, contrast corect, mecanica de scroll — paralaxă, linii care
+  se desenează — via `framer-motion`, deja dependință). E COD, nu are nevoie de Higgsfield.
+- **Faza 15 = ANIMAȚII/DESIGN generate.** Asset-urile vizuale propriu-zise (decor organic,
+  intro cu logo, orice altceva generat) via Higgsfield, aplicate DUPĂ ce layout-ul de la Faza 14
+  e stabil pe tot site-ul — ca să nu existe risc de neconcordanță sau regenerare irosită.
+
+Scope Faza 14: toate paginile (`Index`, `Event`, `About`, `Team`, `Contact`, `Donate`,
+`Register`), nu doar `Index.tsx`. Direcția de stil rămâne cea confirmată la Faza 4B: morfism +
+Kurzgesagt flat, fără glassmorphism, contrast ajustabil în aceeași paletă. Layout-ul concret,
+per pagină, se decide la execuția fiecărei sub-faze (14.1-14.8) — pt conținut SECVENȚIAL
+(pași, cronologie), tiparul e un parcurs vertical cu progres legat de scroll (vezi 14.2,
+iterația 3, "Cum funcționează?"); pt conținut PARALEL/independent, ierarhie vizuală (bento) +
+reveal simplu, fără să forțăm un tipar secvențial unde nu se potrivește conceptual.
 
 **Curățenie emoji — inventar concret găsit în cod (2026-08-26, de reverificat că e complet la
 momentul execuției, poate mai apar altele între timp):**
@@ -487,12 +498,17 @@ comune tuturor paginilor:
   (text cu `--foreground` pe fundal `--primary` → ~9.4:1) rămâne în aceeași paletă, deci e o
   opțiune validă conform acestei permisiuni.
 
-### Faza 15 — Animații decorative cu Higgsfield (homepage) · *Execută: Claude (sesiune cu Higgsfield), ULTERIOR — ultima fază*
+### Faza 15 — Animații/design generate cu Higgsfield, pe tot site-ul · *Execută: Claude (sesiune cu Higgsfield), ULTERIOR — ultima fază*
 
-**Nu face parte din scope-ul curent — se lucrează abia după ce Fazele 0-6 sunt terminate și
-verificate.** Antigravity nu are acces la Higgsfield (e disponibil doar într-o sesiune Claude
-Code cu acest MCP conectat), deci materialele se generează separat, apoi se predau ca fișiere
-gata făcute (imagini/video/SVG) pe care Antigravity le integrează în cod.
+**Graniță cu Faza 14, vezi mai sus**: Faza 14 = layout/structură (cod, fără Higgsfield); Faza 15
+= asset-urile vizuale generate propriu-zise, aplicate DUPĂ ce layout-ul e stabil pe toate
+paginile — nu doar homepage, scope-ul s-a extins odată cu Faza 14. Include și specificația
+"intro/loading animation cu logo" notată mai jos.
+
+Nu face parte din scope-ul curent — se lucrează abia după ce toate sub-fazele 14.x sunt
+terminate și verificate. Antigravity nu are acces la Higgsfield (e disponibil doar într-o
+sesiune Claude Code cu acest MCP conectat), deci materialele se generează separat, apoi se
+predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integrează în cod.
 
 Scop: „morfism dinamic" al site-ului prin decor abstract — NU fotografii/video ale unor
 evenimente/persoane false. Poze și video-uri reale de la evenimente rămân un subiect separat,
