@@ -498,11 +498,25 @@ comune tuturor paginilor:
     curând" în loc de "Invalid Date").
   - Contrast corectat (`text-white` → `text-foreground` pe `bg-primary`) pe linkul de
     înregistrare și pe nodurile cu cifra ediției.
-- [ ] 14.4 — Despre Noi (`About.tsx`)
-- [ ] 14.5 — Echipă (`Team.tsx`)
-- [ ] 14.6 — Contact (`Contact.tsx`)
-- [ ] 14.7 — Donează (`Donate.tsx`)
-- [ ] 14.8 — Înregistrare (`Register.tsx`)
+- [x] **14.4 — Despre Noi (`About.tsx`)** (FĂCUT 2026-08-27): pagina era un bloc de text foarte
+  lung, fără niciun element vizual — adăugat decor organic + intrare legată de scroll, fără să
+  ating niciun cuvânt. "Valorile noastre" foloseau emoji (💪📚🤝🙏🎵) ca iconițe, deși fiecare
+  valoare avea deja un icon Lucide importat dar nefolosit — curățenie emoji (parte din scope-ul
+  Faza 14) + trecut pe `ProcessStepCard`/`IconBlob`, consecvent cu restul site-ului.
+- [x] **14.5 — Echipă (`Team.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe 3 pill-uri de rol
+  (moșteneau `text-white` de la părinte). Stagger la intrare pe grid (`whileInView`). Panourile
+  custom de hover/click rămase neschimbate — deja distinctive și funcționale.
+- [x] **14.6 — Contact (`Contact.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe butonul de
+  submit. Formularul și panoul de info intră din direcții opuse (stânga/dreapta).
+- [x] **14.7 — Donează (`Donate.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe CTA. Icon-urile
+  „De ce să donezi?" (cutii pătrate) → `IconBlob`, consecvent cu restul site-ului. Reveal-ul
+  existent (era deja acolo) a primit garda `prefers-reduced-motion` care lipsea.
+- [x] **14.8 — Înregistrare (`Register.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe 3
+  butoane. Reparate și 2 erori de lint pre-existente găsite pe drum (`catch (err: any)`,
+  `let` nereasignat).
+
+**Toate sub-fazele 14.1-14.8 sunt complete (2026-08-27).** Faza 14 (layout imersiv-scrolabil,
+pe tot site-ul) e închisă. Rămâne Faza 15 (Higgsfield — asset-uri vizuale generate).
 
 **Notițe de stil suplimentare de la client (2026-08-26), de urmat la execuție:**
 - **Animații la scrolare** cu ajutorul Higgsfield (asset-uri generate reacționează la scroll,
