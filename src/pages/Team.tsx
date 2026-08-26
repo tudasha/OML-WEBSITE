@@ -135,21 +135,22 @@ const Team = () => {
           pointer-events-none), cu puls CSS ambiental + paralaxă legată de scroll, ca peste tot
           pe site. Poziții fixe (procent din înălțimea totală a wrapper-ului), nu urmăresc un
           anumit membru. */}
+      {/* Video ambiental — position:fixed (nu sticky!), relativ la ECRAN, nu la secțiune —
+          rămâne literal neclintit cât scrolezi prin tot conținutul de mai jos, exact ca un
+          fundal fix. z-index negativ, deci pictează sub tot conținutul normal al paginii;
+          scapă de overflow-hidden al wrapper-ului de mai jos (fixed nu e prins de el, doar
+          absolute/relative sunt). */}
+      <video
+        src={teamBgVideo}
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+        className="fixed inset-0 -z-10 w-full h-full object-cover opacity-25 motion-reduce:hidden pointer-events-none"
+      />
+
       <div className="relative overflow-hidden">
-        {/* Video ambiental — sticky, foarte discret (opacity-10), rămâne "ancorat" cât scrolezi
-            prin toată pagina. Secțiunile de mai jos devin ușor translucide (bg-background/90,
-            section-cream/90) ca video-ul să se vadă foarte slab prin ele, fără să afecteze
-            lizibilitatea textului. */}
-        <div className="sticky top-0 h-screen w-full -mb-[100vh] pointer-events-none" aria-hidden="true">
-          <video
-            src={teamBgVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover opacity-10 motion-reduce:hidden"
-          />
-        </div>
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <motion.img
             alt=""
@@ -192,16 +193,21 @@ const Team = () => {
         {teamStory.map((member, index) => {
         const reversed = index % 2 === 1;
         return (
-          <section key={member.name} className={cn("relative py-16 md:py-24", index % 2 === 0 ? "bg-background/90" : "bg-[hsl(40,30%,97%)]/90")}>
+          <section key={member.name} className="relative py-16 md:py-24">
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start max-w-5xl mx-auto">
                 <StickyMemberPhoto photo={member.photo} name={member.name} reversed={reversed} shouldReduceMotion={!!shouldReduceMotion} />
 
+                {/* Card propriu de lizibilitate (nu toată secțiunea opacă) — video-ul de fundal
+                    rămâne vizibil în jurul lui, textul rămâne perfect lizibil deasupra lui. */}
                 <motion.div
                   initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className={cn("space-y-4", reversed && "md:order-1")}
+                  className={cn(
+                    "space-y-4 bg-white/95 rounded-2xl p-6 md:p-8 shadow-lg",
+                    reversed && "md:order-1"
+                  )}
                 >
                   <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium">
                     {member.role}
@@ -219,8 +225,9 @@ const Team = () => {
         );
       })}
 
-      {/* Restul echipei — fără bio, card compact, nu o secțiune de scroll */}
-      <section className="relative py-16 md:py-20 bg-background/90">
+      {/* Restul echipei — fără bio, card compact, nu o secțiune de scroll. Fără fundal opac pe
+          secțiune — cardurile individuale (bg-white) rămân lizibile peste video-ul de fundal. */}
+      <section className="relative py-16 md:py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-sm mx-auto">
             {restOfTeam.map((member) => (
@@ -240,8 +247,8 @@ const Team = () => {
             ))}
           </div>
 
-          {/* Team message */}
-          <div className="max-w-2xl mx-auto mt-16 text-center">
+          {/* Team message — propriul card de lizibilitate, ca la bio-urile de mai sus */}
+          <div className="max-w-2xl mx-auto mt-16 text-center bg-white/95 rounded-2xl p-6 md:p-8 shadow-lg">
             <p className="text-muted-foreground text-lg leading-relaxed">
               Oradea Music Lab este construit de liceeni pasionați de muzică și
               comunitate. Credem că vârsta nu este o barieră pentru a face lucruri
