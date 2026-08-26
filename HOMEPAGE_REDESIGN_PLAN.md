@@ -158,6 +158,44 @@ mișcare, mai puțin prin bloc de text.
   vectorizarea logo-ului în SVG și/sau generare Higgsfield — asta trece în Faza 14, nu aici;
   varianta CSS de mai sus e suficientă pentru un prim pas "viu, dar discret".
 
+### Faza 4B — Redesign fluid/organic: „Cum funcționează?" + „De ce suntem diferiți?" · *Execută: Claude (CSS/SVG, fără Higgsfield) — FĂCUT 2026-08-26*
+
+Reacție la feedback: cele două secțiuni (4 carduri + 6 rânduri, una după alta) erau prea
+aglomerate. Direcție aleasă de client, dintre mai multe variante cercetate (glassmorphism,
+bento grid, forme organice — trenduri 2026 confirmate: [Envato](https://elements.envato.com/learn/web-design-trends),
+[Design Deluxe](https://designdeluxe.in/web-design-trends-2026-with-organic-shapes/)):
+**secțiune unică, fluidă**, cu fundal organic și carduri "glass".
+
+**Ce s-a schimbat tehnic:**
+- Cele două `<section>` separate (`Cum funcționează?` + `De ce suntem diferiți?`) au devenit
+  UNA singură în `Index.tsx`, pe fundal `bg-background` (alb) — păstrează alternanța macro
+  Hero(dark)→cream→alb→hero(dark)→cream, doar cele două secțiuni foste separate s-au unit.
+- Fundal organic: 3 blob-uri circulare blurate (`blur-3xl`, `bg-primary/10`–`/15`, poziționate
+  absolut), cu mișcare lentă de 20s (`blob-drift` keyframe nou în `tailwind.config.ts`),
+  aplicată prin `motion-safe:animate-blob-drift` — se dezactivează AUTOMAT pentru
+  `prefers-reduced-motion` (varianta Tailwind `motion-safe:` face asta nativ, fără cod
+  suplimentar).
+- `ProcessStepCard.tsx` a primit un prop nou, **`tone`** (`"solid"` implicit / `"glass"`),
+  independent de `variant` (care rămâne despre layout numbered/compact): `tone="glass"` =
+  `bg-white/80 backdrop-blur-md border border-white/60` — opacitate 80% aleasă explicit ca să
+  nu scadă contrastul textului sub pragul de accesibilitate (relevant pentru Faza 5).
+- Ambele grupuri de carduri (Cum funcționează + De ce suntem diferiți) folosesc acum
+  `tone="glass"`.
+
+**Notă importantă**: asta modifică parțial regula "tonul general (dark hero + secțiuni cream
+alternante) nu se schimbă" din capul planului — dar e o decizie explicită a clientului din
+discuție (2026-08-26), nu o abatere neanunțată. Se aplică DOAR la aceste două secțiuni; restul
+paginii (Ce este OML, Preview eveniment, Instagram) rămâne cu alternanța cream/dark neschimbată.
+
+**Relația cu Faza 14 (Higgsfield)**: fundalul organic de acum e varianta CSS/gratuită a
+"morfismului" discutat pentru Faza 14 — la momentul potrivit, Higgsfield poate îmbunătăți/
+înlocui blob-urile CSS cu ceva generat, în ACELAȘI loc din cod, nu se reconstruiește nimic.
+
+**De verificat la Faza 5 (accesibilitate/performanță), specific pentru asta**: contrast text pe
+`bg-white/80` + blur (probabil OK, dar de confirmat cu un audit real), și impactul de
+performanță al celor 3 blob-uri blurate + animate pe mobil de gamă joasă (Lighthouse ≥ 90 e
+ținta existentă, trebuie re-verificată după acest add-on, nu presupusă).
+
 ### Faza 9 — Instagram feed live-sincronizat, nu mai hardcodat · *Execută: Claude (backend), Antigravity (UI)* · **Decizie luată: Opțiunea B (Graph API + Supabase)**
 
 **Stare azi (verificat în cod)**: `src/components/InstagramFeed.tsx` are un array hardcodat

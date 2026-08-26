@@ -90,16 +90,24 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Cum funcționează Section */}
-      <section className="py-20 md:py-28 bg-background">
-        <div className="container mx-auto px-4">
+      {/* Cum funcționează + De ce suntem diferiți — secțiune unică, fluidă (Faza 4B) */}
+      <section className="relative py-20 md:py-28 bg-background overflow-hidden">
+        {/* Fundal organic: blob-uri blurate, culoarea de brand, mișcare lentă — dezactivată
+            automat pentru utilizatorii cu prefers-reduced-motion prin varianta motion-safe: */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="absolute -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-primary/15 blur-3xl motion-safe:animate-blob-drift" />
+          <div className="absolute top-1/3 -right-32 w-[24rem] h-[24rem] rounded-full bg-primary/10 blur-3xl motion-safe:animate-blob-drift [animation-delay:-7s]" />
+          <div className="absolute bottom-0 left-1/4 w-[20rem] h-[20rem] rounded-full bg-primary/10 blur-3xl motion-safe:animate-blob-drift [animation-delay:-14s]" />
+        </div>
+
+        <div className="container mx-auto px-4 relative">
           <ScrollReveal>
             <div className="text-center mb-12 md:mb-16">
               <SectionHeading kicker="Structura evenimentului" title="Cum funcționează?" kickerClassName="mb-3" />
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 md:mb-24">
             {[{
             icon: Mic,
             title: "Concert Live",
@@ -121,15 +129,10 @@ const Index = () => {
             description: "Moment de conectare și networking între participanți.",
             number: "04"
           }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} />
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="glass" />
               </ScrollReveal>)}
           </div>
-        </div>
-      </section>
 
-      {/* De ce suntem diferiți Section */}
-      <section className="py-20 md:py-28 section-cream-dark">
-        <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-12 md:mb-16">
               <SectionHeading kicker="Filozofia noastră" title="De ce suntem diferiți?" kickerClassName="mb-3" />
@@ -162,7 +165,7 @@ const Index = () => {
             title: "Comunitate",
             description: "Conexiuni reale între generații de muzicieni."
           }].map((item, index) => <ScrollReveal key={index} delay={index * 80}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" />
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" tone="glass" />
               </ScrollReveal>)}
           </div>
         </div>
