@@ -513,8 +513,21 @@ comune tuturor paginilor:
   valoare avea deja un icon Lucide importat dar nefolosit — curățenie emoji (parte din scope-ul
   Faza 14) + trecut pe `ProcessStepCard`/`IconBlob`, consecvent cu restul site-ului.
 - [x] **14.5 — Echipă (`Team.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe 3 pill-uri de rol
-  (moșteneau `text-white` de la părinte). Stagger la intrare pe grid (`whileInView`). Panourile
-  custom de hover/click rămase neschimbate — deja distinctive și funcționale.
+  (moșteneau `text-white` de la părinte). Stagger la intrare pe grid (`whileInView`).
+  **Iterație 2 (2026-08-27), la cererea clientului — bio-urile "care în mod normal ar apărea cu
+  hover" să devină imersive/scrolabile**: rescris complet modelul de interacțiune. Bio-urile
+  erau ascunse până interactionai (hover pe desktop → panou lateral cu poziționare dinamică
+  stânga/dreapta; click pe mobil → modal) — logică custom complexă (`hoveredState`,
+  `lockedState`, `getPanelPositionClasses`, `getAnimationX`, `AnimatePresence`). Înlocuit cu:
+  fiecare membru cu bio (Madi, Alessio, Alexia, Claudiu) devine propria secțiune, cu poza
+  **sticky** (același tipar "sticky figure" ca la posterul din `Event.tsx`) cât bio-ul
+  scrolează pe lângă ea, alternând stânga/dreapta pe rând, fundal alternant cream/alb. Bio-ul e
+  acum vizibil direct, nu ascuns — mai accesibil, nu doar mai "imersiv". Octavian (fără bio) nu
+  intră în secvența de scroll — nu are sens fără text de parcurs — rămâne un card compact la
+  final. Poze folosite: cele deja existente în `src/assets/team/` — generarea Higgsfield
+  propriu-zisă (eventual decor în spatele fiecărei secțiuni) rămâne la Faza 15, conform
+  secvențierii deja stabilite, layout-ul e pregătit s-o primească. Cod net mai simplu (bundle
+  JS a scăzut, nu a crescut — toată logica de poziționare a panourilor a dispărut).
 - [x] **14.6 — Contact (`Contact.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe butonul de
   submit. Formularul și panoul de info intră din direcții opuse (stânga/dreapta).
 - [x] **14.7 — Donează (`Donate.tsx`)** (FĂCUT 2026-08-27): contrast corectat pe CTA. Icon-urile
