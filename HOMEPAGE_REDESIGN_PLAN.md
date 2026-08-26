@@ -434,6 +434,15 @@ comune tuturor paginilor:
   organic flat decorativ (reosit `BLOB_PATH`) + wordmark-ul "OML" cu accent de culoare pe "M"
   (logo-ul PNG are fundal alb copt în imagine, nu merge pe fundal închis fără o variantă nouă —
   de generat la Faza 15 dacă se dorește logo real în footer, nu text).
+  **Completare (2026-08-27), la cererea explicită a clientului — "și meniul să fie
+  restructurat"**: navigarea desktop primește un indicator animat (`layoutId` din
+  framer-motion) care alunecă fluid între linkuri la schimbarea rutei, nu doar apare/dispare
+  instant; cele 2 butoane CTA capătă `hover:scale-105`; meniul mobil a fost rescris de la un
+  toggle CSS simplu (opacity/visibility) la `AnimatePresence` + `motion.nav` cu
+  `staggerChildren` — linkurile apar eșalonat, nu toate deodată. **Header complet transparent
+  peste Hero (tipar comun pe site-uri imersive) rămâne blocat**: logo-ul PNG are fundal alb
+  copt în imagine, ar arăta ca un pătrat alb plutind pe fundal închis — necesită o variantă de
+  logo nouă (transparentă/pentru fundal închis), notată pentru Faza 15.
 - [x] **14.2 — Homepage (`Index.tsx` + `InstagramFeed.tsx`)** (FĂCUT 2026-08-27): găsit și
   reparat glassmorphism real (nu doar contrast) în cardul "Următorul eveniment" —
   `bg-white/5 backdrop-blur` → panou opac flat (`bg-[hsl(240_10%_14%)]`, fără blur); butonul
