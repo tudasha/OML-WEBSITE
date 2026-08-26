@@ -10,7 +10,6 @@ import alessioPhoto from "@/assets/team/alessio-zoica.jpeg";
 import alexiaPhoto from "@/assets/team/alexia-mateas.jpeg";
 import claudiuPhoto from "@/assets/team/claudiu-rostas.jpeg";
 import octavianPhoto from "@/assets/team/octavian-boji.png";
-import voluntariiPhoto from "@/assets/team/voluntarii.jpeg";
 import teamBackground from "@/assets/team/team-background.jpg";
 interface TeamMember {
   name: string;
@@ -184,24 +183,8 @@ const Team = () => {
         </AnimatePresence>
 
         <div className="container mx-auto px-4">
-          {/* Founder & Volunteers - Featured */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
-            {/* Volunteers Card */}
-            <Card className="overflow-hidden border-0 shadow-xl group">
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <img src={voluntariiPhoto} alt="Voluntarii Oradea Music Lab" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <span className="inline-block px-3 py-1 bg-primary rounded-full text-xs font-medium mb-2">
-                    Voluntari
-                  </span>
-                  <h3 className="text-2xl font-display font-bold">
-                    Echipa de Voluntari
-                  </h3>
-                </div>
-              </div>
-            </Card>
-
+          {/* Founder - Featured */}
+          <div className="max-w-sm mx-auto mb-12">
             {/* Founder Card */}
             <Card 
               className={`overflow-hidden border-0 shadow-xl group cursor-pointer ${activeMember?.name === teamMembers[0].name ? "ring-2 ring-primary ring-offset-2" : ""}`}
