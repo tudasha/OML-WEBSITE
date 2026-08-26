@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users, Heart, CalendarX, ImageIcon } from "lucide-react";
 import Layout from "@/components/Layout";
+import { nextEvent } from "@/data/events";
 import heroConcert from "@/assets/hero-concert.png";
 import eventArtists from "@/assets/event-calin-marius.jpg";
 import oml1Concert from "@/assets/oml1-concert.jpg";
@@ -18,6 +19,24 @@ import sunetPentruJasmine from "@/assets/sunet-pentru-jasmine.png";
 import oml3Concert from "@/assets/oml3-concert.jpg";
 import oml3Discussion from "@/assets/oml3-discussion.jpg";
 import oml3Group from "@/assets/oml3-group.jpg";
+
+// Îngroașă automat tema și numele artistului invitat oriunde apar în descriere —
+// echivalentul <strong> hardcodat de dinainte de Faza 1, dar derivat din date, nu repetat manual.
+const highlightTerms = [nextEvent.theme, nextEvent.guestArtist].filter(Boolean) as string[];
+
+function renderWithHighlights(text: string, terms: string[]) {
+  if (terms.length === 0) return text;
+  const pattern = new RegExp(`(${terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g");
+  return text.split(pattern).map((part, i) =>
+    terms.includes(part) ? (
+      <strong key={i} className="text-foreground">
+        {part}
+      </strong>
+    ) : (
+      part
+    )
+  );
+}
 
 const Event = () => {
   return (
@@ -49,49 +68,42 @@ const Event = () => {
                 Următorul eveniment
               </h2>
               <h3 className="text-2xl md:text-3xl font-display font-bold text-primary">
-                Oradea Music Lab IV: Freedom 250
+                {nextEvent.title}
               </h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
                 <img
-                  src="/oml_poster-1.png"
-                  alt="OML IV - 9 Mai - Lokal Oradea"
+                  src={nextEvent.poster}
+                  alt={nextEvent.posterAlt}
                   className="rounded-2xl shadow-2xl w-full"
                 />
               </div>
               <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
-                <p>
-                  Oradea Music Lab revine cu a patra ediție, consolidându-și rolul de platformă dedicată tinerilor unde educația muzicală întâlnește scena într-un mediu sigur și profesionist. Obiectivul nostru rămâne acela de a oferi un context inspirațional în care tinerii artiști să își poată exprima talentul și să își dezvolte abilitățile interpretative fără presiunea unei competiții.
-                </p>
-                <p>
-                  Această ediție este dedicată temei <strong className="text-foreground">Freedom 250</strong>, marcând aniversarea a 250 de ani de independență a Statelor Unite. Provocarea lansată participanților vizează explorarea repertoriului american, singura condiție fiind ca piesele interpretate să aparțină unor artiști sau trupe din SUA. Indiferent de genul muzical abordat, evenimentul va celebra spiritul libertății și diversitatea culturală prin muzică.
-                </p>
-                <p>
-                  Invitații speciali ai serii, trupa <strong className="text-foreground">Naty Loves Monday</strong>, vor susține un concert live urmat de o sesiune de discuții axată pe experiența lor în industria muzicală. Această componentă educativă pregătește terenul pentru Open Mic-ul Scena Tinerilor, unde tineri muzicieni vor urca sub reflectoare. La Oradea Music Lab, accentul cade pe susținerea comunității și pe depășirea tracului, fiecare participant fiind tratat cu respectul cuvenit unui artist, într-un spațiu care încurajează progresul în locul perfecțiunii imediate.
-                </p>
-                <p>
-                  Evenimentul se va încheia într-o notă relaxată, cu o sesiune de networking și pizza pentru toți cei prezenți, spectatori și artiști deopotrivă. Vă invităm să descoperiți noua generație de muzicieni din Oradea și să susțineți talentele locale la această ediție aniversară!
-                </p>
+                {nextEvent.description.map((paragraph, i) => (
+                  <p key={i}>{renderWithHighlights(paragraph, highlightTerms)}</p>
+                ))}
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm pt-2">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-primary shrink-0" />
-                    <span>Sâmbătă, 9 Mai</span>
+                    <span>{nextEvent.dateDisplay}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-primary shrink-0" />
-                    <span>Lokal, Oradea</span>
+                    <span>{nextEvent.location}</span>
                   </div>
-                  <div className="flex items-center gap-2 col-span-2">
-                    <Gift className="w-4 h-4 text-primary shrink-0" />
-                    <span>Tombolă cu premii & Pizza din partea casei</span>
-                  </div>
+                  {nextEvent.extras && (
+                    <div className="flex items-center gap-2 col-span-2">
+                      <Gift className="w-4 h-4 text-primary shrink-0" />
+                      <span>{nextEvent.extras}</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-4">
-                  <Link to="/inregistrare" className="inline-flex w-full justify-center items-center bg-primary text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg">
+                  <Link to={nextEvent.registerLink} className="inline-flex w-full justify-center items-center bg-primary text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg">
                     Înregistrează-te acum
                   </Link>
                 </div>

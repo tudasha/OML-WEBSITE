@@ -6,6 +6,7 @@ import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calen
 import Layout from "@/components/Layout";
 import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
+import { nextEvent, getEventSummary } from "@/data/events";
 
 // Hero video — upload to your own CDN and update this URL after deployment
 const HERO_VIDEO_URL = "/hero_1_compressed.mp4";
@@ -37,8 +38,8 @@ const Index = () => {
           <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
             <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30">Comunitatea muzicală din Oradea</span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
-              Un spațiu sigur unde tinerii își pot exprima{" "}
-              <span className="text-primary">​talentul</span>
+              Un spațiu sigur în care fiecare tânăr este{" "}
+              <span className="text-primary">o vedetă</span>
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
               Învață din greșeli, primește sfaturi de la artiști cu experiență și 
@@ -217,8 +218,8 @@ const Index = () => {
                   <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
                     <div className="shrink-0">
                       <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
-                        <span className="text-2xl font-display font-bold text-primary">9</span>
-                        <span className="text-xs text-white/60">Mai</span>
+                        <span className="text-2xl font-display font-bold text-primary">{nextEvent.day}</span>
+                        <span className="text-xs text-white/60">{nextEvent.month}</span>
                       </div>
                     </div>
                     <div className="flex-1 space-y-3">
@@ -226,15 +227,15 @@ const Index = () => {
                         Următorul eveniment
                       </span>
                       <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
-                        OML IV - cu Naty Loves Monday
+                        OML {nextEvent.edition} — cu {nextEvent.guestArtist}
                       </h3>
-                      <p className="text-white/70">Ne bucurăm să îi avem de data aceasta ca invitați speciali pe Naty Loves Monday! 🎶 O trupă cu energie și personalitate aparte, gata să ne încânte cu un concert live.</p>
+                      <p className="text-white/70">{getEventSummary(nextEvent)}</p>
                       <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
                         <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" /> Lokal, Oradea
+                          <MapPin className="w-4 h-4" /> {nextEvent.location}
                         </span>
                         <span className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" /> 9 Mai
+                          <Calendar className="w-4 h-4" /> {nextEvent.day} {nextEvent.month}
                         </span>
                       </div>
                     </div>
