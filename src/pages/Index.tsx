@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin } from "lucide-react";
@@ -8,14 +8,48 @@ import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeading from "@/components/SectionHeading";
 import ProcessStepCard from "@/components/ProcessStepCard";
+import EventCountdown from "@/components/EventCountdown";
 import { nextEvent, getEventSummary } from "@/data/events";
 import { BLOB_PATH } from "@/lib/blob-shape";
+import heroPoster from "@/assets/hero-concert.png";
 
 // Hero video — upload to your own CDN and update this URL after deployment
 const HERO_VIDEO_URL = "/hero_1_compressed.mp4";
 
 const Index = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // prefers-reduced-motion: nu pornim autoplay pe videoclipul de fundal pentru utilizatorii
+  // care au cerut mișcare redusă — rămân doar cu poster-ul static (hero-concert.png).
+  // Inițializat direct din matchMedia (nu în useEffect), altfel video-ul apucă să pornească
+  // autoplay pentru o clipă înainte să se corecteze — attribute-ul autoPlay din JSX nu oprește
+  // un <video> deja pornit.
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+  // Sticky CTA pe mobil: apare doar după ce utilizatorul a scrolat trecut de Hero.
+  const [showStickyCta, setShowStickyCta] = useState(false);
+
+  useEffect(() => {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onMotionChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+      // Dacă utilizatorul schimbă setarea din mers, oprim/pornim explicit video-ul deja
+      // montat — schimbarea prop-ului autoPlay singură nu are efect asupra unui video pornit.
+      if (videoRef.current) {
+        if (e.matches) videoRef.current.pause();
+        else videoRef.current.play().catch(() => {});
+      }
+    };
+    motionQuery.addEventListener("change", onMotionChange);
+
+    const onScroll = () => setShowStickyCta(window.scrollY > window.innerHeight * 0.6);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      motionQuery.removeEventListener("change", onMotionChange);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return <Layout>
       {/* Hero Section */}
@@ -26,7 +60,8 @@ const Index = () => {
             ref={videoRef}
             className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
             src={HERO_VIDEO_URL}
-            autoPlay
+            poster={heroPoster}
+            autoPlay={!prefersReducedMotion}
             muted
             loop
             playsInline
@@ -230,6 +265,7 @@ const Index = () => {
                           <Calendar className="w-4 h-4" /> {nextEvent.day} {nextEvent.month}
                         </span>
                       </div>
+                      <EventCountdown event={nextEvent} className="pt-3" />
                     </div>
                     <div className="shrink-0">
                       <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto">
@@ -246,6 +282,17 @@ const Index = () => {
 
       {/* Instagram Feed */}
       <InstagramFeed />
+
+      {/* Sticky CTA — doar mobil, apare după ce utilizatorul a trecut de Hero (Faza 3) */}
+      <div
+        className={`md:hidden fixed bottom-0 left-0 right-0 z-40 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-white border-t border-border shadow-lg transition-transform duration-300 ${
+          showStickyCta ? "translate-y-0" : "translate-y-full pointer-events-none"
+        }`}
+      >
+        <Button asChild size="lg" className="w-full bg-primary hover:bg-primary/90 text-white font-semibold">
+          <Link to="/eveniment">Vezi următorul eveniment</Link>
+        </Button>
+      </div>
     </Layout>;
 };
 export default Index;

@@ -18,6 +18,8 @@ export interface EventInfo {
   guestArtist: string;
   /** Data completă, afișabilă (ex. "Sâmbătă, 9 Mai") — folosită pe pagina de evenimente */
   dateDisplay: string;
+  /** Data în format ISO (YYYY-MM-DD), pentru calcule (countdown) — dateDisplay e doar text */
+  isoDate: string;
   /** Ziua numerică, pentru cardul-badge compact de pe homepage (ex. "9") */
   day: string;
   /** Luna prescurtată, pentru cardul-badge compact de pe homepage (ex. "Mai") */
@@ -42,6 +44,7 @@ export const nextEvent: EventInfo = {
   theme: "Freedom 250",
   guestArtist: "Naty Loves Monday",
   dateDisplay: "Sâmbătă, 9 Mai",
+  isoDate: "2026-05-09",
   day: "9",
   month: "Mai",
   location: "Lokal, Oradea",
