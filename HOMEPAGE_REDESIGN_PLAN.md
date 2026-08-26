@@ -149,6 +149,14 @@ mișcare, mai puțin prin bloc de text.
   și "De ce suntem diferiți".
 - Respectă `prefers-reduced-motion` la fel ca în Faza 3/7 — orice animație nouă de aici se
   dezactivează/simplifică pentru utilizatorii cu mișcare redusă.
+- **Animație pe logo** (idee nouă, 2026-08-26): logo-ul din `Header.tsx` (`logo-oml.png`, azi
+  un PNG static, folosit pe toate paginile prin `Layout.tsx`) primește o animație subtilă —
+  ex. puls ușor la idle, sau o mică reacție la hover (scale/rotate ușor). Se face cu CSS
+  (`transform`/`filter`, tranziții), fără nicio dependință nouă — logo-ul rămâne PNG-ul actual,
+  doar containerul lui capătă animația. Respectă `prefers-reduced-motion` ca restul fazei.
+  **Notă**: o variantă mai elaborată (morphing real de formă, nu doar puls/scale) ar necesita
+  vectorizarea logo-ului în SVG și/sau generare Higgsfield — asta trece în Faza 14, nu aici;
+  varianta CSS de mai sus e suficientă pentru un prim pas "viu, dar discret".
 
 ### Faza 9 — Instagram feed live-sincronizat, nu mai hardcodat · *Execută: Claude (backend), Antigravity (UI)* · **Decizie luată: Opțiunea B (Graph API + Supabase)**
 
