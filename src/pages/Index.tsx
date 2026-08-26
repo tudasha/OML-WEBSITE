@@ -81,10 +81,14 @@ const Index = () => {
   const omlY = useTransform(omlProgress, [0, 1], shouldReduceMotion ? [0, 0] : [40, 0]);
   const omlBlobY = useTransform(omlProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-20, 20]);
 
-  const previewRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: previewProgress } = useScroll({ target: previewRef, offset: ["start 90%", "start 45%"] });
-  const previewOpacity = useTransform(previewProgress, [0, 1], shouldReduceMotion ? [1, 1] : [0, 1]);
-  const previewScale = useTransform(previewProgress, [0, 1], shouldReduceMotion ? [1, 1] : [0.92, 1]);
+  // Panoul "Următorul eveniment" rămâne fixat (sticky) cât timp scrolezi prin secțiune, apoi se
+  // "dizolvă" (scade + dispare) pe măsură ce Instagram-ul alunecă peste el — nu mai taie brusc
+  // între cele două secțiuni luminoase din jur (feedback client). Progresul se calculează pe tot
+  // wrapper-ul înalt (170vh pe desktop), nu doar pe cardul propriu-zis.
+  const previewWrapperRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: previewProgress } = useScroll({ target: previewWrapperRef, offset: ["start start", "end end"] });
+  const previewOpacity = useTransform(previewProgress, [0, 0.15, 0.75, 1], shouldReduceMotion ? [1, 1, 1, 1] : [0, 1, 1, 0]);
+  const previewScale = useTransform(previewProgress, [0, 0.15, 0.75, 1], shouldReduceMotion ? [1, 1, 1, 1] : [0.9, 1, 1, 0.85]);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -346,51 +350,55 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Preview Următorul Eveniment */}
-      <section ref={previewRef} className="py-20 md:py-28 bg-hero-bg text-white">
-        <div className="container mx-auto px-4">
-          <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
-            <div className="max-w-4xl mx-auto">
-              {/* Fundal opac, fără backdrop-blur — panou flat, nu glassmorphism. Ușor mai
-                  deschis decât bg-hero-bg al secțiunii, ca să se separe vizual ca un card. */}
-              <Card className="bg-[hsl(240_10%_14%)] border border-white/10 overflow-hidden">
-                <CardContent className="p-8 md:p-12">
-                  <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-                    <div className="shrink-0">
-                      <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
-                        <span className="text-2xl font-display font-bold text-primary">{nextEvent.day}</span>
-                        <span className="text-xs text-white/60">{nextEvent.month}</span>
+      {/* Preview Următorul Eveniment — sticky + dizolvare (vezi hook-urile de mai sus). Doar
+          desktop (md:h-[170vh] + md:sticky) — pe mobil rămâne o secțiune normală, fără pin
+          (sticky/scroll-jacking e mai puțin fiabil pe ecrane mici). */}
+      <section ref={previewWrapperRef} className="relative bg-hero-bg text-white md:h-[170vh]">
+        <div className="md:sticky md:top-0 md:h-screen flex items-center py-20 md:py-0 overflow-hidden">
+          <div className="container mx-auto px-4 w-full">
+            <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
+              <div className="max-w-4xl mx-auto">
+                {/* Fundal opac, fără backdrop-blur — panou flat, nu glassmorphism. Ușor mai
+                    deschis decât bg-hero-bg al secțiunii, ca să se separe vizual ca un card. */}
+                <Card className="bg-[hsl(240_10%_14%)] border border-white/10 overflow-hidden">
+                  <CardContent className="p-8 md:p-12">
+                    <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+                      <div className="shrink-0">
+                        <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
+                          <span className="text-2xl font-display font-bold text-primary">{nextEvent.day}</span>
+                          <span className="text-xs text-white/60">{nextEvent.month}</span>
+                        </div>
+                      </div>
+                      <div className="flex-1 space-y-3">
+                        <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
+                          Următorul eveniment
+                        </span>
+                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
+                          OML {nextEvent.edition}
+                          {nextEvent.guestArtist ? ` — cu ${nextEvent.guestArtist}` : ""}
+                        </h3>
+                        <p className="text-white/70">{getEventSummary(nextEvent)}</p>
+                        <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" /> {nextEvent.location}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Calendar className="w-4 h-4" /> {nextEvent.day} {nextEvent.month}
+                          </span>
+                        </div>
+                        <EventCountdown event={nextEvent} className="pt-3" />
+                      </div>
+                      <div className="shrink-0">
+                        <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto">
+                          <Link to="/eveniment">Vezi detalii</Link>
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex-1 space-y-3">
-                      <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
-                        Următorul eveniment
-                      </span>
-                      <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
-                        OML {nextEvent.edition}
-                        {nextEvent.guestArtist ? ` — cu ${nextEvent.guestArtist}` : ""}
-                      </h3>
-                      <p className="text-white/70">{getEventSummary(nextEvent)}</p>
-                      <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" /> {nextEvent.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" /> {nextEvent.day} {nextEvent.month}
-                        </span>
-                      </div>
-                      <EventCountdown event={nextEvent} className="pt-3" />
-                    </div>
-                    <div className="shrink-0">
-                      <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto">
-                        <Link to="/eveniment">Vezi detalii</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </motion.div>
+                  </CardContent>
+                </Card>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
