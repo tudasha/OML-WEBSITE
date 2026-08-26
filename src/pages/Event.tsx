@@ -1,25 +1,18 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users, Heart, CalendarX, ImageIcon } from "lucide-react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { Calendar, MapPin, Mic, Music, MessageCircle, Gift, ImageIcon } from "lucide-react";
 import Layout from "@/components/Layout";
 import { nextEvent, pastEvents, type EventInfo } from "@/data/events";
 import heroConcert from "@/assets/hero-concert.png";
-import oml1Concert from "@/assets/oml1-concert.jpg";
-import oml1Discussion from "@/assets/oml1-discussion.jpg";
-import oml1Group from "@/assets/oml1-group.jpg";
-import oml2Concert from "@/assets/oml2-concert.jpg";
-import oml2Group from "@/assets/oml2-group.jpg";
-import oml2Discussion from "@/assets/oml2-discussion.jpg";
-import oml3Concert from "@/assets/oml3-concert.jpg";
-import oml3Discussion from "@/assets/oml3-discussion.jpg";
-import oml3Group from "@/assets/oml3-group.jpg";
 
 // Îngroașă automat tema și numele artistului invitat oriunde apar în descriere —
 // echivalentul <strong> hardcodat de dinainte de Faza 1, dar derivat din date, nu repetat manual.
 // Calculat per-eveniment (nu o singură dată global), pentru că acum sunt afișate mai multe
 // evenimente pe pagină (nextEvent + pastEvents), fiecare cu propria temă/artist invitat.
+// event.highlightTerms are prioritate dacă e prezent (cazuri cu casing/nume multiple, ex. OML III).
 function getHighlightTerms(event: EventInfo) {
-  return [event.theme, event.guestArtist].filter(Boolean) as string[];
+  return event.highlightTerms ?? ([event.theme, event.guestArtist].filter(Boolean) as string[]);
 }
 
 function renderWithHighlights(text: string, terms: string[]) {
@@ -36,10 +29,22 @@ function renderWithHighlights(text: string, terms: string[]) {
   );
 }
 
+// Structura evenimentului e identică la fiecare ediție — extras o singură dată (era repetat
+// de 4 ori, cuvânt cu cuvânt, în versiunea dinaintea Faza 14.3).
+const EVENT_STRUCTURE = [
+  { icon: Music, title: "Concert Live", time: "Prima parte" },
+  { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
+  { icon: Mic, title: "Open Mic", time: "A treia parte" },
+];
+
 const Event = () => {
-  // Deocamdată doar OML IV a trecut în istoric (Faza 11) — array-ul e gata pentru viitoare
-  // ediții încheiate, fără să presupună azi că există mai mult de una.
-  const [omlIV] = pastEvents;
+  const historyRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress: historyProgress } = useScroll({
+    target: historyRef,
+    offset: ["start 80%", "end 60%"],
+  });
+  const lineProgress = useTransform(historyProgress, [0, 1], [0, 1]);
 
   return (
     <Layout>
@@ -112,7 +117,7 @@ const Event = () => {
                 </div>
 
                 <div className="pt-4">
-                  <Link to={nextEvent.registerLink} className="inline-flex w-full justify-center items-center bg-primary text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg">
+                  <Link to={nextEvent.registerLink} className="inline-flex w-full justify-center items-center bg-primary text-foreground py-3 px-6 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg">
                     Înregistrează-te acum
                   </Link>
                 </div>
@@ -140,220 +145,77 @@ const Event = () => {
         </div>
       </section>
 
-      {/* OML IV */}
-      <section className="py-12 md:py-16 section-cream">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-10">
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
-                {omlIV.title}
-              </h3>
-              <p className="text-muted-foreground mt-2">{omlIV.dateDisplay} · {omlIV.location}</p>
-            </div>
-
-            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
-              {omlIV.description.map((paragraph, i) => (
-                <p key={i}>{renderWithHighlights(paragraph, getHighlightTerms(omlIV))}</p>
-              ))}
-            </div>
-
-            {/* Structure cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-              {[
-                { icon: Music, title: "Concert Live", time: "Prima parte" },
-                { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
-                { icon: Mic, title: "Open Mic", time: "A treia parte" },
-              ].map((item, i) => (
-                <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
-                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium text-foreground">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.time}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Photo Gallery — nu există încă poze reale de la această ediție, nu inventăm */}
-            <div className="flex flex-col items-center justify-center gap-2 py-10 border-2 border-dashed border-border rounded-xl text-center">
-              <ImageIcon className="w-6 h-6 text-muted-foreground/50" />
-              <p className="text-sm text-muted-foreground">Pozele de la această ediție urmează să fie adăugate.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider */}
-      <div className="container mx-auto px-4">
-        <div className="border-t border-border" />
-      </div>
-
-      {/* OML III */}
+      {/* Edițiile noastre — parcurs vertical cronologic (Faza 14.3), nu 4 secțiuni copiate.
+          Linia din stânga (doar desktop) se umple pe măsură ce scrolezi prin istoric, cu un
+          nod (cifra ediției) în dreptul fiecărei ediții. Fundal unic (nu mai alternează
+          cream/alb per ediție) — acum e un singur parcurs continuu, nu blocuri separate. */}
       <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-10">
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
-                OML III — Călin Pop & Marius Pop
-              </h3>
-              <p className="text-muted-foreground mt-2">7 Februarie 2026 · Lokal, Oradea</p>
+          <div ref={historyRef} className="relative max-w-3xl mx-auto">
+            <div className="hidden md:block absolute left-6 top-2 bottom-2 w-0.5">
+              <div className="absolute inset-0 bg-primary/10 rounded-full" />
+              <motion.div
+                className="absolute inset-x-0 top-0 bg-primary rounded-full origin-top h-full"
+                style={{ scaleY: shouldReduceMotion ? 1 : lineProgress }}
+              />
             </div>
 
-            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
-              <p>
-                Ne bucurăm să îi avem ca invitați speciali pe <strong className="text-foreground">CĂLIN POP</strong> și{" "}
-                <strong className="text-foreground">MARIUS POP</strong>! Duo-ul tată-fiu din formația Celelalte Cuvinte
-                ne-a încântat cu un concert live, urmat de o discuție și sesiune de Q&A despre industria muzicală.
-              </p>
-            </div>
+            <div className="space-y-16 md:space-y-20">
+              {pastEvents.map((event, index) => (
+                <div
+                  key={event.id}
+                  className={`relative md:pl-20 ${index > 0 ? "pt-16 md:pt-20 border-t border-border" : ""}`}
+                >
+                  <div className="hidden md:flex absolute left-0 top-16 w-12 h-12 rounded-full bg-primary text-foreground items-center justify-center font-display font-bold shadow-lg z-10">
+                    {event.edition}
+                  </div>
 
-            {/* Structure cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-              {[
-                { icon: Music, title: "Concert Live", time: "Prima parte" },
-                { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
-                { icon: Mic, title: "Open Mic", time: "A treia parte" },
-              ].map((item, i) => (
-                <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
-                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium text-foreground">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.time}</p>
+                  <div className="text-center md:text-left mb-8 md:mb-10">
+                    <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground">
+                      {event.title}
+                    </h3>
+                    {(event.dateDisplay || event.location) && (
+                      <p className="text-muted-foreground mt-2">
+                        {[event.dateDisplay, event.location].filter(Boolean).join(" · ")}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed text-center md:text-left">
+                    {event.description.map((paragraph, i) => (
+                      <p key={i}>{renderWithHighlights(paragraph, getHighlightTerms(event))}</p>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
+                    {EVENT_STRUCTURE.map((item, i) => (
+                      <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
+                        <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+                        <p className="text-sm font-medium text-foreground">{item.title}</p>
+                        <p className="text-xs text-muted-foreground">{item.time}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {event.gallery && event.gallery.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {event.gallery.map((img, i) => (
+                        <img
+                          key={i}
+                          src={img.src}
+                          alt={img.alt}
+                          className="aspect-square object-cover rounded-xl w-full"
+                          loading="lazy"
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-2 py-10 border-2 border-dashed border-border rounded-xl text-center">
+                      <ImageIcon className="w-6 h-6 text-muted-foreground/50" />
+                      <p className="text-sm text-muted-foreground">Pozele de la această ediție urmează să fie adăugate.</p>
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
-
-            {/* OML III Photo Gallery */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {[
-                { src: oml3Concert, alt: "OML III - Concert live" },
-                { src: oml3Discussion, alt: "OML III - Discuție pe scenă" },
-                { src: oml3Group, alt: "OML III - Foto de grup" },
-              ].map((img, i) => (
-                <img
-                  key={i}
-                  src={img.src}
-                  alt={img.alt}
-                  className="aspect-square object-cover rounded-xl w-full"
-                  loading="lazy"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider */}
-      <div className="container mx-auto px-4">
-        <div className="border-t border-border" />
-      </div>
-
-      {/* OML II */}
-      <section className="py-12 md:py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-10">
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
-                OML II
-              </h3>
-              <p className="text-muted-foreground mt-2">Oradea</p>
-            </div>
-
-            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
-              <p>
-                Cea de-a doua ediție Oradea Music Lab a reconfirmat succesul acestui spațiu dedicat curajului și învățării, oferind tinerilor artiști o experiență autentică de scenă, fără presiunea unei competiții. Invitații speciali, <strong className="text-foreground">Narcisa Badea</strong>, <strong className="text-foreground">Petruț Remus (Trupa X)</strong> și <strong className="text-foreground">STEFXN</strong>, au creat o atmosferă vibrantă printr-un concert live, urmat de o discuție deschisă în care și-au împărtășit experiențele acumulate la emisiuni precum Vocea României.
-              </p>
-              <p>
-                Momentul central al serii, Open Mic-ul „Scena Tinerilor", a adus în lumina reflectoarelor 10 tineri talentați care au beneficiat de susținerea întregii comunități. Evenimentul a pus accent pe evoluție și depășirea tracului, premiind curajul participanților printr-o tombolă specială. Seara s-a încheiat într-un spirit de celebrare și socializare, unde toți cei prezenți s-au bucurat de pizza oferită de partenerii de la Enigma, consolidând astfel legăturile în cadrul noii familii muzicale orădene.
-              </p>
-            </div>
-
-            {/* Structure cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-              {[
-                { icon: Music, title: "Concert Live", time: "Prima parte" },
-                { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
-                { icon: Mic, title: "Open Mic", time: "A treia parte" },
-              ].map((item, i) => (
-                <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
-                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium text-foreground">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.time}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Photo Gallery — max 3 poze per eveniment (Faza 11) */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {[
-                { src: oml2Concert, alt: "OML II - Concert live" },
-                { src: oml2Discussion, alt: "OML II - Discuție pe scenă" },
-                { src: oml2Group, alt: "OML II - Foto de grup" },
-              ].map((img, i) => (
-                <img
-                  key={i}
-                  src={img.src}
-                  alt={img.alt}
-                  className="aspect-square object-cover rounded-xl w-full"
-                  loading="lazy"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Divider */}
-      <div className="container mx-auto px-4">
-        <div className="border-t border-border" />
-      </div>
-
-      {/* OML I */}
-      <section className="py-12 md:py-16 section-cream">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-10">
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
-                OML I — Frații Jdieri
-              </h3>
-              <p className="text-muted-foreground mt-2">17 Octombrie 2025 · Lokal, Oradea</p>
-            </div>
-
-            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
-              <p>
-                Pe 17 octombrie 2025, la Lokal Oradea, a avut loc prima ediție Oradea Music Lab, un eveniment vibrant care a marcat nașterea unei noi comunități pentru tinerii artiști locali. Invitații speciali, <strong className="text-foreground">Frații Jdieri</strong>, au oferit un concert memorabil de Transylvanian Jdier Rock și au împărtășit lecții prețioase din parcursul lor artistic într-o sesiune deschisă de Q&A.
-              </p>
-              <p>
-                Punctul culminant a fost secțiunea Open Mic „Scena Tinerilor", unde liceeni și studenți de până la 21 de ani au urcat pe scenă pentru a-și demonstra talentul și pentru a primi feedback direct de la artiștii invitați. Seara s-a încheiat într-o atmosferă plină de entuziasm, cu o tombolă cu premii și surprize pentru toți cei care au ales să susțină debutul acestui proiect dedicat muzicii.
-              </p>
-            </div>
-
-            {/* Structure cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-              {[
-                { icon: Music, title: "Concert Live", time: "Prima parte" },
-                { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
-                { icon: Mic, title: "Open Mic", time: "A treia parte" },
-              ].map((item, i) => (
-                <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
-                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium text-foreground">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.time}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Photo Gallery — max 3 poze per eveniment (Faza 11) */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {[
-                { src: oml1Concert, alt: "OML I - Concert live" },
-                { src: oml1Discussion, alt: "OML I - Discuție pe scenă" },
-                { src: oml1Group, alt: "OML I - Foto de grup" },
-              ].map((img, i) => (
-                <img
-                  key={i}
-                  src={img.src}
-                  alt={img.alt}
-                  className="aspect-square object-cover rounded-xl w-full"
-                  loading="lazy"
-                />
               ))}
             </div>
           </div>

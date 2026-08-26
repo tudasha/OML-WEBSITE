@@ -469,6 +469,24 @@ comune tuturor paginilor:
   fade-once) — motivul: NU e conținut secvențial (sunt valori independente, paralele), deci
   tiparul "poveste de scroll" nu i se potrivește conceptual, spre deosebire de "Cum funcționează"
   care chiar e o secvență de pași reali.
+- [x] **14.3 — Pagina Evenimente (`Event.tsx` + `events.ts`)** (FĂCUT 2026-08-27): "Edițiile
+  noastre" (IV→III→II→I) erau 4 secțiuni JSX copiate aproape identic, cu alternanță cream/alb
+  fără sens real — restructurat complet:
+  - OML I/II/III mutate din JSX hardcodat în `pastEvents[]` (ca OML IV deja), cu tip `EventInfo`
+    extins: `dateDisplay`/`isoDate`/`day`/`month` acum OPȚIONALE (OML II nu are dată înregistrată
+    pe site-ul original — descoperire, nu inventez o dată), `gallery?` (galeria foto, mutată din
+    JSX), `highlightTerms?` (override pt cazuri cu nume/casing multiple care nu se potrivesc pe
+    tiparul [theme, guestArtist] — ex. OML III are doi artiști invitați, în MAJUSCULE).
+  - `EVENT_STRUCTURE` (cele 3 carduri "Concert Live/Discuție/Open Mic") extras o singură dată —
+    era literalmente copiat de 4 ori, cuvânt cu cuvânt.
+  - Cele 4 ediții randate acum dintr-un singur `.map()`, ca un **parcurs vertical cronologic**:
+    linie verticală (doar desktop) care se umple pe măsură ce scrolezi prin istoric, cu un nod
+    (cifra ediției, cerc) în dreptul fiecăreia — același tipar ca la "Cum funcționează" de pe
+    homepage (14.2), aplicat aici pt că istoricul e la fel de secvențial/cronologic.
+  - `EventCountdown.tsx` actualizat să gestioneze `isoDate` opțional (fallback "Urmează în
+    curând" în loc de "Invalid Date").
+  - Contrast corectat (`text-white` → `text-foreground` pe `bg-primary`) pe linkul de
+    înregistrare și pe nodurile cu cifra ediției.
 - [ ] 14.4 — Despre Noi (`About.tsx`)
 - [ ] 14.5 — Echipă (`Team.tsx`)
 - [ ] 14.6 — Contact (`Contact.tsx`)

@@ -17,8 +17,11 @@ interface TimeParts {
   minutes: number;
 }
 
-function getTimeParts(targetDate: Date): TimeParts | null {
-  const diff = targetDate.getTime() - Date.now();
+function getTimeParts(isoDate?: string): TimeParts | null {
+  // Fără isoDate (ediții din istoric fără dată cunoscută) — nu putem calcula nimic, arătăm
+  // direct fallback-ul, nu încercăm un new Date(undefined) care ar da "Invalid Date".
+  if (!isoDate) return null;
+  const diff = new Date(`${isoDate}T00:00:00`).getTime() - Date.now();
   if (diff <= 0) return null;
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -28,19 +31,13 @@ function getTimeParts(targetDate: Date): TimeParts | null {
 }
 
 const EventCountdown = ({ event, className }: EventCountdownProps) => {
-  // event.isoDate (string) e dependența stabilă pt useEffect — un `new Date(...)` reconstruit
-  // direct în corpul componentei ar fi un obiect nou la fiecare randare, declanșând efectul
-  // inutil de des (ESLint react-hooks/exhaustive-deps semnalează exact asta).
-  const [parts, setParts] = useState<TimeParts | null>(() =>
-    getTimeParts(new Date(`${event.isoDate}T00:00:00`))
-  );
+  const [parts, setParts] = useState<TimeParts | null>(() => getTimeParts(event.isoDate));
 
   useEffect(() => {
-    const target = new Date(`${event.isoDate}T00:00:00`);
-    setParts(getTimeParts(target));
+    setParts(getTimeParts(event.isoDate));
     // Actualizare la fiecare minut e suficient pentru un countdown pe zile/ore/minute —
     // nu are rost un interval mai des, doar consumă resurse degeaba.
-    const id = setInterval(() => setParts(getTimeParts(target)), 60_000);
+    const id = setInterval(() => setParts(getTimeParts(event.isoDate)), 60_000);
     return () => clearInterval(id);
   }, [event.isoDate]);
 
