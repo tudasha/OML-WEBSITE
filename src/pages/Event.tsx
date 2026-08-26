@@ -4,7 +4,6 @@ import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users,
 import Layout from "@/components/Layout";
 import { nextEvent, pastEvents, type EventInfo } from "@/data/events";
 import heroConcert from "@/assets/hero-concert.png";
-import eventArtists from "@/assets/event-calin-marius.jpg";
 import oml1Concert from "@/assets/oml1-concert.jpg";
 import oml1Discussion from "@/assets/oml1-discussion.jpg";
 import oml1Group from "@/assets/oml1-group.jpg";
@@ -198,41 +197,27 @@ const Event = () => {
               <p className="text-muted-foreground mt-2">7 Februarie 2026 · Lokal, Oradea</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
-              {/* Image */}
-              <div>
-                <img
-                  src={eventArtists}
-                  alt="Călin Pop și Marius Pop - Celelalte Cuvinte"
-                  className="rounded-2xl shadow-2xl w-full"
-                />
-              </div>
+            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
+              <p>
+                Ne bucurăm să îi avem ca invitați speciali pe <strong className="text-foreground">CĂLIN POP</strong> și{" "}
+                <strong className="text-foreground">MARIUS POP</strong>! Duo-ul tată-fiu din formația Celelalte Cuvinte
+                ne-a încântat cu un concert live, urmat de o discuție și sesiune de Q&A despre industria muzicală.
+              </p>
+            </div>
 
-              {/* Text */}
-              <div className="space-y-6">
-                <div className="space-y-4 text-muted-foreground text-lg leading-relaxed">
-                  <p>
-                    Ne bucurăm să îi avem ca invitați speciali pe <strong className="text-foreground">CĂLIN POP</strong> și{" "}
-                    <strong className="text-foreground">MARIUS POP</strong>! Duo-ul tată-fiu din formația Celelalte Cuvinte
-                    ne-a încântat cu un concert live, urmat de o discuție și sesiune de Q&A despre industria muzicală.
-                  </p>
+            {/* Structure cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
+              {[
+                { icon: Music, title: "Concert Live", time: "Prima parte" },
+                { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
+                { icon: Mic, title: "Open Mic", time: "A treia parte" },
+              ].map((item, i) => (
+                <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
+                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+                  <p className="text-sm font-medium text-foreground">{item.title}</p>
+                  <p className="text-xs text-muted-foreground">{item.time}</p>
                 </div>
-
-                {/* Structure cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {[
-                    { icon: Music, title: "Concert Live", time: "Prima parte" },
-                    { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
-                    { icon: Mic, title: "Open Mic", time: "A treia parte" },
-                  ].map((item, i) => (
-                    <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
-                      <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                      <p className="text-sm font-medium text-foreground">{item.title}</p>
-                      <p className="text-xs text-muted-foreground">{item.time}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
 
             {/* OML III Photo Gallery */}

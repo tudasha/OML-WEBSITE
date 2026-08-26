@@ -317,6 +317,11 @@ Fișier țintă: `src/pages/Event.tsx` (dacă Faza 1 e deja făcută, lucrează 
     valabilă și pentru OML IV/V când trec în istoric.
   - Nu șterg fișierele imagine din `src/assets` (rămân disponibile pentru refolosire), doar
     scot referințele din array-urile de galerie afișate.
+  - **Adăugat 2026-08-26**: la cererea clientului, scoase și pozele/afișele promoționale de la
+    evenimentele trecute (diferite de galeriile foto) — găsit un singur caz, imaginea
+    `event-calin-marius.jpg` din blocul OML III (layout cu 2 coloane imagine+text). Restructurat
+    OML III să folosească același tipar centrat text-apoi-carduri ca OML I/II (nu mai are
+    coloană de imagine separată). Import-ul acum neutilizat a fost eliminat.
 
 ### Faza 12 — Elimină poza echipei de voluntari · *Execută: Antigravity*
 
@@ -407,6 +412,29 @@ evaluează caz cu caz, nu se șterg automat doar pentru că "nu se potrivesc".
 
 **Notă**: fiind un scope mult mai mare decât Faza 15 originală, s-ar putea să merite împărțită
 în sub-faze per pagină când se ajunge efectiv la execuție — de rafinat atunci, nu acum.
+
+**Notițe de stil suplimentare de la client (2026-08-26), de urmat la execuție:**
+- **Animații la scrolare** cu ajutorul Higgsfield (asset-uri generate reacționează la scroll,
+  nu doar decor static) — extensie a `ScrollReveal.tsx` deja existent.
+- **Refacere totală a layout-ului**, nu doar a stilului vizual — inclusiv scoaterea a ceea ce
+  NU e necesar (conținut/elemente de eliminat, nu doar re-stilizat). De identificat concret la
+  momentul execuției, secțiune cu secțiune.
+- **Poze noi** — clientul va mai adăuga poze de folosit (nu se generează/inventează, se
+  așteaptă predarea lor).
+- **Experiență imersivă în stilul Lusion** (lusion.co — animații 3D/WebGL, scroll fluid,
+  micro-interacțiuni, tranziții cinematice între secțiuni) — referință de calitate/ambiție
+  pentru nivelul de polish, combinată cu direcția deja stabilită (morfism + Kurzgesagt flat, NU
+  glassmorphism). De reconciliat la execuție: Lusion e high-end WebGL/3D, Kurzgesagt e flat
+  vectorial — ambiția e o experiență la fel de imersivă, dar cu limbajul vizual flat/organic,
+  nu neapărat 3D realist.
+- **Toate paginile**, INCLUSIV meniul (`Header.tsx`/`Footer.tsx`) — confirmat explicit că
+  redesign-ul acoperă și navigarea, nu doar conținutul paginilor.
+- **Contrast**: clientul permite explicit ajustarea RELAȚIILOR de contrast (ex. ce culoare de
+  text stă pe ce fundal), CU CONDIȚIA să rămână aceeași paletă de culori (portocaliu brand +
+  crem + dark, fără culori noi). **Asta rezolvă găsirea din Faza 5**: textul alb pe fundal
+  portocaliu (~2.24:1, sub WCAG AA) poate fi corectat la execuție — alternativa deja verificată
+  (text cu `--foreground` pe fundal `--primary` → ~9.4:1) rămâne în aceeași paletă, deci e o
+  opțiune validă conform acestei permisiuni.
 
 ### Faza 15 — Animații decorative cu Higgsfield (homepage) · *Execută: Claude (sesiune cu Higgsfield), ULTERIOR — ultima fază*
 
