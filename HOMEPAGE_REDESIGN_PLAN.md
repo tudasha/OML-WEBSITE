@@ -527,6 +527,25 @@ comune tuturor paginilor:
 **Toate sub-fazele 14.1-14.8 sunt complete (2026-08-27).** Faza 14 (layout imersiv-scrolabil,
 pe tot site-ul) e închisă. Rămâne Faza 15 (Higgsfield — asset-uri vizuale generate).
 
+**Completare pe bază de research (2026-08-27)**: la cererea clientului, am căutat structura
+reală a site-urilor imersive (nu doar improvizat), surse: [Lovable — Scrolling Design
+Patterns](https://lovable.dev/guides/scrolling-designs-patterns-when-to-use),
+[UXPin — 4 Types of Scrolling Patterns](https://www.uxpin.com/studio/blog/4-types-creative-website-scrolling-patterns/),
+[Scrollytelling.ai — Design Patterns](https://scrollytelling.ai/scrollytelling-design-patterns/).
+Tiparele deja aplicate (parcurs vertical cu linie, paralaxă, stagger la intrare) se confirmă ca
+fiind corecte/standard. Găsite 2 tipare consacrate care încă lipseau, aplicate acum:
+- **Sticky figure** (o imagine rămâne fixă cât timp textul de lângă ea scrolează) — aplicat la
+  posterul din "Următorul eveniment" (`Event.tsx`): `md:sticky md:top-24` pe coloana cu
+  poster/fallback, `items-center` → `items-start` pe grid (necesar pt ca sticky să aibă spațiu
+  de derulat).
+- **Indicator de progres al lecturii, sticky** — `About.tsx`, "Povestea OML" (articol lung, 9
+  paragrafe): linie verticală sticky (nu doar o linie statică de secțiune, ca la Faza 14.2/14.3)
+  care se umple pe măsură ce parcurgi TOT articolul (`useScroll` cu offset `["start start", "end
+  end"]`, distinct de progresul de intrare deja existent). Vizibil doar pe ecrane foarte largi
+  (`xl:` — nu era loc pe ecrane mai mici fără să se suprapună peste text).
+- Nu s-au aplicat: scroll snapping, secțiuni "pinned" full-screen (scroll-jacking) — riscante pe
+  mobil/performanță conform aceleiași cercetări, și nu erau cerute explicit.
+
 **Notițe de stil suplimentare de la client (2026-08-26), de urmat la execuție:**
 - **Animații la scrolare** cu ajutorul Higgsfield (asset-uri generate reacționează la scroll,
   nu doar decor static) — extensie a `ScrollReveal.tsx` deja existent.

@@ -12,6 +12,13 @@ const About = () => {
   const { scrollYProgress: storyProgress } = useScroll({ target: storyRef, offset: ["start 90%", "start 40%"] });
   const storyOpacity = useTransform(storyProgress, [0, 1], shouldReduceMotion ? [1, 1] : [0, 1]);
   const storyY = useTransform(storyProgress, [0, 1], shouldReduceMotion ? [0, 0] : [40, 0]);
+  // Indicator de progres al lecturii — sticky, se umple pe măsură ce parcurgi tot articolul
+  // (offset diferit de storyProgress de mai sus, care e doar pt intrarea în viewport; asta
+  // urmărește întreaga secțiune, de la primul până la ultimul rând). Tipar clasic de
+  // scrollytelling (sticky figure/progress), confirmat prin research — nu era folosit încă
+  // nicăieri pe site, doar linii de progres pe secțiuni scurte (Cum funcționează, Edițiile
+  // noastre), nu pe un articol lung ca acesta.
+  const { scrollYProgress: readProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
 
   return (
     <Layout>
@@ -42,7 +49,19 @@ const About = () => {
         </svg>
 
         <div className="container mx-auto px-4 relative">
-          <motion.div style={{ opacity: storyOpacity, y: storyY }} className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 xl:grid-cols-[2rem_1fr]">
+            {/* Indicator sticky, doar pe ecrane foarte largi (unde nu se suprapune cu textul) */}
+            <div className="hidden xl:block">
+              <div className="sticky top-28 h-40 w-1 mx-auto rounded-full">
+                <div className="absolute inset-0 bg-primary/10 rounded-full" />
+                <motion.div
+                  className="absolute inset-x-0 top-0 bg-primary rounded-full origin-top h-full"
+                  style={{ scaleY: shouldReduceMotion ? 1 : readProgress }}
+                />
+              </div>
+            </div>
+
+            <motion.div style={{ opacity: storyOpacity, y: storyY }} className="max-w-4xl mx-auto xl:mx-0">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground text-center mb-10">
               Povestea Oradea Music Lab
             </h2>
@@ -128,7 +147,8 @@ const About = () => {
                 și formare personală.
               </p>
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

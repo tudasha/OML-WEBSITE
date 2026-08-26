@@ -79,8 +79,10 @@ const Event = () => {
               </h3>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-              <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+              {/* Posterul rămâne fixat (sticky) cât timp descrierea din dreapta scrolează pe
+                  lângă el — tipar "sticky figure", clasic în scrollytelling. */}
+              <div className="md:sticky md:top-24">
                 {nextEvent.poster ? (
                   <img
                     src={nextEvent.poster}
