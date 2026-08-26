@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin } from "lucide-react";
@@ -28,6 +29,33 @@ const Index = () => {
   );
   // Sticky CTA pe mobil: apare doar după ce utilizatorul a scrolat trecut de Hero.
   const [showStickyCta, setShowStickyCta] = useState(false);
+
+  // Mișcare legată REAL de scroll (nu doar fade-once ca ScrollReveal) pe secțiunea
+  // "Cum funcționează"/"De ce suntem diferiți" — răspuns la feedback că panelurile statice nu
+  // simt suficient de "dinamic scrolabil" (Faza 14.2, iterație 2).
+  const dynamicSectionRef = useRef<HTMLElement>(null);
+  const stepsRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  const { scrollYProgress: sectionProgress } = useScroll({
+    target: dynamicSectionRef,
+    offset: ["start end", "end start"],
+  });
+  // Paralaxă pe blob-urile de fundal: se mișcă la viteze/direcții diferite de restul
+  // conținutului pe măsură ce scrolezi — pe lângă puls-ul CSS ambiental (blob-drift), nu în loc
+  // de el. Dezactivată (offset 0) pentru prefers-reduced-motion.
+  const blob1Y = useTransform(sectionProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-50, 50]);
+  const blob2Y = useTransform(sectionProgress, [0, 1], shouldReduceMotion ? [0, 0] : [40, -40]);
+  const blob3Y = useTransform(sectionProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-30, 30]);
+
+  const { scrollYProgress: stepsProgress } = useScroll({
+    target: stepsRef,
+    offset: ["start 85%", "end 55%"],
+  });
+  // Linia conectoare dintre cei 4 pași se "desenează" pe măsură ce scrolezi prin secțiune, nu
+  // apare gata desenată. Pentru reduced motion, arătăm linia completă direct (informația tot
+  // trebuie să fie disponibilă, doar fără animație).
+  const lineProgress = useTransform(stepsProgress, [0, 1], [0, 1]);
 
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -137,22 +165,29 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Cum funcționează + De ce suntem diferiți — secțiune unică, fluidă (Faza 4B) */}
-      <section className="relative py-20 md:py-28 bg-background overflow-hidden">
+      {/* Cum funcționează + De ce suntem diferiți — secțiune unică, fluidă (Faza 4B/14.2) */}
+      <section ref={dynamicSectionRef} className="relative py-20 md:py-28 bg-background overflow-hidden">
         {/* Fundal organic: forme "blob" flat, vectoriale — fără blur/transparență de sticlă
             (client a respins explicit glassmorphism), stil între morfism și ilustrație plată
-            (Kurzgesagt). Mișcare lentă, dezactivată automat la prefers-reduced-motion prin
-            varianta Tailwind motion-safe:. */}
+            (Kurzgesagt). Puls CSS ambiental (blob-drift) + paralaxă legată de scroll (motion.div
+            style={{ y }}) — două straturi de mișcare pe elemente diferite, nu se calcă unul pe
+            altul. Paralaxa se dezactivează pentru prefers-reduced-motion (blob*Y = 0 mai sus). */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <svg viewBox="0 0 200 200" className="absolute -top-20 -left-24 w-[26rem] h-[26rem] md:w-[34rem] md:h-[34rem] motion-safe:animate-blob-drift">
-            <path className="fill-primary/25" d={BLOB_PATH} transform="translate(100 100)" />
-          </svg>
-          <svg viewBox="0 0 200 200" className="absolute top-1/4 -right-28 w-80 h-80 md:w-[28rem] md:h-[28rem] motion-safe:animate-blob-drift [animation-delay:-7s]">
-            <path className="fill-primary/15" d={BLOB_PATH} transform="translate(100 100) rotate(120)" />
-          </svg>
-          <svg viewBox="0 0 200 200" className="absolute -bottom-16 left-1/3 w-72 h-72 md:w-96 md:h-96 motion-safe:animate-blob-drift [animation-delay:-14s]">
-            <path className="fill-primary/20" d={BLOB_PATH} transform="translate(100 100) rotate(240) scale(-1,1)" />
-          </svg>
+          <motion.div style={{ y: blob1Y }} className="absolute -top-20 -left-24 w-[26rem] h-[26rem] md:w-[34rem] md:h-[34rem]">
+            <svg viewBox="0 0 200 200" className="w-full h-full motion-safe:animate-blob-drift">
+              <path className="fill-primary/25" d={BLOB_PATH} transform="translate(100 100)" />
+            </svg>
+          </motion.div>
+          <motion.div style={{ y: blob2Y }} className="absolute top-1/4 -right-28 w-80 h-80 md:w-[28rem] md:h-[28rem]">
+            <svg viewBox="0 0 200 200" className="w-full h-full motion-safe:animate-blob-drift [animation-delay:-7s]">
+              <path className="fill-primary/15" d={BLOB_PATH} transform="translate(100 100) rotate(120)" />
+            </svg>
+          </motion.div>
+          <motion.div style={{ y: blob3Y }} className="absolute -bottom-16 left-1/3 w-72 h-72 md:w-96 md:h-96">
+            <svg viewBox="0 0 200 200" className="w-full h-full motion-safe:animate-blob-drift [animation-delay:-14s]">
+              <path className="fill-primary/20" d={BLOB_PATH} transform="translate(100 100) rotate(240) scale(-1,1)" />
+            </svg>
+          </motion.div>
         </div>
 
         <div className="container mx-auto px-4 relative">
@@ -163,9 +198,17 @@ const Index = () => {
           </ScrollReveal>
 
           {/* Layout "parcurs": cei 4 pași sunt o secvență, nu un grid generic — o linie
-              punctată îi leagă vizual (doar desktop; pe mobil rămân stivuiți simplu). */}
-          <div className="relative mb-16 md:mb-24">
-            <div className="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] border-t-2 border-dashed border-primary/25" />
+              punctată îi leagă vizual (doar desktop; pe mobil rămân stivuiți simplu). Linia se
+              "desenează" pe măsură ce scrolezi prin secțiune (nu apare gata desenată) — track
+              static dedesubt (foarte discret) + progres real deasupra. */}
+          <div ref={stepsRef} className="relative mb-16 md:mb-24">
+            <div className="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5">
+              <div className="absolute inset-0 border-t-2 border-dashed border-primary/10" />
+              <motion.div
+                className="absolute inset-0 border-t-2 border-primary/50 origin-left"
+                style={{ scaleX: shouldReduceMotion ? 1 : lineProgress }}
+              />
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[{
               icon: Mic,

@@ -430,8 +430,20 @@ comune tuturor paginilor:
   simplu; corectat contrastul (`text-white` → `text-foreground` pe `bg-primary`) pe toate cele
   5 butoane afectate din `Index.tsx` + `InstagramFeed.tsx`; adăugat un accent organic discret
   (blob flat, opacitate 5%) în secțiunea "Ce este OML", care era doar text plat — fără nicio
-  schimbare de cuvinte. Secțiunile "Cum funcționează"/"De ce suntem diferiți" rămân ca-n
-  Faza 4B (deja coerente stilistic, nu au nevoie de refacere).
+  schimbare de cuvinte.
+  **Iterație 2 (2026-08-27) — mișcare reală legată de scroll**, ca reacție la feedback că
+  panelurile statice nu simt suficient de "dinamic scrolabil": adăugat `framer-motion`
+  (`useScroll`/`useTransform`, deja dependință) peste `ScrollReveal.tsx` (care doar apare o
+  dată, fade-once, nu e cu adevărat scroll-linked). Concret: cele 3 blob-uri de fundal capătă
+  paralaxă (se mișcă la viteze/direcții diferite pe măsură ce scrolezi, pe lângă puls-ul CSS
+  ambiental existent, nu în loc de el); linia conectoare din "Cum funcționează" nu mai apare
+  gata desenată — se "desenează" (scaleX 0→1) pe măsură ce utilizatorul scrolează prin cei 4
+  pași. Ambele efecte se dezactivează la `prefers-reduced-motion` (via hook-ul
+  `useReducedMotion` din framer-motion — linia arată completă static, blob-urile nu se mișcă).
+  Decizie explicită (2026-08-27): mecanica de scroll e cod (framer-motion), nu are nevoie de
+  Higgsfield — Higgsfield rămâne rezervat pt asset-uri vizuale generate, la Faza 15, aplicat
+  coerent pe tot site-ul odată ce structura/codul tuturor paginilor e stabil (nu bucată cu
+  bucată, ca să nu existe risc de neconcordanță stilistică sau regenerare irosită).
 - [ ] 14.3 — Pagina Evenimente (`Event.tsx`)
 - [ ] 14.4 — Despre Noi (`About.tsx`)
 - [ ] 14.5 — Echipă (`Team.tsx`)
