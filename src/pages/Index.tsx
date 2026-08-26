@@ -9,15 +9,10 @@ import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeading from "@/components/SectionHeading";
 import ProcessStepCard from "@/components/ProcessStepCard";
 import { nextEvent, getEventSummary } from "@/data/events";
+import { BLOB_PATH } from "@/lib/blob-shape";
 
 // Hero video — upload to your own CDN and update this URL after deployment
 const HERO_VIDEO_URL = "/hero_1_compressed.mp4";
-
-// Formă organică (blob) flat, fără blur — folosită ca decor de fundal în secțiunea
-// "Cum funcționează / De ce suntem diferiți" (Faza 4B). Aceeași formă e refolosită de mai
-// multe ori cu transform/culoare diferite, în loc de mai multe path-uri desenate separat.
-const BLOB_PATH =
-  "M54.2,-58.3C68.7,-49.5,78.2,-32.1,80.7,-14.1C83.2,3.9,78.7,22.6,68.5,37.6C58.3,52.6,42.4,64,24.7,70.4C7,76.8,-12.5,78.3,-29.8,72.4C-47.1,66.6,-62.2,53.4,-70.7,37C-79.2,20.6,-81.1,1,-76.8,-16.8C-72.5,-34.6,-62,-50.6,-47.7,-59.3C-33.4,-68,-16.7,-69.4,0.9,-70.6C18.5,-71.8,39.7,-67.1,54.2,-58.3Z";
 
 const Index = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -103,14 +98,14 @@ const Index = () => {
             (Kurzgesagt). Mișcare lentă, dezactivată automat la prefers-reduced-motion prin
             varianta Tailwind motion-safe:. */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <svg viewBox="0 0 200 200" className="absolute -top-16 -left-20 w-72 h-72 md:w-96 md:h-96 motion-safe:animate-blob-drift">
-            <path className="fill-primary/10" d={BLOB_PATH} transform="translate(100 100)" />
+          <svg viewBox="0 0 200 200" className="absolute -top-20 -left-24 w-[26rem] h-[26rem] md:w-[34rem] md:h-[34rem] motion-safe:animate-blob-drift">
+            <path className="fill-primary/25" d={BLOB_PATH} transform="translate(100 100)" />
           </svg>
-          <svg viewBox="0 0 200 200" className="absolute top-1/3 -right-24 w-64 h-64 md:w-80 md:h-80 motion-safe:animate-blob-drift [animation-delay:-7s]">
-            <path className="fill-primary/5" d={BLOB_PATH} transform="translate(100 100) rotate(120)" />
+          <svg viewBox="0 0 200 200" className="absolute top-1/4 -right-28 w-80 h-80 md:w-[28rem] md:h-[28rem] motion-safe:animate-blob-drift [animation-delay:-7s]">
+            <path className="fill-primary/15" d={BLOB_PATH} transform="translate(100 100) rotate(120)" />
           </svg>
-          <svg viewBox="0 0 200 200" className="absolute -bottom-10 left-1/4 w-56 h-56 md:w-72 md:h-72 motion-safe:animate-blob-drift [animation-delay:-14s]">
-            <path className="fill-primary/5" d={BLOB_PATH} transform="translate(100 100) rotate(240) scale(-1,1)" />
+          <svg viewBox="0 0 200 200" className="absolute -bottom-16 left-1/3 w-72 h-72 md:w-96 md:h-96 motion-safe:animate-blob-drift [animation-delay:-14s]">
+            <path className="fill-primary/20" d={BLOB_PATH} transform="translate(100 100) rotate(240) scale(-1,1)" />
           </svg>
         </div>
 
@@ -143,7 +138,7 @@ const Index = () => {
             description: "Moment de conectare și networking între participanți.",
             number: "04"
           }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="flat" />
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="flat" blobRotate={index * 47} />
               </ScrollReveal>)}
           </div>
 
@@ -179,7 +174,7 @@ const Index = () => {
             title: "Comunitate",
             description: "Conexiuni reale între generații de muzicieni."
           }].map((item, index) => <ScrollReveal key={index} delay={index * 80}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" tone="flat" />
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" tone="flat" blobRotate={index * 47} />
               </ScrollReveal>)}
           </div>
         </div>
