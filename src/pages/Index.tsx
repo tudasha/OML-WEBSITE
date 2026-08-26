@@ -109,7 +109,7 @@ const Index = () => {
             <div className="max-w-3xl mx-auto text-center space-y-6">
               <SectionHeading kicker="Descoperă" title="Ce este Oradea Music Lab?" />
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
-                <p>Oradea Music Lab este un eveniment bilunar care aduce împreună tineri aspiranți muzicieni și artiști consacrați din Oradea, creând o seară educativă și distractivă.</p>
+                <p>Oradea Music Lab este o asociație care organizează evenimente ce aduc împreună tineri aspiranți muzicieni și artiști consacrați din Oradea, într-o seară educativă și distractivă.</p>
                 <p>
                   Nu este un concurs. Accentul cade pe <strong className="text-foreground">curaj</strong>, 
                   {" "}<strong className="text-foreground">învățare</strong> și{" "}

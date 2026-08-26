@@ -141,7 +141,7 @@ mișcare, mai puțin prin bloc de text.
   sub regula "nu inventa/rescrie conținut" din capul planului, pentru că scurtarea poate
   schimba sensul).
 - Pentru fiecare bloc de text rămas lung, alătură o imagine deja existentă în `src/assets`
-  (nu genera una nouă aici — generarea rămâne exclusiv Faza 14/Higgsfield) dacă secțiunea
+  (nu genera una nouă aici — generarea rămâne exclusiv Faza 15/Higgsfield) dacă secțiunea
   respectivă nu are deja una.
 - Extinde folosirea `ScrollReveal.tsx` (deja în cod) + `framer-motion` (deja dependință,
   folosit azi în `Team.tsx`) pentru: fade+slide la intrarea în viewport a fiecărei imagini, și
@@ -155,7 +155,7 @@ mișcare, mai puțin prin bloc de text.
   (`transform`/`filter`, tranziții), fără nicio dependință nouă — logo-ul rămâne PNG-ul actual,
   doar containerul lui capătă animația. Respectă `prefers-reduced-motion` ca restul fazei.
   **Notă**: o variantă mai elaborată (morphing real de formă, nu doar puls/scale) ar necesita
-  vectorizarea logo-ului în SVG și/sau generare Higgsfield — asta trece în Faza 14, nu aici;
+  vectorizarea logo-ului în SVG și/sau generare Higgsfield — asta trece în Faza 15, nu aici;
   varianta CSS de mai sus e suficientă pentru un prim pas "viu, dar discret".
 
 ### Faza 4B — Redesign fluid/organic: „Cum funcționează?" + „De ce suntem diferiți?" · *Execută: Claude (CSS/SVG, fără Higgsfield) — FĂCUT 2026-08-26*
@@ -167,7 +167,8 @@ bento grid, forme organice — trenduri 2026 confirmate: [Envato](https://elemen
 **secțiune unică, fluidă**, cu fundal organic.
 
 **⚠️ Direcție de stil confirmată explicit de client (2026-08-26), valabilă peste tot pe site,
-inclusiv la Faza 14/Higgsfield — de reținut pentru orice design viitor**: **NU glassmorphism**
+inclusiv la Faza 14 (redesign complet) și Faza 15/Higgsfield — de reținut pentru orice design
+viitor**: **NU glassmorphism**
 (fără `backdrop-blur`/transparență de sticlă, nici acum, nici mai târziu). Stilul dorit e ceva
 **între morfism (forme organice) și Kurzgesagt (ilustrație vectorială flat)** — culori solide,
 opace, margini vectoriale curate, fără blur/ceață. Prima încercare a folosit glassmorphism din
@@ -194,12 +195,12 @@ discuție (2026-08-26), nu o abatere neanunțată. Se aplică DOAR la aceste dou
 paginii (Ce este OML, Preview eveniment, Instagram) rămâne cu alternanța cream/dark neschimbată.
 
 **Paleta**: forma/culorile blob-urilor rămân strict pe portocaliul de brand existent (`primary`,
-nuanțe de opacitate) — nu s-au adăugat culori noi. Dacă la Faza 14 se dorește un look Kurzgesagt
-mai bogat (de obicei 2-3 culori flat complementare), e nevoie de o decizie explicită separată
-înainte să se extindă paleta.
+nuanțe de opacitate) — nu s-au adăugat culori noi. Dacă la Faza 14/15 se dorește un look
+Kurzgesagt mai bogat (de obicei 2-3 culori flat complementare), e nevoie de o decizie explicită
+separată înainte să se extindă paleta.
 
-**Relația cu Faza 14 (Higgsfield)**: fundalul organic flat de acum e varianta CSS/gratuită a
-direcției de stil discutate pentru Faza 14 — la momentul potrivit, Higgsfield poate îmbunătăți/
+**Relația cu Faza 15 (Higgsfield)**: fundalul organic flat de acum e varianta CSS/gratuită a
+direcției de stil discutate pentru Faza 15 — la momentul potrivit, Higgsfield poate îmbunătăți/
 înlocui blob-urile SVG cu ceva generat, în ACELAȘI loc din cod și în ACELAȘI stil (flat,
 opac, fără glassmorphism) — nu se reconstruiește nimic, dar generarea trebuie ghidată explicit
 să nu producă glass/blur.
@@ -377,7 +378,37 @@ migrațiile din `supabase/migrations/`, cu RLS configurat corect pentru insert p
 rândul nou apărut în `contact_submissions` (Supabase dashboard) → verifică primirea email-ului
 la `oradeamusiclab@gmail.com`.
 
-### Faza 14 — Animații decorative cu Higgsfield · *Execută: Claude (sesiune cu Higgsfield), ULTERIOR — ultima fază*
+### Faza 14 — Redesign vizual complet al ÎNTREGULUI site (nu doar homepage) + curățenie emoji · *Execută: Claude (Higgsfield pt asset-uri) + Antigravity (aplicare cod), ULTERIOR*
+
+**Adăugată 2026-08-26, la cererea clientului**: extinde scope-ul fostei "Faza 14 — Higgsfield"
+(acum devine Faza 15 mai jos) de la "doar decor pe homepage" la **un redesign vizual al
+întregului site** — toate paginile (`Index`, `Event`, `About`, `Team`, `Contact`, `Donate`,
+`Register`), nu doar `Index.tsx`. Direcția de stil e cea deja stabilită și confirmată explicit
+de client (vezi Faza 4B): **morfism modern + stil Kurzgesagt** (ilustrație vectorială flat,
+opacă, fără glassmorphism), cu **animații la scrolare** (extensie a `ScrollReveal.tsx` deja
+existent, posibil cu asset-uri/tranziții generate via Higgsfield).
+
+**Curățenie emoji — inventar concret găsit în cod (2026-08-26, de reverificat că e complet la
+momentul execuției, poate mai apar altele între timp):**
+- `About.tsx` (liniile 133, 139, 145, 151, 157): 💪 📚 🤝 🙏 🎵 — emoji folosite ca "iconițe" în
+  loc de icon-uri Lucide (design inconsistent — restul site-ului folosește Lucide peste tot).
+- `Team.tsx` (liniile 31, 36): 🤝 și 🍷 în descrierea lui Alessio; ✨️ în descrierea Alexiei —
+  parte din textul biografic scris de membri, NU se șterge fără acordul lor (e vocea lor
+  personală, diferit de emoji-urile decorative din About.tsx).
+- `Register.tsx` (liniile 202, 267): 🎉 (confirmare înregistrare) și ⚠️ (avertisment sub 18 ani)
+  — de evaluat individual dacă rămân (⚠️ are rol funcțional de atenționare, nu doar decorativ).
+
+**Regulă de aplicat**: elimină/înlocuiește emoji-urile FOLOSITE CA ICONIȚE DECORATIVE (ex.
+`About.tsx`) cu icon-uri Lucide sau cu iconițe flat/blob în stilul Kurzgesagt stabilit — astea
+sunt clar înlocuibile fără să atingă vreun conținut. Emoji-urile din TEXTUL SCRIS DE OAMENI
+(descrierile din `Team.tsx`) nu se ating fără aprobare explicită a persoanei respective, pentru
+că fac parte din vocea ei, nu din design. Emoji-urile cu rol funcțional (`Register.tsx`) se
+evaluează caz cu caz, nu se șterg automat doar pentru că "nu se potrivesc".
+
+**Notă**: fiind un scope mult mai mare decât Faza 15 originală, s-ar putea să merite împărțită
+în sub-faze per pagină când se ajunge efectiv la execuție — de rafinat atunci, nu acum.
+
+### Faza 15 — Animații decorative cu Higgsfield (homepage) · *Execută: Claude (sesiune cu Higgsfield), ULTERIOR — ultima fază*
 
 **Nu face parte din scope-ul curent — se lucrează abia după ce Fazele 0-6 sunt terminate și
 verificate.** Antigravity nu are acces la Higgsfield (e disponibil doar într-o sesiune Claude
