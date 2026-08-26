@@ -254,7 +254,8 @@ const Index = () => {
                         Următorul eveniment
                       </span>
                       <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
-                        OML {nextEvent.edition} — cu {nextEvent.guestArtist}
+                        OML {nextEvent.edition}
+                        {nextEvent.guestArtist ? ` — cu ${nextEvent.guestArtist}` : ""}
                       </h3>
                       <p className="text-white/70">{getEventSummary(nextEvent)}</p>
                       <div className="flex items-center gap-4 text-sm text-white/60 pt-2">

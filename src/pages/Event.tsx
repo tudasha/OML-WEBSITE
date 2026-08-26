@@ -2,27 +2,26 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, MapPin, Mic, Music, MessageCircle, Gift, Pizza, Users, Heart, CalendarX, ImageIcon } from "lucide-react";
 import Layout from "@/components/Layout";
-import { nextEvent } from "@/data/events";
+import { nextEvent, pastEvents, type EventInfo } from "@/data/events";
 import heroConcert from "@/assets/hero-concert.png";
 import eventArtists from "@/assets/event-calin-marius.jpg";
 import oml1Concert from "@/assets/oml1-concert.jpg";
 import oml1Discussion from "@/assets/oml1-discussion.jpg";
-import oml1Closeup from "@/assets/oml1-closeup.jpg";
-import oml1Audience from "@/assets/oml1-audience.jpg";
 import oml1Group from "@/assets/oml1-group.jpg";
 import oml2Concert from "@/assets/oml2-concert.jpg";
-import oml2Team from "@/assets/oml2-team.jpg";
 import oml2Group from "@/assets/oml2-group.jpg";
 import oml2Discussion from "@/assets/oml2-discussion.jpg";
-import oml2Audience from "@/assets/oml2-audience.jpg";
-import sunetPentruJasmine from "@/assets/sunet-pentru-jasmine.png";
 import oml3Concert from "@/assets/oml3-concert.jpg";
 import oml3Discussion from "@/assets/oml3-discussion.jpg";
 import oml3Group from "@/assets/oml3-group.jpg";
 
 // Îngroașă automat tema și numele artistului invitat oriunde apar în descriere —
 // echivalentul <strong> hardcodat de dinainte de Faza 1, dar derivat din date, nu repetat manual.
-const highlightTerms = [nextEvent.theme, nextEvent.guestArtist].filter(Boolean) as string[];
+// Calculat per-eveniment (nu o singură dată global), pentru că acum sunt afișate mai multe
+// evenimente pe pagină (nextEvent + pastEvents), fiecare cu propria temă/artist invitat.
+function getHighlightTerms(event: EventInfo) {
+  return [event.theme, event.guestArtist].filter(Boolean) as string[];
+}
 
 function renderWithHighlights(text: string, terms: string[]) {
   if (terms.length === 0) return text;
@@ -39,6 +38,10 @@ function renderWithHighlights(text: string, terms: string[]) {
 }
 
 const Event = () => {
+  // Deocamdată doar OML IV a trecut în istoric (Faza 11) — array-ul e gata pentru viitoare
+  // ediții încheiate, fără să presupună azi că există mai mult de una.
+  const [omlIV] = pastEvents;
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -74,15 +77,22 @@ const Event = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <img
-                  src={nextEvent.poster}
-                  alt={nextEvent.posterAlt}
-                  className="rounded-2xl shadow-2xl w-full"
-                />
+                {nextEvent.poster ? (
+                  <img
+                    src={nextEvent.poster}
+                    alt={nextEvent.posterAlt}
+                    className="rounded-2xl shadow-2xl w-full"
+                  />
+                ) : (
+                  <div className="rounded-2xl border-2 border-dashed border-primary/20 bg-primary/5 aspect-[3/4] flex flex-col items-center justify-center gap-3 text-center p-8">
+                    <ImageIcon className="w-10 h-10 text-primary/40" />
+                    <p className="text-muted-foreground text-sm">Posterul ediției urmează să fie publicat</p>
+                  </div>
+                )}
               </div>
               <div className="space-y-4 text-muted-foreground text-sm leading-relaxed">
                 {nextEvent.description.map((paragraph, i) => (
-                  <p key={i}>{renderWithHighlights(paragraph, highlightTerms)}</p>
+                  <p key={i}>{renderWithHighlights(paragraph, getHighlightTerms(nextEvent))}</p>
                 ))}
 
                 <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm pt-2">
@@ -131,12 +141,57 @@ const Event = () => {
         </div>
       </section>
 
+      {/* OML IV */}
+      <section className="py-12 md:py-16 section-cream">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
+                {omlIV.title}
+              </h3>
+              <p className="text-muted-foreground mt-2">{omlIV.dateDisplay} · {omlIV.location}</p>
+            </div>
+
+            <div className="max-w-3xl mx-auto mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed">
+              {omlIV.description.map((paragraph, i) => (
+                <p key={i}>{renderWithHighlights(paragraph, getHighlightTerms(omlIV))}</p>
+              ))}
+            </div>
+
+            {/* Structure cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
+              {[
+                { icon: Music, title: "Concert Live", time: "Prima parte" },
+                { icon: MessageCircle, title: "Discuție & Q&A", time: "A doua parte" },
+                { icon: Mic, title: "Open Mic", time: "A treia parte" },
+              ].map((item, i) => (
+                <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
+                  <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+                  <p className="text-sm font-medium text-foreground">{item.title}</p>
+                  <p className="text-xs text-muted-foreground">{item.time}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Photo Gallery — nu există încă poze reale de la această ediție, nu inventăm */}
+            <div className="flex flex-col items-center justify-center gap-2 py-10 border-2 border-dashed border-border rounded-xl text-center">
+              <ImageIcon className="w-6 h-6 text-muted-foreground/50" />
+              <p className="text-sm text-muted-foreground">Pozele de la această ediție urmează să fie adăugate.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="container mx-auto px-4">
+        <div className="border-t border-border" />
+      </div>
+
       {/* OML III */}
       <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-10">
-              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediția III</span>
               <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
                 OML III — Călin Pop & Marius Pop
               </h3>
@@ -210,7 +265,6 @@ const Event = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-10">
-              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediția II</span>
               <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
                 OML II
               </h3>
@@ -241,13 +295,11 @@ const Event = () => {
               ))}
             </div>
 
-            {/* Photo Gallery */}
+            {/* Photo Gallery — max 3 poze per eveniment (Faza 11) */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { src: oml2Concert, alt: "OML II - Concert live" },
                 { src: oml2Discussion, alt: "OML II - Discuție pe scenă" },
-                { src: oml2Audience, alt: "OML II - Publicul" },
-                { src: oml2Team, alt: "OML II - Echipa pe scenă" },
                 { src: oml2Group, alt: "OML II - Foto de grup" },
               ].map((img, i) => (
                 <img
@@ -273,7 +325,6 @@ const Event = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-10">
-              <span className="text-sm text-primary font-medium uppercase tracking-wider">Ediția I</span>
               <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
                 OML I — Frații Jdieri
               </h3>
@@ -304,13 +355,11 @@ const Event = () => {
               ))}
             </div>
 
-            {/* Photo Gallery */}
+            {/* Photo Gallery — max 3 poze per eveniment (Faza 11) */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { src: oml1Concert, alt: "OML I - Concert live" },
                 { src: oml1Discussion, alt: "OML I - Discuție pe scenă" },
-                { src: oml1Closeup, alt: "OML I - Momente de pe scenă" },
-                { src: oml1Audience, alt: "OML I - Publicul" },
                 { src: oml1Group, alt: "OML I - Foto de grup" },
               ].map((img, i) => (
                 <img
