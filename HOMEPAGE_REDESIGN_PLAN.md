@@ -472,6 +472,19 @@ Idei de decor discutate (de rafinat împreună înainte de generare):
 - Forme/paneluri cu morphing (blob-uri animate, tranziții organice între secțiuni) în loc de
   linii drepte între secțiunile cream/dark.
 - Elemente mici de decor (accente lângă butoane CTA, separatoare animate între secțiuni).
+- **Intro/loading animation cu logo-ul, la prima intrare pe site** (idee client, 2026-08-26):
+  overlay fullscreen cu animația logo-ului (ex. vinilul se rotește, notele muzicale zboară și se
+  asamblează în wordmark), apoi se dă la o parte și apare site-ul. Cerințe stricte, ca să nu
+  strice ce s-a câștigat la Faza 5 (Lighthouse ≥90):
+  - **Scurt** (sub ~1-1.5s) și **skippabil** (click/tap oriunde = sare direct).
+  - Apare **doar la prima intrare** pe site într-o sesiune de navigare, NU la fiecare schimbare
+    de rută (tehnic simplu — SPA, Header/Footer/Layout nu se remontează la navigare internă;
+    componenta de intro trăiește o singură dată la nivel de `App.tsx`/root, cu un flag în
+    `sessionStorage` ca să nu reapară dacă utilizatorul navighează/reîncarcă în aceeași sesiune).
+  - Respectă `prefers-reduced-motion` — sare complet peste intro pentru cei cu mișcare redusă,
+    nu doar o simplifică.
+  - Fișierul generat (video/animație) optimizat ca greutate, lazy — nu blochează primul paint
+    al conținutului real din spate.
 
 Cerințe tehnice de reținut la generare/integrare (ca să nu strice performanța/accesibilitatea
 câștigată în Fazele 3 și 5):
