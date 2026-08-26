@@ -607,6 +607,35 @@ terminate și verificate. Antigravity nu are acces la Higgsfield (e disponibil d
 sesiune Claude Code cu acest MCP conectat), deci materialele se generează separat, apoi se
 predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integrează în cod.
 
+**Faza 15 a început (2026-08-27)** — Faza 14 fiind complet închisă (toate sub-fazele 14.1-14.8
++ completările), clientul a confirmat explicit să trecem la Faza 15.
+
+- [x] **Decor pagina Echipă (note muzicale, panglică, granule)** (FĂCUT 2026-08-27): generate
+  cu `recraft_v4_1` (`model_type: vector`), 3 SVG-uri, 7.5 credite (13 → 5.5 rămase). **Lecție
+  tehnică importantă, de reținut pentru generările viitoare**: modelul NU a respectat strict
+  parametrii ceruți — `background_color: null` a produs oricum un fundal alb opac (dreptunghi
+  desenat, nu transparență reală), iar `colors: ["#F59656"]` (un singur portocaliu) nu a
+  împiedicat modelul să adauge o a doua culoare (albastru) pe cont propriu. Corectat manual,
+  fără cost suplimentar: fundalul alb șters direct din SVG (element `<path>`), elementele
+  albastre recolorate portocaliu prin înlocuire de text în fișier. Metadata C2PA de
+  provenance (semnătură/certificat, inutilă pentru site) eliminată — a redus dimensiunea
+  fișierelor cu ~45%. **La generările viitoare**: nu presupune că `background_color`/`colors`
+  sunt respectate strict — verifică vizual (conversie SVG→PNG cu `magick`, apoi citește
+  imaginea) înainte să integrezi, și fii pregătit să corectezi manual în loc să regenerezi
+  (regenerarea costă credite din nou, corectarea manuală e gratis).
+  - Fișiere: `src/assets/decor/{notes,ribbon,grains}.svg`.
+  - Integrare (`Team.tsx`): plutesc pe toată pagina (nu doar o secțiune) — `useScroll()` fără
+    `target` urmărește tot documentul; paralaxă (`useTransform`, viteze diferite per element)
+    + puls CSS ambiental (`motion-safe:animate-blob-drift`, reosit), opacitate 30-40% ca să
+    rămână decor, nu accent principal. `pointer-events-none` + `aria-hidden`. Respectă
+    `prefers-reduced-motion`.
+- [ ] Restul asset-urilor discutate: blob-uri de fundal îmbunătățite (homepage + alte pagini),
+  intro/loading animation cu logo, variantă de logo pt fundal închis (footer + eventual header
+  transparent peste Hero) — de continuat.
+- [ ] **Idee pusă pe pauză explicit de client**: animație Higgsfield pe pozele reale ale
+  echipei (puppeteering/motion transfer) — vezi nota din Faza 14.5 mai sus. NU se implementează
+  fără ca subiectul să fie redeschis explicit de client.
+
 Scop: „morfism dinamic" al site-ului prin decor abstract — NU fotografii/video ale unor
 evenimente/persoane false. Poze și video-uri reale de la evenimente rămân un subiect separat,
 adăugate ulterior de echipă, nu generate.
