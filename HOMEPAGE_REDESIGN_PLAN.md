@@ -209,6 +209,20 @@ performanță al celor 3 forme SVG animate pe mobil de gamă joasă (Lighthouse 
 existentă, trebuie re-verificată după acest add-on, nu presupusă) — contrastul textului nu mai
 e un risc ca la glassmorphism, cardurile sunt acum complet opace.
 
+**Iterație 2 (2026-08-26) — refacere layout, nu doar stil**: la cerere client ("poate sunt
+variante mai estetice de a expune, refă cum consideri"), pe lângă stilul flat, s-a schimbat și
+AȘEZAREA conținutului, ca să nu mai fie doar un grid generic:
+- **"Cum funcționează?"** (4 pași, sunt o secvență reală) → layout tip "parcurs": o linie
+  punctată orizontală leagă vizual cele 4 carduri (doar desktop, `lg:`; pe mobil rămân stivuite
+  simplu, fără linie). Cardurile rămân aceleași (`ProcessStepCard variant="numbered"`), doar
+  containerul primește linia conectoare în spate (DOM order, fără z-index — linia se vede doar
+  în spațiile dintre carduri, acoperită de ele unde se suprapun).
+- **"De ce suntem diferiți?"** (6 puncte, NU sunt o secvență, sunt valori independente) →
+  layout tip "bento": primele 2 ("Nu este un concurs", "Ești vedeta serii" — cele mai aproape
+  de identitatea de brand) devin `variant="numbered"` + `sm:col-span-2` (mai mari, fără numărul
+  mare din fundal, pentru că nu sunt pași), restul de 4 rămân `variant="compact"`, o coloană
+  fiecare pe `lg:grid-cols-4`. Ierarhie vizuală reală, nu 6 cutii la aceeași greutate.
+
 ### Faza 9 — Instagram feed live-sincronizat, nu mai hardcodat · *Execută: Claude (backend), Antigravity (UI)* · **Decizie luată: Opțiunea B (Graph API + Supabase)**
 
 **Stare azi (verificat în cod)**: `src/components/InstagramFeed.tsx` are un array hardcodat

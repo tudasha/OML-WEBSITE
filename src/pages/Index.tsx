@@ -116,30 +116,35 @@ const Index = () => {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 md:mb-24">
-            {[{
-            icon: Mic,
-            title: "Concert Live",
-            description: "Artiști invitați cu experiență susțin un moment muzical live.",
-            number: "01"
-          }, {
-            icon: MessageCircle,
-            title: "Discuție & Întrebări",
-            description: "Sesiune interactivă despre carieră, provocări și experiențe.",
-            number: "02"
-          }, {
-            icon: Star,
-            title: "Open Mic",
-            description: "Scena Tinerilor - spațiu dedicat tinerilor să cânte live.",
-            number: "03"
-          }, {
-            icon: Users,
-            title: "Socializare & Pizza",
-            description: "Moment de conectare și networking între participanți.",
-            number: "04"
-          }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="flat" blobRotate={index * 47} />
-              </ScrollReveal>)}
+          {/* Layout "parcurs": cei 4 pași sunt o secvență, nu un grid generic — o linie
+              punctată îi leagă vizual (doar desktop; pe mobil rămân stivuiți simplu). */}
+          <div className="relative mb-16 md:mb-24">
+            <div className="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] border-t-2 border-dashed border-primary/25" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[{
+              icon: Mic,
+              title: "Concert Live",
+              description: "Artiști invitați cu experiență susțin un moment muzical live.",
+              number: "01"
+            }, {
+              icon: MessageCircle,
+              title: "Discuție & Întrebări",
+              description: "Sesiune interactivă despre carieră, provocări și experiențe.",
+              number: "02"
+            }, {
+              icon: Star,
+              title: "Open Mic",
+              description: "Scena Tinerilor - spațiu dedicat tinerilor să cânte live.",
+              number: "03"
+            }, {
+              icon: Users,
+              title: "Socializare & Pizza",
+              description: "Moment de conectare și networking între participanți.",
+              number: "04"
+            }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
+                  <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="flat" blobRotate={index * 47} />
+                </ScrollReveal>)}
+            </div>
           </div>
 
           <ScrollReveal>
@@ -148,33 +153,48 @@ const Index = () => {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {/* Layout "bento": cele 2 mesaje-cheie (identitatea brandului) sunt mai vizibile,
+              restul de 4 sunt suport, compacte — nu 6 cutii identice la aceeași greutate. */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[{
             icon: Trophy,
             title: "Nu este un concurs",
-            description: "Accent pe curaj și evoluție, nu pe perfecțiune."
+            description: "Accent pe curaj și evoluție, nu pe perfecțiune.",
+            featured: true
           }, {
             icon: Star,
             title: "Ești vedeta serii",
-            description: "Fiecare participant primește atenție și respect maxim."
+            description: "Fiecare participant primește atenție și respect maxim.",
+            featured: true
           }, {
             icon: Music,
             title: "Scenă profesională",
-            description: "Sunet de calitate și experiență reală de concert."
+            description: "Sunet de calitate și experiență reală de concert.",
+            featured: false
           }, {
             icon: Lightbulb,
             title: "Feedback constructiv",
-            description: "Sfaturi practice de la artiști cu experiență."
+            description: "Sfaturi practice de la artiști cu experiență.",
+            featured: false
           }, {
             icon: Heart,
             title: "Public susținător",
-            description: "Atmosferă prietenoasă și lipsită de presiune."
+            description: "Atmosferă prietenoasă și lipsită de presiune.",
+            featured: false
           }, {
             icon: Users,
             title: "Comunitate",
-            description: "Conexiuni reale între generații de muzicieni."
-          }].map((item, index) => <ScrollReveal key={index} delay={index * 80}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" tone="flat" blobRotate={index * 47} />
+            description: "Conexiuni reale între generații de muzicieni.",
+            featured: false
+          }].map((item, index) => <ScrollReveal key={index} delay={index * 80} className={item.featured ? "sm:col-span-2" : undefined}>
+                <ProcessStepCard
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                  variant={item.featured ? "numbered" : "compact"}
+                  tone="flat"
+                  blobRotate={index * 47}
+                />
               </ScrollReveal>)}
           </div>
         </div>
