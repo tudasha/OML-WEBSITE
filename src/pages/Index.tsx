@@ -13,6 +13,12 @@ import { nextEvent, getEventSummary } from "@/data/events";
 // Hero video — upload to your own CDN and update this URL after deployment
 const HERO_VIDEO_URL = "/hero_1_compressed.mp4";
 
+// Formă organică (blob) flat, fără blur — folosită ca decor de fundal în secțiunea
+// "Cum funcționează / De ce suntem diferiți" (Faza 4B). Aceeași formă e refolosită de mai
+// multe ori cu transform/culoare diferite, în loc de mai multe path-uri desenate separat.
+const BLOB_PATH =
+  "M54.2,-58.3C68.7,-49.5,78.2,-32.1,80.7,-14.1C83.2,3.9,78.7,22.6,68.5,37.6C58.3,52.6,42.4,64,24.7,70.4C7,76.8,-12.5,78.3,-29.8,72.4C-47.1,66.6,-62.2,53.4,-70.7,37C-79.2,20.6,-81.1,1,-76.8,-16.8C-72.5,-34.6,-62,-50.6,-47.7,-59.3C-33.4,-68,-16.7,-69.4,0.9,-70.6C18.5,-71.8,39.7,-67.1,54.2,-58.3Z";
+
 const Index = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -92,12 +98,20 @@ const Index = () => {
 
       {/* Cum funcționează + De ce suntem diferiți — secțiune unică, fluidă (Faza 4B) */}
       <section className="relative py-20 md:py-28 bg-background overflow-hidden">
-        {/* Fundal organic: blob-uri blurate, culoarea de brand, mișcare lentă — dezactivată
-            automat pentru utilizatorii cu prefers-reduced-motion prin varianta motion-safe: */}
+        {/* Fundal organic: forme "blob" flat, vectoriale — fără blur/transparență de sticlă
+            (client a respins explicit glassmorphism), stil între morfism și ilustrație plată
+            (Kurzgesagt). Mișcare lentă, dezactivată automat la prefers-reduced-motion prin
+            varianta Tailwind motion-safe:. */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div className="absolute -top-24 -left-24 w-[28rem] h-[28rem] rounded-full bg-primary/15 blur-3xl motion-safe:animate-blob-drift" />
-          <div className="absolute top-1/3 -right-32 w-[24rem] h-[24rem] rounded-full bg-primary/10 blur-3xl motion-safe:animate-blob-drift [animation-delay:-7s]" />
-          <div className="absolute bottom-0 left-1/4 w-[20rem] h-[20rem] rounded-full bg-primary/10 blur-3xl motion-safe:animate-blob-drift [animation-delay:-14s]" />
+          <svg viewBox="0 0 200 200" className="absolute -top-16 -left-20 w-72 h-72 md:w-96 md:h-96 motion-safe:animate-blob-drift">
+            <path className="fill-primary/10" d={BLOB_PATH} transform="translate(100 100)" />
+          </svg>
+          <svg viewBox="0 0 200 200" className="absolute top-1/3 -right-24 w-64 h-64 md:w-80 md:h-80 motion-safe:animate-blob-drift [animation-delay:-7s]">
+            <path className="fill-primary/5" d={BLOB_PATH} transform="translate(100 100) rotate(120)" />
+          </svg>
+          <svg viewBox="0 0 200 200" className="absolute -bottom-10 left-1/4 w-56 h-56 md:w-72 md:h-72 motion-safe:animate-blob-drift [animation-delay:-14s]">
+            <path className="fill-primary/5" d={BLOB_PATH} transform="translate(100 100) rotate(240) scale(-1,1)" />
+          </svg>
         </div>
 
         <div className="container mx-auto px-4 relative">
@@ -129,7 +143,7 @@ const Index = () => {
             description: "Moment de conectare și networking între participanți.",
             number: "04"
           }].map((item, index) => <ScrollReveal key={index} delay={index * 100}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="glass" />
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} number={item.number} tone="flat" />
               </ScrollReveal>)}
           </div>
 
@@ -165,7 +179,7 @@ const Index = () => {
             title: "Comunitate",
             description: "Conexiuni reale între generații de muzicieni."
           }].map((item, index) => <ScrollReveal key={index} delay={index * 80}>
-                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" tone="glass" />
+                <ProcessStepCard icon={item.icon} title={item.title} description={item.description} variant="compact" tone="flat" />
               </ScrollReveal>)}
           </div>
         </div>

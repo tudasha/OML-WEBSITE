@@ -164,37 +164,50 @@ Reacție la feedback: cele două secțiuni (4 carduri + 6 rânduri, una după al
 aglomerate. Direcție aleasă de client, dintre mai multe variante cercetate (glassmorphism,
 bento grid, forme organice — trenduri 2026 confirmate: [Envato](https://elements.envato.com/learn/web-design-trends),
 [Design Deluxe](https://designdeluxe.in/web-design-trends-2026-with-organic-shapes/)):
-**secțiune unică, fluidă**, cu fundal organic și carduri "glass".
+**secțiune unică, fluidă**, cu fundal organic.
 
-**Ce s-a schimbat tehnic:**
+**⚠️ Direcție de stil confirmată explicit de client (2026-08-26), valabilă peste tot pe site,
+inclusiv la Faza 14/Higgsfield — de reținut pentru orice design viitor**: **NU glassmorphism**
+(fără `backdrop-blur`/transparență de sticlă, nici acum, nici mai târziu). Stilul dorit e ceva
+**între morfism (forme organice) și Kurzgesagt (ilustrație vectorială flat)** — culori solide,
+opace, margini vectoriale curate, fără blur/ceață. Prima încercare a folosit glassmorphism din
+greșeală (interpretare greșită a cererii inițiale de "fluid design") și a fost corectată.
+
+**Ce s-a implementat tehnic (versiunea finală, flat):**
 - Cele două `<section>` separate (`Cum funcționează?` + `De ce suntem diferiți?`) au devenit
   UNA singură în `Index.tsx`, pe fundal `bg-background` (alb) — păstrează alternanța macro
   Hero(dark)→cream→alb→hero(dark)→cream, doar cele două secțiuni foste separate s-au unit.
-- Fundal organic: 3 blob-uri circulare blurate (`blur-3xl`, `bg-primary/10`–`/15`, poziționate
-  absolut), cu mișcare lentă de 20s (`blob-drift` keyframe nou în `tailwind.config.ts`),
-  aplicată prin `motion-safe:animate-blob-drift` — se dezactivează AUTOMAT pentru
-  `prefers-reduced-motion` (varianta Tailwind `motion-safe:` face asta nativ, fără cod
-  suplimentar).
-- `ProcessStepCard.tsx` a primit un prop nou, **`tone`** (`"solid"` implicit / `"glass"`),
-  independent de `variant` (care rămâne despre layout numbered/compact): `tone="glass"` =
-  `bg-white/80 backdrop-blur-md border border-white/60` — opacitate 80% aleasă explicit ca să
-  nu scadă contrastul textului sub pragul de accesibilitate (relevant pentru Faza 5).
-- Ambele grupuri de carduri (Cum funcționează + De ce suntem diferiți) folosesc acum
-  `tone="glass"`.
+- Fundal organic: 3 forme "blob" SVG flat (`BLOB_PATH`, un singur path reosit de 3 ori cu
+  `rotate`/`scale` diferite), umplute cu `fill-primary/5`–`/10` — **opace, fără blur/filter**,
+  margini vectoriale curate, nu ceață. Mișcare lentă de 20s (`blob-drift` keyframe în
+  `tailwind.config.ts`), aplicată prin `motion-safe:animate-blob-drift` — se dezactivează
+  AUTOMAT la `prefers-reduced-motion` (varianta Tailwind `motion-safe:`, fără cod suplimentar).
+- `ProcessStepCard.tsx` are un prop nou, **`tone`** (`"solid"` implicit / `"flat"`), independent
+  de `variant` (care rămâne despre layout numbered/compact): `tone="flat"` = card complet opac
+  (`bg-white`, `border-2 border-primary/10`), cu o bandă de accent portocalie sus (1.5px) —
+  fără transparență, fără blur.
+- Ambele grupuri de carduri (Cum funcționează + De ce suntem diferiți) folosesc `tone="flat"`.
 
 **Notă importantă**: asta modifică parțial regula "tonul general (dark hero + secțiuni cream
 alternante) nu se schimbă" din capul planului — dar e o decizie explicită a clientului din
 discuție (2026-08-26), nu o abatere neanunțată. Se aplică DOAR la aceste două secțiuni; restul
 paginii (Ce este OML, Preview eveniment, Instagram) rămâne cu alternanța cream/dark neschimbată.
 
-**Relația cu Faza 14 (Higgsfield)**: fundalul organic de acum e varianta CSS/gratuită a
-"morfismului" discutat pentru Faza 14 — la momentul potrivit, Higgsfield poate îmbunătăți/
-înlocui blob-urile CSS cu ceva generat, în ACELAȘI loc din cod, nu se reconstruiește nimic.
+**Paleta**: forma/culorile blob-urilor rămân strict pe portocaliul de brand existent (`primary`,
+nuanțe de opacitate) — nu s-au adăugat culori noi. Dacă la Faza 14 se dorește un look Kurzgesagt
+mai bogat (de obicei 2-3 culori flat complementare), e nevoie de o decizie explicită separată
+înainte să se extindă paleta.
 
-**De verificat la Faza 5 (accesibilitate/performanță), specific pentru asta**: contrast text pe
-`bg-white/80` + blur (probabil OK, dar de confirmat cu un audit real), și impactul de
-performanță al celor 3 blob-uri blurate + animate pe mobil de gamă joasă (Lighthouse ≥ 90 e
-ținta existentă, trebuie re-verificată după acest add-on, nu presupusă).
+**Relația cu Faza 14 (Higgsfield)**: fundalul organic flat de acum e varianta CSS/gratuită a
+direcției de stil discutate pentru Faza 14 — la momentul potrivit, Higgsfield poate îmbunătăți/
+înlocui blob-urile SVG cu ceva generat, în ACELAȘI loc din cod și în ACELAȘI stil (flat,
+opac, fără glassmorphism) — nu se reconstruiește nimic, dar generarea trebuie ghidată explicit
+să nu producă glass/blur.
+
+**De verificat la Faza 5 (accesibilitate/performanță), specific pentru asta**: impactul de
+performanță al celor 3 forme SVG animate pe mobil de gamă joasă (Lighthouse ≥ 90 e ținta
+existentă, trebuie re-verificată după acest add-on, nu presupusă) — contrastul textului nu mai
+e un risc ca la glassmorphism, cardurile sunt acum complet opace.
 
 ### Faza 9 — Instagram feed live-sincronizat, nu mai hardcodat · *Execută: Claude (backend), Antigravity (UI)* · **Decizie luată: Opțiunea B (Graph API + Supabase)**
 

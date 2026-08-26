@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 // fundal) și "De ce suntem diferiți?" (variant="compact", rând orizontal icon+text).
 // `variant` controlează FORMA/layout-ul; `tone` controlează STILUL vizual, independent:
 // - tone="solid" (implicit): cardul opac de dinainte, neschimbat.
-// - tone="glass": stil translucid (fundal alb semi-transparent + blur), pentru secțiunea
-//   fluidă/organică din Faza 4B (vezi HOMEPAGE_REDESIGN_PLAN.md) — opacitatea e suficient de
-//   mare (bg-white/80) ca să nu scadă contrastul textului sub pragul de accesibilitate.
+// - tone="flat": stil ilustrație vectorială plată (opac, fără blur/transparență — client a
+//   respins explicit glassmorphism, vrea ceva între morfism și stil Kurzgesagt), cu un accent
+//   colorat subțire sus, pentru secțiunea fluidă/organică din Faza 4B (vezi
+//   HOMEPAGE_REDESIGN_PLAN.md).
 // ScrollReveal + delay-ul de animație rămân la locul de folosire (în .map()), nu fac parte
 // din componentă.
 interface ProcessStepCardProps {
@@ -17,7 +18,7 @@ interface ProcessStepCardProps {
   title: string;
   description: string;
   variant?: "numbered" | "compact";
-  tone?: "solid" | "glass";
+  tone?: "solid" | "flat";
   /** Doar pentru variant="numbered" — numărul mare, semi-transparent, din fundal (ex. "01") */
   number?: string;
 }
@@ -30,14 +31,14 @@ const ProcessStepCard = ({
   tone = "solid",
   number,
 }: ProcessStepCardProps) => {
-  const isGlass = tone === "glass";
+  const isFlat = tone === "flat";
 
   if (variant === "compact") {
     return (
       <div
         className={cn(
           "flex items-start gap-4 p-5 rounded-xl shadow-sm hover:shadow-md transition-shadow h-full",
-          isGlass ? "bg-white/80 backdrop-blur-md border border-white/60" : "bg-background"
+          isFlat ? "bg-white border-2 border-primary/10" : "bg-background"
         )}
       >
         <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
@@ -51,13 +52,14 @@ const ProcessStepCard = ({
     );
   }
 
-  if (isGlass) {
-    // Varianta "numbered" cu tone="glass" nu mai folosește <Card> (are fundal opac fix prin
-    // token-ul --card) — un div simplu, ca să controlăm transparența direct.
+  if (isFlat) {
+    // Varianta "numbered" cu tone="flat" nu mai folosește <Card> (are fundal fix prin
+    // token-ul --card) — un div simplu, opac, cu o bandă de accent sus (motiv flat/ilustrativ).
     return (
-      <div className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full p-6 pt-8">
+      <div className="group relative overflow-hidden rounded-2xl border-2 border-primary/10 bg-white shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 h-full p-6 pt-8">
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-primary" />
         {number && (
-          <div className="absolute top-4 right-4 text-4xl font-display font-bold text-primary/10">
+          <div className="absolute top-5 right-4 text-4xl font-display font-bold text-primary/10">
             {number}
           </div>
         )}
