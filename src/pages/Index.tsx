@@ -85,10 +85,14 @@ const Index = () => {
               descoperă bucuria de a urca pe scenă într-un mediu susținător.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-base px-8 font-semibold shadow-lg">
+              {/* text-foreground (nu text-white) pe bg-primary: alb pică WCAG AA (~2.24:1),
+                  text-foreground dă ~9.4:1, aceeași paletă (Faza 14). */}
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground text-base px-8 font-semibold shadow-lg">
                 <Link to="/eveniment">Vezi următorul eveniment</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-2 border-white bg-white/10 text-white hover:bg-white hover:text-foreground text-base px-8 font-semibold">
+              {/* Fără bg-white/10 (era o urmă de translucență/glass) — buton ghost simplu,
+                  transparent, doar contur + text. */}
+              <Button asChild variant="outline" size="lg" className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-foreground text-base px-8 font-semibold">
                 <Link to="/contact">Contactează-ne</Link>
               </Button>
             </div>
@@ -104,8 +108,14 @@ const Index = () => {
       </section>
 
       {/* Ce este OML Section */}
-      <section className="py-20 md:py-28 section-cream">
-        <div className="container mx-auto px-4">
+      <section className="relative py-20 md:py-28 section-cream overflow-hidden">
+        {/* Decor flat, discret — secțiunea era doar text plat, fără niciun element vizual
+            (Faza 14.2). Nu ating cuvintele, doar adaug un accent organic în spate. */}
+        <svg viewBox="0 0 200 200" className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 translate-x-1/3 -translate-y-1/3 pointer-events-none motion-safe:animate-blob-drift" aria-hidden="true">
+          <path className="fill-primary/5" d={BLOB_PATH} />
+        </svg>
+
+        <div className="container mx-auto px-4 relative">
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center space-y-6">
               <SectionHeading kicker="Descoperă" title="Ce este Oradea Music Lab?" />
@@ -241,7 +251,9 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="max-w-4xl mx-auto">
-              <Card className="bg-white/5 border-white/10 backdrop-blur overflow-hidden">
+              {/* Fundal opac, fără backdrop-blur — panou flat, nu glassmorphism. Ușor mai
+                  deschis decât bg-hero-bg al secțiunii, ca să se separe vizual ca un card. */}
+              <Card className="bg-[hsl(240_10%_14%)] border border-white/10 overflow-hidden">
                 <CardContent className="p-8 md:p-12">
                   <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
                     <div className="shrink-0">
@@ -270,7 +282,7 @@ const Index = () => {
                       <EventCountdown event={nextEvent} className="pt-3" />
                     </div>
                     <div className="shrink-0">
-                      <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white w-full md:w-auto">
+                      <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto">
                         <Link to="/eveniment">Vezi detalii</Link>
                       </Button>
                     </div>
@@ -291,7 +303,7 @@ const Index = () => {
           showStickyCta ? "translate-y-0" : "translate-y-full pointer-events-none"
         }`}
       >
-        <Button asChild size="lg" className="w-full bg-primary hover:bg-primary/90 text-white font-semibold">
+        <Button asChild size="lg" className="w-full bg-primary hover:bg-primary/90 text-foreground font-semibold">
           <Link to="/eveniment">Vezi următorul eveniment</Link>
         </Button>
       </div>

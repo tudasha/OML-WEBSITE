@@ -423,9 +423,15 @@ comune tuturor paginilor:
   organic flat decorativ (reosit `BLOB_PATH`) + wordmark-ul "OML" cu accent de culoare pe "M"
   (logo-ul PNG are fundal alb copt în imagine, nu merge pe fundal închis fără o variantă nouă —
   de generat la Faza 15 dacă se dorește logo real în footer, nu text).
-- [ ] 14.2 — Homepage (`Index.tsx`) — trecere completă (Hero, Ce este OML, Preview eveniment,
-  Instagram feed); secțiunile "Cum funcționează"/"De ce suntem diferiți" au deja stilul din
-  Faza 4B, de integrat coerent cu restul, nu neapărat refăcute de la zero.
+- [x] **14.2 — Homepage (`Index.tsx` + `InstagramFeed.tsx`)** (FĂCUT 2026-08-27): găsit și
+  reparat glassmorphism real (nu doar contrast) în cardul "Următorul eveniment" —
+  `bg-white/5 backdrop-blur` → panou opac flat (`bg-[hsl(240_10%_14%)]`, fără blur); butonul
+  ghost "Contactează-ne" din Hero pierde umplerea translucidă `bg-white/10`, rămâne outline
+  simplu; corectat contrastul (`text-white` → `text-foreground` pe `bg-primary`) pe toate cele
+  5 butoane afectate din `Index.tsx` + `InstagramFeed.tsx`; adăugat un accent organic discret
+  (blob flat, opacitate 5%) în secțiunea "Ce este OML", care era doar text plat — fără nicio
+  schimbare de cuvinte. Secțiunile "Cum funcționează"/"De ce suntem diferiți" rămân ca-n
+  Faza 4B (deja coerente stilistic, nu au nevoie de refacere).
 - [ ] 14.3 — Pagina Evenimente (`Event.tsx`)
 - [ ] 14.4 — Despre Noi (`About.tsx`)
 - [ ] 14.5 — Echipă (`Team.tsx`)

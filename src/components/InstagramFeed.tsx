@@ -60,7 +60,7 @@ const InstagramFeed = () => {
             <p className="text-muted-foreground mb-6">
               Urmareste-ne pentru ultimele noutati!
             </p>
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground font-semibold">
               <a href="https://www.instagram.com/oradeamusiclab/" target="_blank" rel="noopener noreferrer">
                 <Instagram className="w-5 h-5 mr-2" />
                 @oradeamusiclab
@@ -84,7 +84,7 @@ const InstagramFeed = () => {
             </div>
             
             <div className="text-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground font-semibold">
                 <a href="https://www.instagram.com/oradeamusiclab/" target="_blank" rel="noopener noreferrer">
                   <Instagram className="w-5 h-5 mr-2" />
                   Vezi toate postarile
