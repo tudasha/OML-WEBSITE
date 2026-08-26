@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import Layout from "@/components/Layout";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -57,6 +58,30 @@ const teamStory: TeamMember[] = [
 // Fără bio — nu are sens o secțiune imersivă de scroll fără text de parcurs; rămâne un card
 // compact, la final.
 const restOfTeam: TeamMember[] = [{ name: "Boji Octavian", role: "Software Developer", photo: octavianPhoto }];
+
+// Poza fiecărui membru face un zoom lent (Ken Burns) legat de scroll, cât timp rămâne sticky —
+// alternativă din cod la animația Higgsfield discutată (care s-a lovit de o limitare tehnică a
+// unlimited-ului pt seedance_2_0_mini prin acest MCP; gratis, fără nicio mișcare a feței, doar
+// "camera" care se apropie ușor). Component separat (nu hook direct în .map()) — fiecare
+// instanță are propriul ref/scroll, regulile hook-urilor React sunt respectate normal.
+const StickyMemberPhoto = ({ photo, name, reversed, shouldReduceMotion }: { photo: string; name: string; reversed: boolean; shouldReduceMotion: boolean }) => {
+  const photoRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: photoRef, offset: ["start end", "end start"] });
+  const zoom = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [1, 1] : [1, 1.15]);
+
+  return (
+    <div ref={photoRef} className={cn("md:sticky md:top-24", reversed && "md:order-2")}>
+      <motion.div
+        initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-xl"
+      >
+        <motion.img src={photo} alt={name} style={{ scale: zoom }} className="w-full h-full object-cover" />
+      </motion.div>
+    </div>
+  );
+};
 
 const Team = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -126,16 +151,7 @@ const Team = () => {
           <section key={member.name} className={cn("py-16 md:py-24", index % 2 === 0 ? "bg-background" : "section-cream")}>
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start max-w-5xl mx-auto">
-                <div className={cn("md:sticky md:top-24", reversed && "md:order-2")}>
-                  <motion.div
-                    initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-xl"
-                  >
-                    <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
-                  </motion.div>
-                </div>
+                <StickyMemberPhoto photo={member.photo} name={member.name} reversed={reversed} shouldReduceMotion={!!shouldReduceMotion} />
 
                 <motion.div
                   initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 24 }}
