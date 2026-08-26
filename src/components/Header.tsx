@@ -21,12 +21,14 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white backdrop-blur-md border-b border-border shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img 
-              src={logoOml} 
-              alt="Oradea Music Lab" 
-              className="h-12 md:h-14 w-auto"
+          {/* Logo — puls subtil la idle + reacție la hover (Faza 8). Hover-ul e pe <Link>
+              (element diferit de <img>), ca cele două animații de transform să nu se calce
+              una pe alta pe același element. */}
+          <Link to="/" className="flex items-center transition-transform duration-300 hover:scale-105">
+            <img
+              src={logoOml}
+              alt="Oradea Music Lab"
+              className="h-12 md:h-14 w-auto motion-safe:animate-logo-pulse"
             />
           </Link>
 

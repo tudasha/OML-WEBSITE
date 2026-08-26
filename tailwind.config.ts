@@ -106,6 +106,10 @@ export default {
           "33%": { transform: "translate(3%, -4%) scale(1.05)" },
           "66%": { transform: "translate(-3%, 3%) scale(0.97)" },
         },
+        "logo-pulse": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.04)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -114,6 +118,7 @@ export default {
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "scale-in": "scale-in 0.5s ease-out forwards",
         "blob-drift": "blob-drift 20s ease-in-out infinite",
+        "logo-pulse": "logo-pulse 4s ease-in-out infinite",
       },
     },
   },
