@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import Layout from "@/components/Layout";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 
 // Import team photos
@@ -49,6 +49,7 @@ interface HoveredState {
   index: number;
 }
 const Team = () => {
+  const shouldReduceMotion = useReducedMotion();
   const [hoveredState, setHoveredState] = useState<HoveredState | null>(null);
   const [lockedState, setLockedState] = useState<HoveredState | null>(null);
   const activeState = lockedState || hoveredState;
@@ -165,7 +166,9 @@ const Team = () => {
                   <img src={activeMember.photo} alt={activeMember.name} className="w-full h-full object-cover object-top" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute bottom-4 left-5 text-white">
-                    <span className="inline-block px-3 py-1 bg-primary rounded-full text-xs font-medium mb-2">
+                    {/* text-foreground pe span, nu moștenit din text-white al părintelui — alb
+                        pe bg-primary pică WCAG AA (Faza 14). */}
+                    <span className="inline-block px-3 py-1 bg-primary text-foreground rounded-full text-xs font-medium mb-2">
                       {activeMember.role}
                     </span>
                     <h3 className={`font-display font-bold ${isLocked ? "text-2xl" : "text-xl"}`}>
@@ -196,7 +199,7 @@ const Team = () => {
                 <img src={teamMembers[0].photo} alt={teamMembers[0].name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <span className="inline-block px-3 py-1 bg-primary rounded-full text-xs font-medium mb-2">
+                  <span className="inline-block px-3 py-1 bg-primary text-foreground rounded-full text-xs font-medium mb-2">
                     {teamMembers[0].role}
                   </span>
                   <h3 className="text-2xl font-display font-bold">
@@ -212,23 +215,31 @@ const Team = () => {
 
           {/* Rest of the team */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {teamMembers.slice(1).map((member, index) => <Card key={index} className={`overflow-hidden border-0 shadow-lg group hover:shadow-xl transition-all duration-300 ${member.description ? "cursor-pointer" : ""} ${activeMember?.name === member.name ? "ring-2 ring-primary ring-offset-2" : ""}`} onMouseEnter={() => handleMouseEnter(member, index)} onMouseLeave={handleMouseLeave} onClick={() => handleCardClick(member, index)}>
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img src={member.photo} alt={member.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                    <span className="inline-block px-2 py-0.5 bg-primary/80 rounded-full text-xs font-medium mb-1">
-                      {member.role}
-                    </span>
-                    <h3 className="text-lg font-display font-semibold">
-                      {member.name}
-                    </h3>
-                    {member.description && <span className="text-xs text-white/60 mt-1 block">
-                        Click pentru detalii
-                      </span>}
+            {teamMembers.slice(1).map((member, index) => <motion.div
+                key={index}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: shouldReduceMotion ? 0 : index * 0.08 }}
+              >
+                <Card className={`overflow-hidden border-0 shadow-lg group hover:shadow-xl transition-all duration-300 ${member.description ? "cursor-pointer" : ""} ${activeMember?.name === member.name ? "ring-2 ring-primary ring-offset-2" : ""}`} onMouseEnter={() => handleMouseEnter(member, index)} onMouseLeave={handleMouseLeave} onClick={() => handleCardClick(member, index)}>
+                  <div className="relative aspect-[3/4] overflow-hidden">
+                    <img src={member.photo} alt={member.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                      <span className="inline-block px-2 py-0.5 bg-primary/80 text-foreground rounded-full text-xs font-medium mb-1">
+                        {member.role}
+                      </span>
+                      <h3 className="text-lg font-display font-semibold">
+                        {member.name}
+                      </h3>
+                      {member.description && <span className="text-xs text-white/60 mt-1 block">
+                          Click pentru detalii
+                        </span>}
+                    </div>
                   </div>
-                </div>
-              </Card>)}
+                </Card>
+              </motion.div>)}
           </div>
 
           {/* Mobile description panel */}
