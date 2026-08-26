@@ -17,6 +17,10 @@ import teamBackground from "@/assets/team/team-background.jpg";
 import decorNotes from "@/assets/decor/notes.svg";
 import decorRibbon from "@/assets/decor/ribbon.svg";
 import decorGrains from "@/assets/decor/grains.svg";
+// Video ambiental generat de client (Seedance, higgsfield.ai) — blob-uri organice portocalii
+// care morfează/plutesc, note și scântei, pe fundal deschis. Folosit foarte discret (opacitate
+// mică), sticky, ca textura de fundal a întregii pagini, nu ca element central.
+import teamBgVideo from "@/assets/decor/team-bg.mp4";
 
 interface TeamMember {
   name: string;
@@ -132,6 +136,20 @@ const Team = () => {
           pe site. Poziții fixe (procent din înălțimea totală a wrapper-ului), nu urmăresc un
           anumit membru. */}
       <div className="relative overflow-hidden">
+        {/* Video ambiental — sticky, foarte discret (opacity-10), rămâne "ancorat" cât scrolezi
+            prin toată pagina. Secțiunile de mai jos devin ușor translucide (bg-background/90,
+            section-cream/90) ca video-ul să se vadă foarte slab prin ele, fără să afecteze
+            lizibilitatea textului. */}
+        <div className="sticky top-0 h-screen w-full -mb-[100vh] pointer-events-none" aria-hidden="true">
+          <video
+            src={teamBgVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-10 motion-reduce:hidden"
+          />
+        </div>
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <motion.img
             alt=""
@@ -174,7 +192,7 @@ const Team = () => {
         {teamStory.map((member, index) => {
         const reversed = index % 2 === 1;
         return (
-          <section key={member.name} className={cn("py-16 md:py-24", index % 2 === 0 ? "bg-background" : "section-cream")}>
+          <section key={member.name} className={cn("relative py-16 md:py-24", index % 2 === 0 ? "bg-background/90" : "bg-[hsl(40,30%,97%)]/90")}>
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start max-w-5xl mx-auto">
                 <StickyMemberPhoto photo={member.photo} name={member.name} reversed={reversed} shouldReduceMotion={!!shouldReduceMotion} />
@@ -202,7 +220,7 @@ const Team = () => {
       })}
 
       {/* Restul echipei — fără bio, card compact, nu o secțiune de scroll */}
-      <section className="py-16 md:py-20 bg-background">
+      <section className="relative py-16 md:py-20 bg-background/90">
         <div className="container mx-auto px-4">
           <div className="max-w-sm mx-auto">
             {restOfTeam.map((member) => (
