@@ -71,7 +71,6 @@ const Index = () => {
   // să fie coerent, nu pe bucăți.
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroVideoScale = useTransform(heroProgress, [0, 1], shouldReduceMotion ? [1, 1] : [1, 1.15]);
   const heroContentOpacity = useTransform(heroProgress, [0, 0.7], shouldReduceMotion ? [1, 1] : [1, 0]);
   const heroContentY = useTransform(heroProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -80]);
 
@@ -113,24 +112,28 @@ const Index = () => {
   }, []);
 
   return <Layout>
+      {/* Video Hero — position:fixed (nu doar în interiorul secțiunii Hero): rămâne vizibil pe
+          fundal cât scrolezi mai departe prin pagină, nu doar cât timp ești în primele 90vh
+          (feedback client: "sper ca videoul hero va rămâne vizibil"). Aceeași tehnică fix +
+          z-index negativ ca la Team.tsx. "Ce este OML" de mai jos e translucid special ca să
+          rămână vizibil prin el; "Cum funcționează" (opac, cu propriul decor) e punctul unde
+          se "acoperă" natural — nu trebuie oprit manual, doar conținut opac peste el. */}
+      <video
+        ref={videoRef}
+        src={HERO_VIDEO_URL}
+        poster={heroPoster}
+        autoPlay={!prefersReducedMotion}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+        className="fixed inset-0 -z-10 w-full h-full object-cover"
+      />
+
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Background Video — zoom lent legat de scroll (paralaxă), nu doar autoplay static */}
-        <motion.div style={{ scale: heroVideoScale }} className="absolute inset-0 w-full h-full bg-hero-bg">
-          <video
-            ref={videoRef}
-            className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
-            src={HERO_VIDEO_URL}
-            poster={heroPoster}
-            autoPlay={!prefersReducedMotion}
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-          />
-        </motion.div>
-        {/* Overlay */}
+        {/* Overlay — doar în Hero, pt contrastul textului peste video */}
         <div className="absolute inset-0 hero-gradient pointer-events-none" />
         
         {/* Content — se estompează + urcă ușor (paralaxă) pe măsură ce scrolezi în afara Hero-ului,
@@ -172,8 +175,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Ce este OML Section */}
-      <section ref={omlRef} className="relative py-20 md:py-28 section-cream overflow-hidden">
+      {/* Ce este OML Section — fără fundal opac (era section-cream) — video-ul Hero de mai sus
+          (acum fix) rămâne vizibil prin ea. Textul primește propriul card de lizibilitate în
+          loc ca toată secțiunea să fie opacă (același tipar ca la Team.tsx). */}
+      <section ref={omlRef} className="relative py-20 md:py-28 overflow-hidden">
         {/* Decor flat, discret, cu paralaxă legată de scroll (nu doar puls CSS static) —
             secțiunea era doar text plat, fără niciun element vizual (Faza 14.2). Nu ating
             cuvintele, doar adaug un accent organic în spate. */}
@@ -188,18 +193,18 @@ const Index = () => {
 
         <div className="container mx-auto px-4 relative">
           <motion.div style={{ opacity: omlOpacity, y: omlY }}>
-            <div className="max-w-3xl mx-auto text-center space-y-6">
+            <div className="max-w-3xl mx-auto text-center space-y-6 bg-white/95 rounded-2xl p-6 md:p-10 shadow-lg">
               <SectionHeading kicker="Descoperă" title="Ce este Oradea Music Lab?" />
               <div className="space-y-4 text-muted-foreground text-lg leading-relaxed text-left md:text-center">
                 <p>Oradea Music Lab este o asociație care organizează evenimente ce aduc împreună tineri aspiranți muzicieni și artiști consacrați din Oradea, într-o seară educativă și distractivă.</p>
                 <p>
-                  Nu este un concurs. Accentul cade pe <strong className="text-foreground">curaj</strong>, 
+                  Nu este un concurs. Accentul cade pe <strong className="text-foreground">curaj</strong>,
                   {" "}<strong className="text-foreground">învățare</strong> și{" "}
-                  <strong className="text-foreground">evoluție</strong>. Greșelile sunt 
+                  <strong className="text-foreground">evoluție</strong>. Greșelile sunt
                   acceptate ca parte firească a procesului artistic.
                 </p>
                 <p>
-                  Fiecare tânăr care urcă pe scenă este tratat ca o vedetă, cu sunet 
+                  Fiecare tânăr care urcă pe scenă este tratat ca o vedetă, cu sunet
                   profesional și atenție maximă, pentru o experiență reală de concert.
                 </p>
               </div>
