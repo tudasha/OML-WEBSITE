@@ -632,9 +632,19 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
 - [ ] Restul asset-urilor discutate: blob-uri de fundal îmbunătățite (homepage + alte pagini),
   intro/loading animation cu logo, variantă de logo pt fundal închis (footer + eventual header
   transparent peste Hero) — de continuat.
-- [ ] **Idee pusă pe pauză explicit de client**: animație Higgsfield pe pozele reale ale
-  echipei (puppeteering/motion transfer) — vezi nota din Faza 14.5 mai sus. NU se implementează
-  fără ca subiectul să fie redeschis explicit de client.
+- [x] **Zoom (Ken Burns) pe pozele echipei — din COD, nu Higgsfield** (FĂCUT 2026-08-27):
+  clientul a redeschis subiectul (confirmat "includem și portretele echipei acum") și a cerut
+  să încercăm Seedance 2.0 Mini Unlimited pt animație video reală. **Limitare tehnică reală
+  găsită**: unlimited-ul NU e acceptat deloc prin acest MCP pt `seedance_2_0_mini` — testat
+  batch și individual, cu poză de referință și doar text, cu și fără `aspect_ratio`, mereu
+  eroarea "Unlimited generations aren't supported for seedance_2_0_mini". Confirmat totuși că
+  pass-ul e activ (o tranzacție reușită, 0 credite, azi mai devreme — probabil generată direct
+  prin higgsfield.ai, nu prin acest canal). Cu 720p costând 10 credite/buc și doar 5.5 credite
+  rămase, generare plătită nu era fezabilă fără decizie explicită. Clientul a ales: pozele se
+  animă din cod (gratis), Higgsfield rămâne pt fundal abstract (tot blocat de aceeași limitare
+  de unlimited, nedemonstrat încă dacă merge plătit).
+  - `StickyMemberPhoto` (component nou, `Team.tsx`): zoom lent (scale 1→1.15) legat de scroll
+    cât poza rămâne sticky — DOAR mișcare de "cameră", nicio animație a feței/expresiei.
 
 Scop: „morfism dinamic" al site-ului prin decor abstract — NU fotografii/video ale unor
 evenimente/persoane false. Poze și video-uri reale de la evenimente rămân un subiect separat,
