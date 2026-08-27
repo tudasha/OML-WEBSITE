@@ -732,6 +732,14 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
   (`Layout.tsx`), fiecare secțiune Hero primește în schimb `-mt-24 md:-mt-32` — urcă până la
   marginea reală de sus a ecranului, în spatele header-ului plutitor (transparent în afara
   cardului propriu) — nu mai există niciun gap/dungă, video-ul și pozele "merg până sus".
+- [x] **Secțiunea Instagram (homepage) — un singur card, separată de panelurile din jur**
+  (FĂCUT 2026-08-27): client a clarificat (după o întrebare de-a mea) că "layoutul să fie mai
+  separat" se referea specific la `InstagramFeed.tsx` de pe homepage — voia să se simtă
+  distinctă de panelurile din jur, nu doar titlul ei avea un card mic, restul (grid-ul de
+  postări + butonul) plutea liber peste fundalul ambiental ca și celelalte secțiuni. Rezolvat:
+  tot conținutul secțiunii (titlu + grid + fallback + buton) stă acum într-un singur card
+  (`bg-white/90 rounded-3xl p-8 md:p-12 shadow-lg`), la fel ca panoul "Următorul eveniment" —
+  se citește ca un panel de sine stătător, nu mai e "topită" în fluxul continuu al paginii.
 - [ ] Restul asset-urilor discutate: fundal video pt "Cum funcționează"/"Edițiile noastre"
   (opțional), variantă de logo pt fundal închis (footer + eventual header transparent peste
   Hero) — de continuat.

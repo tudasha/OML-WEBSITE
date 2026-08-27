@@ -43,60 +43,61 @@ const InstagramFeed = () => {
       return () => clearTimeout(timer);
     }
   }, [hasNoPosts]);
-  // Fără section-cream (era opac) — fundalul global se vede clar prin ea; titlul + textul de
-  // introducere primesc propriul card de lizibilitate (același tipar ca la Index.tsx),
-  // embed-urile Instagram + fallback-ul au deja fundal alb propriu, nu au nevoie de altul.
+  // Fără section-cream (era opac) — fundalul global se vede clar prin ea, DAR toată secțiunea
+  // stă acum într-un singur card (bg-white/90 rounded-3xl), ca să se simtă separată de
+  // panelurile din jur (feedback client: "partea de instagram să fie parcă puțin separată de
+  // restul panelurilor") — nu doar titlul avea propriul card mic, restul plutea liber.
   return <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
-          <div className="inline-block bg-white/90 rounded-2xl px-6 py-4 md:px-8 md:py-5">
+        <div className="max-w-5xl mx-auto bg-white/90 rounded-3xl p-8 md:p-12 shadow-lg">
+          <div className="text-center mb-10">
             <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">URMĂRESTE-NE</span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
               Pe Instagram
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">Fii la curent cu evenimentele noastre, poze din culise și povești din comunitate.</p>
           </div>
-        </div>
 
-        {hasNoPosts ? <div className="text-center py-12 bg-white/90 rounded-2xl max-w-md mx-auto">
-            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Instagram className="w-10 h-10 text-primary" />
-            </div>
-            <p className="text-muted-foreground mb-6">
-              Urmareste-ne pentru ultimele noutati!
-            </p>
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground font-semibold">
-              <a href="https://www.instagram.com/oradeamusiclab/" target="_blank" rel="noopener noreferrer">
-                <Instagram className="w-5 h-5 mr-2" />
-                @oradeamusiclab
-              </a>
-            </Button>
-          </div> : <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-10">
-              {instagramPosts.map((postUrl, index) => <div key={index} className="flex justify-center">
-                  <blockquote className="instagram-media" data-instgrm-captioned data-instgrm-permalink={postUrl} data-instgrm-version="14" style={{
-              background: "#FFF",
-              border: 0,
-              borderRadius: "12px",
-              boxShadow: "0 0 1px 0 rgba(0,0,0,0.5), 0 1px 10px 0 rgba(0,0,0,0.15)",
-              margin: "1px",
-              maxWidth: "540px",
-              minWidth: "300px",
-              padding: 0,
-              width: "100%"
-            }} />
-                </div>)}
-            </div>
-            
-            <div className="text-center">
+          {hasNoPosts ? <div className="text-center py-4">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Instagram className="w-10 h-10 text-primary" />
+              </div>
+              <p className="text-muted-foreground mb-6">
+                Urmareste-ne pentru ultimele noutati!
+              </p>
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground font-semibold">
                 <a href="https://www.instagram.com/oradeamusiclab/" target="_blank" rel="noopener noreferrer">
                   <Instagram className="w-5 h-5 mr-2" />
-                  Vezi toate postarile
+                  @oradeamusiclab
                 </a>
               </Button>
-            </div>
-          </>}
+            </div> : <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                {instagramPosts.map((postUrl, index) => <div key={index} className="flex justify-center">
+                    <blockquote className="instagram-media" data-instgrm-captioned data-instgrm-permalink={postUrl} data-instgrm-version="14" style={{
+                background: "#FFF",
+                border: 0,
+                borderRadius: "12px",
+                boxShadow: "0 0 1px 0 rgba(0,0,0,0.5), 0 1px 10px 0 rgba(0,0,0,0.15)",
+                margin: "1px",
+                maxWidth: "540px",
+                minWidth: "300px",
+                padding: 0,
+                width: "100%"
+              }} />
+                  </div>)}
+              </div>
+
+              <div className="text-center">
+                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground font-semibold">
+                  <a href="https://www.instagram.com/oradeamusiclab/" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="w-5 h-5 mr-2" />
+                    Vezi toate postarile
+                  </a>
+                </Button>
+              </div>
+            </>}
+        </div>
       </div>
     </section>;
 };
