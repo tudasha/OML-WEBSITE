@@ -102,8 +102,9 @@ const Team = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
+      {/* Hero Section — urcă până la marginea reală de sus (-mt), în spatele header-ului
+          plutitor transparent (vezi Layout.tsx/Header.tsx), fără gol vizibil dedesubt. */}
+      <section className="relative py-24 md:py-32 -mt-24 md:-mt-32 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-no-repeat"
           style={{ backgroundImage: `url(${teamBackground})`, backgroundPosition: "center 30%" }}

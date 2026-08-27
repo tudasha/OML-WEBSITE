@@ -29,10 +29,13 @@ const Layout = ({ children }: LayoutProps) => {
         className="fixed inset-0 -z-10 w-full h-full object-cover opacity-50 motion-reduce:hidden"
       />
       <Header />
-      {/* pt mai mare decât înălțimea propriu-zisă a header-ului — acum e o "insulă" plutitoare
-          (top-3/top-4 + card rotunjit, vezi Header.tsx), nu o bară lipită de margine, așa că
-          are nevoie de un spațiu de respirație vizibil dedesubt, nu doar înălțimea exactă. */}
-      <main className="flex-1 pt-24 md:pt-32">{children}</main>
+      {/* FĂRĂ padding-top fix — header-ul e acum o "insulă" plutitoare, transparentă în afara
+          cardului ei propriu (vezi Header.tsx), nu o bară opacă ce trebuia "evitată" cu spațiu
+          gol dedesubt. Fiecare pagină își extinde propria secțiune de sus (video/poză de fundal)
+          până la marginea reală a ecranului (`-mt-24 md:-mt-32`, vezi fiecare Hero) — header-ul
+          plutește peste ea, nu mai există o dungă/gap vizibil unde fundalul se "rupe" brusc
+          (feedback client: fundalul paginii se întrerupea sub marginea video-ului). */}
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

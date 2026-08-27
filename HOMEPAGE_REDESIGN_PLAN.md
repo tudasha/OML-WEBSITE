@@ -722,6 +722,16 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
      ex. pastilă/rounded-full). Meniul mobil se deschide acum ÎN interiorul aceluiași card, nu
      mai e un panou separat lipit de margine. `Layout.tsx`: `pt-16/20` → `pt-24/32` (spațiu de
      respirație sub header-ul plutitor, nu doar înălțimea lui exactă).
+- [x] **Fix: fundalul/video-ul de sus se rupea brusc puțin sub header** (FĂCUT 2026-08-27):
+  client a semnalat pe screenshot că panelul header-ului și fundalul paginii se întrerup brusc
+  puțin mai jos de marginea video-ului/pozei — cauzat de `pt-24 md:pt-32` adăugat pe `<main>`
+  odată cu header-ul plutitor (punctul de mai sus): fiecare Hero/poză de fundal (Index, Event,
+  About, Contact, Donate, Register, Team) începea abia după acel gap, lăsând o dungă vizibilă
+  între fundalul ambiental (vizibil în gap, în spatele header-ului) și dreptunghiul opac al
+  video-ului/pozei care începea brusc mai jos. Rezolvat: `pt-24/32` eliminat de pe `<main>`
+  (`Layout.tsx`), fiecare secțiune Hero primește în schimb `-mt-24 md:-mt-32` — urcă până la
+  marginea reală de sus a ecranului, în spatele header-ului plutitor (transparent în afara
+  cardului propriu) — nu mai există niciun gap/dungă, video-ul și pozele "merg până sus".
 - [ ] Restul asset-urilor discutate: fundal video pt "Cum funcționează"/"Edițiile noastre"
   (opțional), variantă de logo pt fundal închis (footer + eventual header transparent peste
   Hero) — de continuat.
