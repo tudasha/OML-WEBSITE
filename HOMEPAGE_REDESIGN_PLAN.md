@@ -687,10 +687,24 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
   de lizibilitate (`bg-white/90` sau `/95`, `rounded-2xl`/`3xl`, `shadow-lg`), tiparul stabilit
   deja la Team.tsx/"Ce este OML" — nu s-a atins fundalul cardurilor deja opace (formulare,
   `ProcessStepCard` cu `tone="flat"`, etc.).
-- [ ] Restul asset-urilor discutate: fundal video pt panoul "Următorul eveniment" (prompt nou
-  dat, orientat pe vibe de anticipare/scenă, nu decor ambiental calm — client generează),
-  fundal video pt "Cum funcționează"/"Edițiile noastre" (opțional), variantă de logo pt fundal
-  închis (footer + eventual header transparent peste Hero) — de continuat.
+- [x] **Fundal video pt panoul "Următorul eveniment"** (FĂCUT 2026-08-27): clientul a generat
+  singur (Seedance, higgsfield.ai) după promptul rescris pt "vibe de următor eveniment"
+  (spotlight, note care urcă, scântei) și l-a predat prin `~/Downloads`. Verificat vizual
+  (ffprobe + cadre extrase) înainte de integrare: 1280x720, 5s, ~2MB, exact conform ideii —
+  con de lumină portocalie pe fundal întunecat, note muzicale + scântei care urcă spre vârful
+  fasciculului. `src/assets/decor/next-event-bg.mp4`, în `Index.tsx`.
+  **Bug raportat de client, corectat în aceeași mișcare** ("a dispărut Următorul eveniment de
+  pe pagina principală"): secțiunea folosește un mecanism de dizolvare (`opacity: 0 → 1 → 0`
+  legat de scroll, pt cardul cu detalii) — înainte avea un fundal opac (`bg-hero-bg`) care
+  ținea locul vizual cât cardul era la opacitate 0; eliminat la trecerea la fundal global
+  (vezi punctul de mai sus), fără să rămână nimic vizibil în acel interval — secțiunea chiar
+  "dispărea" o bucată de scroll. Rezolvat definitiv (nu doar cosmetic) punând noul video de
+  fundal ÎN AFARA `motion.div`-ului care se dizolvă: video-ul rămâne mereu vizibil cât ești în
+  zona sticky a secțiunii, doar cardul cu detaliile evenimentului se dizolvă peste el — nu mai
+  există un interval "gol".
+- [ ] Restul asset-urilor discutate: fundal video pt "Cum funcționează"/"Edițiile noastre"
+  (opțional), variantă de logo pt fundal închis (footer + eventual header transparent peste
+  Hero) — de continuat.
 - [x] **Zoom (Ken Burns) pe pozele echipei — din COD, nu Higgsfield** (FĂCUT 2026-08-27):
   clientul a redeschis subiectul (confirmat "includem și portretele echipei acum") și a cerut
   să încercăm Seedance 2.0 Mini Unlimited pt animație video reală. **Limitare tehnică reală
