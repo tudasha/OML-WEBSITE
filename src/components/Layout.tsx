@@ -29,7 +29,10 @@ const Layout = ({ children }: LayoutProps) => {
         className="fixed inset-0 -z-10 w-full h-full object-cover opacity-50 motion-reduce:hidden"
       />
       <Header />
-      <main className="flex-1 pt-16 md:pt-20">{children}</main>
+      {/* pt mai mare decât înălțimea propriu-zisă a header-ului — acum e o "insulă" plutitoare
+          (top-3/top-4 + card rotunjit, vezi Header.tsx), nu o bară lipită de margine, așa că
+          are nevoie de un spațiu de respirație vizibil dedesubt, nu doar înălțimea exactă. */}
+      <main className="flex-1 pt-24 md:pt-32">{children}</main>
       <Footer />
     </div>
   );

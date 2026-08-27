@@ -80,15 +80,6 @@ const Index = () => {
   const omlY = useTransform(omlProgress, [0, 1], shouldReduceMotion ? [0, 0] : [40, 0]);
   const omlBlobY = useTransform(omlProgress, [0, 1], shouldReduceMotion ? [0, 0] : [-20, 20]);
 
-  // Panoul "Următorul eveniment" rămâne fixat (sticky) cât timp scrolezi prin secțiune, apoi se
-  // "dizolvă" (scade + dispare) pe măsură ce Instagram-ul alunecă peste el — nu mai taie brusc
-  // între cele două secțiuni luminoase din jur (feedback client). Progresul se calculează pe tot
-  // wrapper-ul înalt (170vh pe desktop), nu doar pe cardul propriu-zis.
-  const previewWrapperRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: previewProgress } = useScroll({ target: previewWrapperRef, offset: ["start start", "end end"] });
-  const previewOpacity = useTransform(previewProgress, [0, 0.15, 0.75, 1], shouldReduceMotion ? [1, 1, 1, 1] : [0, 1, 1, 0]);
-  const previewScale = useTransform(previewProgress, [0, 0.15, 0.75, 1], shouldReduceMotion ? [1, 1, 1, 1] : [0.9, 1, 1, 0.85]);
-
   useEffect(() => {
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onMotionChange = (e: MediaQueryListEvent) => {
@@ -112,11 +103,16 @@ const Index = () => {
   }, []);
 
   return <Layout>
-      {/* Hero Section — video-ul revine local, doar în această secțiune (cum era înainte).
-          Fundalul ambiental generat, legat de scroll pe toată pagina, e acum global
-          (Layout.tsx) — Hero-ul își păstrează propria filmare (concert real), doar sus. */}
+      {/* Hero Section — video-ul e local, doar în această secțiune (concert real, nu fundalul
+          ambiental generat, care e global în Layout.tsx). Fundalul + overlay-ul se estompează
+          spre transparent în ultimii ~20% din înălțime (mască CSS, vezi mai jos + .hero-gradient
+          din index.css) — Hero-ul se "dizolvă" organic în fundalul ambiental de dedesubt, nu se
+          taie brusc într-un dreptunghi (client: pozele/videoul de sus să se blenduiască mai bine
+          cu restul design-ului site-ului). */}
       <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 w-full h-full bg-hero-bg">
+        <div
+          className="absolute inset-0 w-full h-full bg-hero-bg [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]"
+        >
           <video
             ref={videoRef}
             className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
@@ -130,8 +126,11 @@ const Index = () => {
             aria-hidden="true"
           />
         </div>
-        {/* Overlay — pt contrastul textului peste video */}
-        <div className="absolute inset-0 hero-gradient pointer-events-none" />
+        {/* Overlay — pt contrastul textului peste video, aceeași estompare la bază (vezi
+            .hero-gradient din index.css) ca fundalul/video-ul să nu lase o "dungă" solidă. */}
+        <div
+          className="absolute inset-0 hero-gradient pointer-events-none [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]"
+        />
         
         {/* Content — se estompează + urcă ușor (paralaxă) pe măsură ce scrolezi în afara Hero-ului,
             nu doar stă acolo până dispare brusc sub secțiunea următoare. */}
@@ -172,9 +171,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Ce este OML Section — fără fundal opac (era section-cream) — video-ul Hero de mai sus
-          (acum fix) rămâne vizibil prin ea. Textul primește propriul card de lizibilitate în
-          loc ca toată secțiunea să fie opacă (același tipar ca la Team.tsx). */}
+      {/* Ce este OML Section — fără fundal opac (era section-cream) — fundalul ambiental global
+          se vede prin ea, continuând firesc din estomparea Hero-ului de mai sus. Textul
+          primește propriul card de lizibilitate în loc ca toată secțiunea să fie opacă
+          (același tipar ca la Team.tsx). */}
       <section ref={omlRef} className="relative py-20 md:py-28 overflow-hidden">
         {/* Decor flat, discret, cu paralaxă legată de scroll (nu doar puls CSS static) —
             secțiunea era doar text plat, fără niciun element vizual (Faza 14.2). Nu ating
@@ -359,56 +359,54 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Preview Următorul Eveniment — sticky + dizolvare (vezi hook-urile de mai sus). Doar
-          desktop (md:h-[170vh] + md:sticky) — pe mobil rămâne o secțiune normală, fără pin
-          (sticky/scroll-jacking e mai puțin fiabil pe ecrane mici). Fără fundal video propriu
-          (client: vrea ACELAȘI fundal ca restul paginii, nu unul dedicat) — fundalul ambiental
-          global (Layout.tsx) se vede direct prin secțiune, ca peste tot altundeva pe site. */}
-      <section ref={previewWrapperRef} className="relative md:h-[170vh]">
-        <div className="md:sticky md:top-0 md:h-screen flex items-center py-20 md:py-0 overflow-hidden">
-          <div className="container mx-auto px-4 w-full">
-            <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>
-              <div className="max-w-4xl mx-auto">
-                {/* Fundal opac, fără backdrop-blur — panou flat, nu glassmorphism. */}
-                <Card className="bg-[hsl(240_10%_14%)] border border-white/10 overflow-hidden">
-                  <CardContent className="p-8 md:p-12">
-                    <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
-                      <div className="shrink-0">
-                        <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
-                          <span className="text-2xl font-display font-bold text-primary">{nextEvent.day}</span>
-                          <span className="text-xs text-white/60">{nextEvent.month}</span>
-                        </div>
-                      </div>
-                      <div className="flex-1 space-y-3">
-                        <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
-                          Următorul eveniment
-                        </span>
-                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
-                          OML {nextEvent.edition}
-                          {nextEvent.guestArtist ? ` — cu ${nextEvent.guestArtist}` : ""}
-                        </h3>
-                        <p className="text-white/70">{getEventSummary(nextEvent)}</p>
-                        <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-4 h-4" /> {nextEvent.location}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" /> {nextEvent.day} {nextEvent.month}
-                          </span>
-                        </div>
-                        <EventCountdown event={nextEvent} className="pt-3" />
-                      </div>
-                      <div className="shrink-0">
-                        <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto">
-                          <Link to="/eveniment">Vezi detalii</Link>
-                        </Button>
+      {/* Preview Următorul Eveniment — acum coerent cu restul paginii: apare cu un fade-in
+          simplu la scroll (ScrollReveal, ca peste tot altundeva), NU mai e sticky/pin +
+          dizolvare — mecanica de scroll-jacking era o animație diferită de tot restul site-ului
+          (client: "sa fie ca restul sa nu fie incoerent in animatie"). Fără fundal propriu —
+          fundalul ambiental global (Layout.tsx) se vede direct prin secțiune. */}
+      <section className="relative py-20 md:py-28">
+        <div className="container mx-auto px-4">
+          <ScrollReveal>
+            <div className="max-w-4xl mx-auto">
+              {/* Fundal opac, fără backdrop-blur — panou flat, nu glassmorphism. */}
+              <Card className="bg-[hsl(240_10%_14%)] border border-white/10 overflow-hidden">
+                <CardContent className="p-8 md:p-12">
+                  <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+                    <div className="shrink-0">
+                      <div className="w-24 h-24 bg-primary/20 rounded-2xl flex flex-col items-center justify-center border border-primary/30">
+                        <span className="text-2xl font-display font-bold text-primary">{nextEvent.day}</span>
+                        <span className="text-xs text-white/60">{nextEvent.month}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </motion.div>
-          </div>
+                    <div className="flex-1 space-y-3">
+                      <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
+                        Următorul eveniment
+                      </span>
+                      <h3 className="text-2xl md:text-3xl font-display font-bold text-white">
+                        OML {nextEvent.edition}
+                        {nextEvent.guestArtist ? ` — cu ${nextEvent.guestArtist}` : ""}
+                      </h3>
+                      <p className="text-white/70">{getEventSummary(nextEvent)}</p>
+                      <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-4 h-4" /> {nextEvent.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" /> {nextEvent.day} {nextEvent.month}
+                        </span>
+                      </div>
+                      <EventCountdown event={nextEvent} className="pt-3" />
+                    </div>
+                    <div className="shrink-0">
+                      <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto">
+                        <Link to="/eveniment">Vezi detalii</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

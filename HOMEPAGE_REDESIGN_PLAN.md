@@ -699,6 +699,29 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
   global (Layout.tsx) se vede direct prin ea, exact ca peste tot altundeva pe site. Bug-ul
   "gol vizual" de mai sus nu revine: fundalul global umple tot spațiul indiferent de
   opacitatea cardului, deci nu mai există niciun interval fără nimic vizibil.
+- [x] **Coerență vizuală: panoul "Următorul eveniment" nu mai e sticky, Hero-ul se blenduiește
+  cu fundalul, Header redesenat** (FĂCUT 2026-08-27) — 3 corecturi cerute de client în același
+  mesaj ("nu vreau ca acel panel sa fie fixed... sa fie ca restul sa nu fie incoerent in
+  animatie", "pozele de sus (sau videoul) sa se blenduiasca mai bine", "meniul sa fie schimbat
+  ca totu sa fie in armonie"):
+  1. **Panoul "Următorul eveniment"**: mecanica de `sticky` + dizolvare legată de scroll
+     (`useScroll`/`useTransform` pe un wrapper de 170vh) era o animație diferită de tot restul
+     paginii, care folosește peste tot `ScrollReveal` (fade+slide simplu la intrarea în
+     viewport). Eliminată mecanica sticky/dizolvare — secțiunea e acum o secțiune normală,
+     `ScrollReveal` în jurul cardului, coerentă cu restul.
+  2. **Hero → fundal ambiental**: video-ul Hero-ului (concert real) se tăia brusc într-un
+     dreptunghi la finalul secțiunii, unde începea fundalul ambiental global — acum se
+     estompează organic spre transparent în ultimii ~25% din înălțime, printr-o mască CSS
+     (`mask-image`/`-webkit-mask-image`, gradient liniar) aplicată atât pe video/fundalul lui,
+     cât și pe `.hero-gradient` (overlay-ul de contrast) — fundalul ambiental global de
+     dedesubt (Layout.tsx) "iese la iveală" treptat, nu apare brusc după o muchie dreaptă.
+  3. **Header redesenat**: din bară albă edge-to-edge (stil generic SaaS, ieșea din tonul
+     site-ului de când fundalul ambiental a devenit dominant) în card plutitor rotunjit
+     (`bg-white/95 rounded-2xl shadow-md/xl`, `top-3/4` + margini laterale) — aceeași geometrie
+     de "insulă opacă peste animație" ca toate celelalte carduri de pe site (nu o formă nouă,
+     ex. pastilă/rounded-full). Meniul mobil se deschide acum ÎN interiorul aceluiași card, nu
+     mai e un panou separat lipit de margine. `Layout.tsx`: `pt-16/20` → `pt-24/32` (spațiu de
+     respirație sub header-ul plutitor, nu doar înălțimea lui exactă).
 - [ ] Restul asset-urilor discutate: fundal video pt "Cum funcționează"/"Edițiile noastre"
   (opțional), variantă de logo pt fundal închis (footer + eventual header transparent peste
   Hero) — de continuat.
