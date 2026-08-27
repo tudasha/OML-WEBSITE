@@ -266,6 +266,46 @@ tokenului):**
 Indiferent de restul detaliilor: păstrează fallback-ul `hasNoPosts` deja existent, pentru cazul
 în care tabela Supabase e goală sau fetch-ul eșuează.
 
+**Cod scris 2026-08-27 (client a confirmat: merge pe Graph API, își face contul imediat) —
+gata de conectat, în așteptarea secretelor reale:**
+- `supabase/migrations/20260827112911_instagram_posts.sql`: tabelă `instagram_posts`
+  (`media_id` UNIQUE — cheie de upsert, ca sincronizarea repetată să nu creeze duplicate),
+  index pe `posted_at DESC`, RLS cu citire publică, fără politică de scriere pentru public
+  (doar service role, din Edge Function, poate scrie).
+- `supabase/functions/sync-instagram/index.ts`: cheamă Graph API
+  (`graph.facebook.com/v21.0/{ig-user-id}/media`), face upsert în `instagram_posts`. Citește
+  `INSTAGRAM_ACCESS_TOKEN` și `INSTAGRAM_USER_ID` din secretele funcției (Supabase → Project
+  Settings → Edge Functions → Secrets) — **nu sunt setate încă**, funcția nu poate rula până
+  nu le aveți. `INSTAGRAM_USER_ID` NU e `@oradeamusiclab` — e ID-ul numeric al contului
+  Business, obținut din Graph API Explorer după conectare (`GET /me/accounts` → `GET
+  /{page-id}?fields=instagram_business_account`). Cron-ul (frecvența de sincronizare) NU e
+  configurat automat doar pt că fișierul există — se programează separat, în dashboard.
+- `src/integrations/supabase/client.ts` (nou — `@supabase/supabase-js` era dependență
+  neconectată nicăieri până acum). Citește `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`; dacă
+  lipsesc, doar dă un warning în consolă, nu pică site-ul (`InstagramFeed` cade grațios pe
+  fallback-ul cu link către profil).
+- `InstagramFeed.tsx` rescrisă: fetch din Supabase (`instagram_posts`, ultimele 3 după
+  `posted_at`) în loc de array hardcodat. **Renunțat și la widget-ul oficial `embed.js` al
+  Instagram** (iframe cu stil impredictibil, greu de integrat cu restul design-ului) — acum
+  avem `media_url` direct din Graph API, deci randăm `<img>` normale, cu același stil de card
+  ca restul site-ului (rotunjit, hover zoom). Videoclipurile salvează thumbnail-ul (nu URL-ul
+  video) ca `media_url`, ca imaginea să fie mereu afișabilă direct. Schelet de încărcare (3
+  pătrate care pulsează) cât timp fetch-ul e în curs, ca fallback-ul de "fără postări" să nu
+  apară fals pentru o clipă.
+- `.env` / `.env.example` / `render.yaml`: `VITE_SUPABASE_URL` completat deja (nu e secret,
+  derivat din `project_id`-ul din `supabase/config.toml`); `VITE_SUPABASE_ANON_KEY` rămâne gol
+  — de completat manual (Supabase → Project Settings → API), local în `.env` și pe Render ca
+  variabilă de mediu (`sync: false` în `render.yaml`, setată direct în dashboard, nu commisă).
+
+**Ce mai trebuie, ca să meargă efectiv (blocat pe voi, nu pe cod):**
+1. Cont `@oradeamusiclab` Business/Creator, conectat la o Pagină de Facebook.
+2. Meta App înregistrată (developers.facebook.com) cu produsul Instagram Graph API.
+3. Din ea: `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_USER_ID` → setate ca secrete pe funcția
+   `sync-instagram` din dashboard-ul Supabase.
+4. `VITE_SUPABASE_ANON_KEY` (Supabase → Project Settings → API) → în `.env` local și în Render.
+5. Programarea cron-ului pt `sync-instagram` (Supabase dashboard).
+6. Cineva care își asumă regenerarea token-ului la ~50-55 de zile (expiră la 60).
+
 ### Faza 10 — Repoziționare: asociație, nu eveniment · *Execută: Claude propune textul, Antigravity aplică DUPĂ aprobare*
 
 **Problemă găsită în cod**: `About.tsx` descrie explicit OML ca eveniment, nu ca organizație —
