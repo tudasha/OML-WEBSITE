@@ -8,13 +8,6 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://event-backend.onrender.com
-      # Faza 9 — feed Instagram live. URL-ul proiectului Supabase nu e secret (derivat din
-      # project_id, vezi supabase/config.toml). Cheia anon SE setează manual în Render
-      # dashboard (Environment) — nu în acest fișier — din Supabase → Project Settings → API.
-      - key: VITE_SUPABASE_URL
-        value: https://gdtraodrfhxcqrrbakac.supabase.co
-      - key: VITE_SUPABASE_ANON_KEY
-        sync: false
     routes:
       - type: rewrite
         source: /*

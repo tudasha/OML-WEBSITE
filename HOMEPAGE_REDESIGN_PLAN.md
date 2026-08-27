@@ -266,45 +266,61 @@ tokenului):**
 Indiferent de restul detaliilor: păstrează fallback-ul `hasNoPosts` deja existent, pentru cazul
 în care tabela Supabase e goală sau fetch-ul eșuează.
 
-**Cod scris 2026-08-27 (client a confirmat: merge pe Graph API, își face contul imediat) —
-gata de conectat, în așteptarea secretelor reale:**
-- `supabase/migrations/20260827112911_instagram_posts.sql`: tabelă `instagram_posts`
-  (`media_id` UNIQUE — cheie de upsert, ca sincronizarea repetată să nu creeze duplicate),
-  index pe `posted_at DESC`, RLS cu citire publică, fără politică de scriere pentru public
-  (doar service role, din Edge Function, poate scrie).
-- `supabase/functions/sync-instagram/index.ts`: cheamă Graph API
-  (`graph.facebook.com/v21.0/{ig-user-id}/media`), face upsert în `instagram_posts`. Citește
-  `INSTAGRAM_ACCESS_TOKEN` și `INSTAGRAM_USER_ID` din secretele funcției (Supabase → Project
-  Settings → Edge Functions → Secrets) — **nu sunt setate încă**, funcția nu poate rula până
-  nu le aveți. `INSTAGRAM_USER_ID` NU e `@oradeamusiclab` — e ID-ul numeric al contului
-  Business, obținut din Graph API Explorer după conectare (`GET /me/accounts` → `GET
-  /{page-id}?fields=instagram_business_account`). Cron-ul (frecvența de sincronizare) NU e
-  configurat automat doar pt că fișierul există — se programează separat, în dashboard.
-- `src/integrations/supabase/client.ts` (nou — `@supabase/supabase-js` era dependență
-  neconectată nicăieri până acum). Citește `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`; dacă
-  lipsesc, doar dă un warning în consolă, nu pică site-ul (`InstagramFeed` cade grațios pe
-  fallback-ul cu link către profil).
-- `InstagramFeed.tsx` rescrisă: fetch din Supabase (`instagram_posts`, ultimele 3 după
-  `posted_at`) în loc de array hardcodat. **Renunțat și la widget-ul oficial `embed.js` al
-  Instagram** (iframe cu stil impredictibil, greu de integrat cu restul design-ului) — acum
-  avem `media_url` direct din Graph API, deci randăm `<img>` normale, cu același stil de card
-  ca restul site-ului (rotunjit, hover zoom). Videoclipurile salvează thumbnail-ul (nu URL-ul
-  video) ca `media_url`, ca imaginea să fie mereu afișabilă direct. Schelet de încărcare (3
-  pătrate care pulsează) cât timp fetch-ul e în curs, ca fallback-ul de "fără postări" să nu
-  apară fals pentru o clipă.
-- `.env` / `.env.example` / `render.yaml`: `VITE_SUPABASE_URL` completat deja (nu e secret,
-  derivat din `project_id`-ul din `supabase/config.toml`); `VITE_SUPABASE_ANON_KEY` rămâne gol
-  — de completat manual (Supabase → Project Settings → API), local în `.env` și pe Render ca
-  variabilă de mediu (`sync: false` în `render.yaml`, setată direct în dashboard, nu commisă).
+**CORECTARE 2026-08-27 — clientul NU folosește Supabase, s-a renunțat la el complet.**
+Cod scris inițial pe Supabase (migrare + Edge Function + client + fetch în `InstagramFeed.tsx`)
+— dar clientul a clarificat că a preluat site-ul de pe Lovable, nu a folosit niciodată
+Supabase conștient; `supabase/config.toml` + migrările vechi (`contact_submissions`) sunt doar
+scaffolding automat de la Lovable, neconectat la nimic real (verificat: `Contact.tsx` chiar
+folosește doar `mailto:`, nu Supabase). Backend-ul REAL, folosit deja de `Register.tsx`
+(`VITE_API_URL` → `event-backend.onrender.com`), e un serviciu separat: **Spring Boot + Maven
++ PostgreSQL (gestionat de Render), repo GitHub separat `tudasha/event-checkin-app`** (are și
+o a doua parte, o aplicație Android de check-in cu scanare QR). Tot codul Supabase a fost
+revertat din acest repo (`git rm` pe migrare + Edge Function + `src/integrations/supabase/`,
+`InstagramFeed.tsx` revenit la array hardcodat + `embed.js`, `render.yaml`/`.env`/`.env.example`
+/`vite-env.d.ts` revenite la starea dinainte) — planul de mai jos înlocuiește complet planul
+Supabase de mai sus.
+
+**⚠️ Găsit pe drum, verificând repo-ul `event-checkin-app` (URGENT, separat de Instagram)**:
+repo-ul e **public** pe GitHub și are secrete reale, în clar, în cod:
+`app.admin.token=${ADMIN_TOKEN:oml_super_secret_default_key}` în `application.properties` —
+dacă `ADMIN_TOKEN` nu e setat explicit pe Render (nu apare în `render.yaml`-ul de acolo),
+backend-ul folosește exact valoarea asta public vizibilă pt tot ce e protejat de
+`AdminAuthInterceptor` (lista de participanți cu PII, `DELETE /api/attendees/all`, marcare
+plăți). Plus două parole de aplicație Gmail în clar (`render.yaml`: `SPRING_MAIL_PASSWORD`,
+`application.properties`: `spring.mail.password`), diferite una de alta. **Semnalat clientului
+2026-08-27, i-am recomandat să verifice/schimbe `ADMIN_TOKEN` pe Render și să revoce ambele
+parole Gmail imediat** — de curățat și codul (scoase valorile hardcodate), dar am nevoie de OK
+explicit înainte să fac push pe acel repo (deploy live, neverificat de mine până acum).
+
+**Plan nou — implementare în `event-checkin-app` (Spring Boot), NU în acest repo, doar de
+schițat aici ca referință. De confirmat cu clientul înainte să scriu cod acolo:**
+1. Entitate JPA nouă `InstagramPost` (`mediaId` UNIQUE — cheie de upsert, `mediaUrl`,
+   `permalink`, `caption`, `mediaType`, `postedAt`) + `InstagramPostRepository`.
+2. Job programat (`@Scheduled`, trebuie adăugat `@EnableScheduling` pe `BackendApplication`,
+   are deja `@EnableAsync`) — cheamă Instagram Graph API (`graph.facebook.com/v21.0/
+   {ig-user-id}/media`) periodic, face upsert. Token/ID citite din `application.properties`
+   ca `${INSTAGRAM_ACCESS_TOKEN:}`/`${INSTAGRAM_USER_ID:}` (fără default hardcodat — lecția de
+   mai sus), setate ca variabile de mediu în Render, ca `STRIPE_API_KEY` deja.
+3. Endpoint nou, PUBLIC (citire), `GET /api/instagram-posts` în `AttendeeController` sau un
+   controller nou — trebuie whitelistuit explicit în `AdminAuthInterceptor` (regula #2, lângă
+   `/ping` și POST-ul de înregistrare), altfel cade sub "SECURE EVERYTHING ELSE" și cere
+   token de admin.
+4. `InstagramFeed.tsx` (acest repo): fetch simplu la `${API_URL}/api/instagram-posts`, același
+   tipar ca `Register.tsx` — NU mai are nevoie de niciun client Supabase. Randare `<img>`
+   directă (nu `embed.js`) — media_url vine deja din Graph API, la fel ca planul Supabase
+   abandonat, doar sursa datelor diferă.
+5. Mentenanța token-ului Instagram (expiră la 60 zile) rămâne identică cu planul de mai sus,
+   doar că regenerarea se pune ca variabilă de mediu pe Render, nu ca secret Supabase.
 
 **Ce mai trebuie, ca să meargă efectiv (blocat pe voi, nu pe cod):**
 1. Cont `@oradeamusiclab` Business/Creator, conectat la o Pagină de Facebook.
 2. Meta App înregistrată (developers.facebook.com) cu produsul Instagram Graph API.
-3. Din ea: `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_USER_ID` → setate ca secrete pe funcția
-   `sync-instagram` din dashboard-ul Supabase.
-4. `VITE_SUPABASE_ANON_KEY` (Supabase → Project Settings → API) → în `.env` local și în Render.
-5. Programarea cron-ului pt `sync-instagram` (Supabase dashboard).
-6. Cineva care își asumă regenerarea token-ului la ~50-55 de zile (expiră la 60).
+3. Din ea: `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_USER_ID` → de pus ca variabile de mediu pe
+   Render, pe serviciul `event-backend`.
+4. OK explicit ca să scriu/fac push cod în `event-checkin-app` (repo separat, deploy live).
+5. Cineva care își asumă regenerarea token-ului la ~50-55 de zile (expiră la 60).
+6. Rezolvarea găsită mai sus (`ADMIN_TOKEN` + parolele Gmail) — independentă de Instagram, dar
+   găsită pe drum, nu de amânat.
 
 ### Faza 10 — Repoziționare: asociație, nu eveniment · *Execută: Claude propune textul, Antigravity aplică DUPĂ aprobare*
 
