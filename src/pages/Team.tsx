@@ -17,10 +17,6 @@ import teamBackground from "@/assets/team/team-background.jpg";
 import decorNotes from "@/assets/decor/notes.svg";
 import decorRibbon from "@/assets/decor/ribbon.svg";
 import decorGrains from "@/assets/decor/grains.svg";
-// Video ambiental generat de client (Seedance, higgsfield.ai) — blob-uri organice portocalii
-// care morfează/plutesc, note și scântei, pe fundal deschis. Folosit foarte discret (opacitate
-// mică), sticky, ca textura de fundal a întregii pagini, nu ca element central.
-import teamBgVideo from "@/assets/decor/team-bg.mp4";
 
 interface TeamMember {
   name: string;
@@ -135,21 +131,8 @@ const Team = () => {
           pointer-events-none), cu puls CSS ambiental + paralaxă legată de scroll, ca peste tot
           pe site. Poziții fixe (procent din înălțimea totală a wrapper-ului), nu urmăresc un
           anumit membru. */}
-      {/* Video ambiental — position:fixed (nu sticky!), relativ la ECRAN, nu la secțiune —
-          rămâne literal neclintit cât scrolezi prin tot conținutul de mai jos, exact ca un
-          fundal fix. z-index negativ, deci pictează sub tot conținutul normal al paginii;
-          scapă de overflow-hidden al wrapper-ului de mai jos (fixed nu e prins de el, doar
-          absolute/relative sunt). */}
-      <video
-        src={teamBgVideo}
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-        className="fixed inset-0 -z-10 w-full h-full object-cover opacity-25 motion-reduce:hidden pointer-events-none"
-      />
-
+      {/* Video-ul ambiental e acum GLOBAL (Layout.tsx, legat de scroll pe toată pagina) — nu
+          mai are nevoie de propria instanță locală aici. */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <motion.img

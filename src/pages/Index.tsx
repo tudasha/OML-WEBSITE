@@ -112,28 +112,25 @@ const Index = () => {
   }, []);
 
   return <Layout>
-      {/* Video Hero — position:fixed (nu doar în interiorul secțiunii Hero): rămâne vizibil pe
-          fundal cât scrolezi mai departe prin pagină, nu doar cât timp ești în primele 90vh
-          (feedback client: "sper ca videoul hero va rămâne vizibil"). Aceeași tehnică fix +
-          z-index negativ ca la Team.tsx. "Ce este OML" de mai jos e translucid special ca să
-          rămână vizibil prin el; "Cum funcționează" (opac, cu propriul decor) e punctul unde
-          se "acoperă" natural — nu trebuie oprit manual, doar conținut opac peste el. */}
-      <video
-        ref={videoRef}
-        src={HERO_VIDEO_URL}
-        poster={heroPoster}
-        autoPlay={!prefersReducedMotion}
-        muted
-        loop
-        playsInline
-        preload="auto"
-        aria-hidden="true"
-        className="fixed inset-0 -z-10 w-full h-full object-cover"
-      />
-
-      {/* Hero Section */}
+      {/* Hero Section — video-ul revine local, doar în această secțiune (cum era înainte).
+          Fundalul ambiental generat, legat de scroll pe toată pagina, e acum global
+          (Layout.tsx) — Hero-ul își păstrează propria filmare (concert real), doar sus. */}
       <section ref={heroRef} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Overlay — doar în Hero, pt contrastul textului peste video */}
+        <div className="absolute inset-0 w-full h-full bg-hero-bg">
+          <video
+            ref={videoRef}
+            className="absolute top-1/2 left-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full -translate-x-1/2 -translate-y-1/2 object-cover"
+            src={HERO_VIDEO_URL}
+            poster={heroPoster}
+            autoPlay={!prefersReducedMotion}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          />
+        </div>
+        {/* Overlay — pt contrastul textului peste video */}
         <div className="absolute inset-0 hero-gradient pointer-events-none" />
         
         {/* Content — se estompează + urcă ușor (paralaxă) pe măsură ce scrolezi în afara Hero-ului,
@@ -213,8 +210,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Cum funcționează + De ce suntem diferiți — secțiune unică, fluidă (Faza 4B/14.2) */}
-      <section ref={dynamicSectionRef} className="relative py-20 md:py-28 bg-background overflow-hidden">
+      {/* Cum funcționează + De ce suntem diferiți — secțiune unică, fluidă (Faza 4B/14.2).
+          Fără fundal opac (era bg-background) — fundalul global se vede clar prin ea; titlurile
+          și pașii își primesc propriul suport de lizibilitate mai jos (același tipar ca la
+          "Ce este OML" / Team.tsx), cardurile bento de mai jos rămân opace deja (bg-white). */}
+      <section ref={dynamicSectionRef} className="relative py-20 md:py-28 overflow-hidden">
         {/* Fundal organic: forme "blob" flat, vectoriale — fără blur/transparență de sticlă
             (client a respins explicit glassmorphism), stil între morfism și ilustrație plată
             (Kurzgesagt). Puls CSS ambiental (blob-drift) + paralaxă legată de scroll (motion.div
@@ -241,7 +241,9 @@ const Index = () => {
         <div className="container mx-auto px-4 relative">
           <ScrollReveal>
             <div className="text-center mb-12 md:mb-16">
-              <SectionHeading kicker="Structura evenimentului" title="Cum funcționează?" kickerClassName="mb-3" />
+              <div className="inline-block bg-white/90 rounded-2xl px-6 py-4 md:px-8 md:py-5">
+                <SectionHeading kicker="Structura evenimentului" title="Cum funcționează?" kickerClassName="mb-3" />
+              </div>
             </div>
           </ScrollReveal>
 
@@ -286,7 +288,7 @@ const Index = () => {
                   <div className="relative z-10 shrink-0 bg-background">
                     <IconBlob icon={item.icon} rotate={index * 47} size="lg" />
                   </div>
-                  <div className="pt-2">
+                  <div className="pt-2 bg-white/90 rounded-xl px-4 py-3 md:px-5 md:py-4 -mt-2">
                     <span className="text-xs font-display font-bold text-primary/50 tracking-widest">
                       PASUL {item.number}
                     </span>
@@ -304,7 +306,9 @@ const Index = () => {
 
           <ScrollReveal>
             <div className="text-center mb-12 md:mb-16">
-              <SectionHeading kicker="Filozofia noastră" title="De ce suntem diferiți?" kickerClassName="mb-3" />
+              <div className="inline-block bg-white/90 rounded-2xl px-6 py-4 md:px-8 md:py-5">
+                <SectionHeading kicker="Filozofia noastră" title="De ce suntem diferiți?" kickerClassName="mb-3" />
+              </div>
             </div>
           </ScrollReveal>
 
@@ -357,8 +361,10 @@ const Index = () => {
 
       {/* Preview Următorul Eveniment — sticky + dizolvare (vezi hook-urile de mai sus). Doar
           desktop (md:h-[170vh] + md:sticky) — pe mobil rămâne o secțiune normală, fără pin
-          (sticky/scroll-jacking e mai puțin fiabil pe ecrane mici). */}
-      <section ref={previewWrapperRef} className="relative bg-hero-bg text-white md:h-[170vh]">
+          (sticky/scroll-jacking e mai puțin fiabil pe ecrane mici). Fără bg-hero-bg pe toată
+          secțiunea (era opac) — tot textul vizibil stă deja pe cardul opac de mai jos, spațiul
+          din jur lasă fundalul global să se vadă. */}
+      <section ref={previewWrapperRef} className="relative md:h-[170vh]">
         <div className="md:sticky md:top-0 md:h-screen flex items-center py-20 md:py-0 overflow-hidden">
           <div className="container mx-auto px-4 w-full">
             <motion.div style={{ opacity: previewOpacity, scale: previewScale }}>

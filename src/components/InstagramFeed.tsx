@@ -43,17 +43,22 @@ const InstagramFeed = () => {
       return () => clearTimeout(timer);
     }
   }, [hasNoPosts]);
-  return <section className="py-16 md:py-24 section-cream">
+  // Fără section-cream (era opac) — fundalul global se vede clar prin ea; titlul + textul de
+  // introducere primesc propriul card de lizibilitate (același tipar ca la Index.tsx),
+  // embed-urile Instagram + fallback-ul au deja fundal alb propriu, nu au nevoie de altul.
+  return <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">URMĂRESTE-NE</span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-            Pe Instagram
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">Fii la curent cu evenimentele noastre, poze din culise și povești din comunitate.</p>
+          <div className="inline-block bg-white/90 rounded-2xl px-6 py-4 md:px-8 md:py-5">
+            <span className="inline-block text-primary font-medium text-sm uppercase tracking-wider mb-3">URMĂRESTE-NE</span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+              Pe Instagram
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Fii la curent cu evenimentele noastre, poze din culise și povești din comunitate.</p>
+          </div>
         </div>
 
-        {hasNoPosts ? <div className="text-center py-12">
+        {hasNoPosts ? <div className="text-center py-12 bg-white/90 rounded-2xl max-w-md mx-auto">
             <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Instagram className="w-10 h-10 text-primary" />
             </div>

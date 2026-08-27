@@ -187,8 +187,9 @@ const Register = () => {
         </div>
       </section>
 
-      {/* Form / Success */}
-      <section className="py-16 md:py-24 section-cream">
+      {/* Form / Success — fără section-cream (era opac); formularul stă deja pe un Card opac
+          propriu, fundalul global se vede clar în jurul lui. */}
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-xl mx-auto">
             {isSuccess ? (

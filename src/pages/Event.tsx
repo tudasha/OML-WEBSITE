@@ -66,10 +66,11 @@ const Event = () => {
         </div>
       </section>
 
-      {/* Next Event */}
-      <section className="py-16 md:py-20 section-cream">
+      {/* Next Event — fără section-cream (era opac); tot conținutul stă pe propriul card
+          de lizibilitate, ca fundalul global (Layout.tsx) să se vadă clar în jur. */}
+      <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-5xl mx-auto bg-white/90 rounded-3xl p-6 md:p-10 shadow-lg">
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
                 Următorul eveniment
@@ -135,23 +136,26 @@ const Event = () => {
         <div className="border-t border-border" />
       </div>
 
-      {/* Past Events Header */}
-      <section className="pt-16 md:pt-20 pb-8 bg-background">
+      {/* Past Events Header — fără bg-background (era opac). */}
+      <section className="pt-16 md:pt-20 pb-8">
         <div className="container mx-auto px-4 text-center">
-          <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium border border-primary/20 mb-4">
-            Istoric
-          </span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-            Edițiile noastre
-          </h2>
+          <div className="inline-block bg-white/90 rounded-2xl px-6 py-4 md:px-8 md:py-5">
+            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium border border-primary/20 mb-4">
+              Istoric
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              Edițiile noastre
+            </h2>
+          </div>
         </div>
       </section>
 
       {/* Edițiile noastre — parcurs vertical cronologic (Faza 14.3), nu 4 secțiuni copiate.
           Linia din stânga (doar desktop) se umple pe măsură ce scrolezi prin istoric, cu un
-          nod (cifra ediției) în dreptul fiecărei ediții. Fundal unic (nu mai alternează
-          cream/alb per ediție) — acum e un singur parcurs continuu, nu blocuri separate. */}
-      <section className="py-12 md:py-16 bg-background">
+          nod (cifra ediției) în dreptul fiecărei ediții. Fără fundal opac de secțiune (era
+          bg-background) — fiecare ediție își primește propriul card de lizibilitate mai jos,
+          ca fundalul global să rămână vizibil între ele. */}
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div ref={historyRef} className="relative max-w-3xl mx-auto">
             <div className="hidden md:block absolute left-6 top-2 bottom-2 w-0.5">
@@ -172,31 +176,35 @@ const Event = () => {
                     {event.edition}
                   </div>
 
-                  <div className="text-center md:text-left mb-8 md:mb-10">
-                    <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-                      {event.title}
-                    </h3>
-                    {(event.dateDisplay || event.location) && (
-                      <p className="text-muted-foreground mt-2">
-                        {[event.dateDisplay, event.location].filter(Boolean).join(" · ")}
-                      </p>
-                    )}
-                  </div>
+                  {/* Card de lizibilitate pt titlu + descriere + structura evenimentului — fundalul
+                      global se vede clar în jurul lui (secțiunea de mai sus nu mai e opacă). */}
+                  <div className="bg-white/90 rounded-2xl p-6 md:p-8 shadow-lg mb-10">
+                    <div className="text-center md:text-left mb-8 md:mb-10">
+                      <h3 className="text-2xl md:text-3xl font-display font-bold text-foreground">
+                        {event.title}
+                      </h3>
+                      {(event.dateDisplay || event.location) && (
+                        <p className="text-muted-foreground mt-2">
+                          {[event.dateDisplay, event.location].filter(Boolean).join(" · ")}
+                        </p>
+                      )}
+                    </div>
 
-                  <div className="mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed text-center md:text-left">
-                    {event.description.map((paragraph, i) => (
-                      <p key={i}>{renderWithHighlights(paragraph, getHighlightTerms(event))}</p>
-                    ))}
-                  </div>
+                    <div className="mb-10 space-y-4 text-muted-foreground text-lg leading-relaxed text-center md:text-left">
+                      {event.description.map((paragraph, i) => (
+                        <p key={i}>{renderWithHighlights(paragraph, getHighlightTerms(event))}</p>
+                      ))}
+                    </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-                    {EVENT_STRUCTURE.map((item, i) => (
-                      <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
-                        <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                        <p className="text-sm font-medium text-foreground">{item.title}</p>
-                        <p className="text-xs text-muted-foreground">{item.time}</p>
-                      </div>
-                    ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {EVENT_STRUCTURE.map((item, i) => (
+                        <div key={i} className="bg-muted/50 rounded-xl p-4 text-center">
+                          <item.icon className="w-6 h-6 text-primary mx-auto mb-2" />
+                          <p className="text-sm font-medium text-foreground">{item.title}</p>
+                          <p className="text-xs text-muted-foreground">{item.time}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   {event.gallery && event.gallery.length > 0 ? (

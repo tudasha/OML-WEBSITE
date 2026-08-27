@@ -110,8 +110,9 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Content */}
-      <section className="py-16 md:py-24 section-cream">
+      {/* Contact Content — fără section-cream (era opac); formularul + info-cardurile de mai
+          jos sunt deja opace pe cont propriu, fundalul global se vede clar în jurul lor. */}
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
             {/* Contact Form — intrare din stânga (Faza 14.6) */}
@@ -191,14 +192,14 @@ const Contact = () => {
               viewport={{ once: true }}
               className="space-y-8"
             >
-              <div>
+              <div className="bg-white/90 rounded-2xl p-6 shadow-lg">
                 <h2 className="text-2xl font-display font-bold text-foreground mb-4">
                   Informații de contact
                 </h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Suntem mereu bucuroși să auzim de la tineri pasionați de muzică! 
-                  Fie că ai întrebări despre evenimentele noastre, vrei să te 
-                  înscrii la Open Mic, sau pur și simplu vrei să ne cunoști - 
+                  Suntem mereu bucuroși să auzim de la tineri pasionați de muzică!
+                  Fie că ai întrebări despre evenimentele noastre, vrei să te
+                  înscrii la Open Mic, sau pur și simplu vrei să ne cunoști -
                   scrie-ne!
                 </p>
               </div>

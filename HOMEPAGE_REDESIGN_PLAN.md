@@ -666,6 +666,27 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
   Eliminate fundalurile de secțiune; video la `opacity-25`; textul bio primește acum propriul
   card de lizibilitate (`bg-white/95 rounded-2xl`) în loc ca toată secțiunea să fie opacă —
   video-ul rămâne vizibil în jurul cardurilor.
+- [x] **Fundalul video devine GLOBAL, pe tot site-ul, nu doar pe Echipă** (FĂCUT 2026-08-27):
+  client a cerut explicit ca aceeași animație de fundal (`team-bg.mp4`) să apară pe toate
+  paginile, mai opacă, iar Hero-ul de pe homepage să rămână doar în partea de sus "cum era
+  înainte" (nu fixat pe tot scroll-ul). Mutat din `Team.tsx` în `Layout.tsx` (`position:fixed`,
+  `opacity-50`, în spatele `Header`/`main`/`Footer` — vizibil pe orice rută, nu se remontează
+  la navigare intra-SPA). Hero-ul din `Index.tsx` a revenit la fiind local, în interiorul
+  propriei secțiuni (`absolute`, nu `fixed`) — își păstrează filmarea proprie de concert,
+  neschimbată de fundalul global.
+  **Corectare tehnică ulterioară, aceeași zi**: prima variantă lega poziția video-ului direct
+  de scroll (`video.currentTime` setat manual la fiecare eveniment de scroll, fără redare
+  reală) — clientul a semnalat că era "foarte laguit". Revenit la redare normală
+  (`autoPlay` + `loop`), fără nicio legătură cu scroll-ul — mult mai fluid, fundalul pur și
+  simplu se redă continuu în buclă în spate.
+  Fundalurile opace de secțiune eliminate pe TOATE paginile (nu doar Echipă) ca animația să se
+  vadă clar: `Index.tsx` ("Cum funcționează"/"De ce suntem diferiți", panoul "Următorul
+  eveniment"), `InstagramFeed.tsx`, `Event.tsx` (eveniment următor + istoric ediții),
+  `About.tsx` (povestea), `Contact.tsx`, `Donate.tsx`, `Register.tsx` — fiecare bloc de text
+  care nu avea deja propriul fundal opac (carduri shadcn, `bg-white`) a primit un card local
+  de lizibilitate (`bg-white/90` sau `/95`, `rounded-2xl`/`3xl`, `shadow-lg`), tiparul stabilit
+  deja la Team.tsx/"Ce este OML" — nu s-a atins fundalul cardurilor deja opace (formulare,
+  `ProcessStepCard` cu `tone="flat"`, etc.).
 - [ ] Restul asset-urilor discutate: fundal video pt panoul "Următorul eveniment" (prompt nou
   dat, orientat pe vibe de anticipare/scenă, nu decor ambiental calm — client generează),
   fundal video pt "Cum funcționează"/"Edițiile noastre" (opțional), variantă de logo pt fundal

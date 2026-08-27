@@ -88,8 +88,10 @@ const About = () => {
 
       {/* Povestea noastră — restructurată (Faza 14.4, iterație 2) în 6 "capitole" narative care
           apar pe rând la scroll, nu un singur bloc de 9 paragrafe. Aceleași cuvinte, ritm nou —
-          rezolvă senzația de "text îngrămădit" fără să atingă conținutul. */}
-      <section ref={storyRef} className="relative py-16 md:py-24 section-cream overflow-hidden">
+          rezolvă senzația de "text îngrămădit" fără să atingă conținutul. Fără section-cream
+          (era opac) — tot articolul stă acum pe propriul card de lizibilitate mai jos, ca
+          fundalul global să se vadă clar în jur. */}
+      <section ref={storyRef} className="relative py-16 md:py-24 overflow-hidden">
         <svg viewBox="0 0 200 200" className="absolute top-0 left-0 w-72 h-72 md:w-[26rem] md:h-[26rem] -translate-x-1/3 -translate-y-1/4 pointer-events-none motion-safe:animate-blob-drift" aria-hidden="true">
           <path className="fill-primary/5" d={BLOB_PATH} />
         </svg>
@@ -107,7 +109,7 @@ const About = () => {
               </div>
             </div>
 
-            <div className="max-w-3xl mx-auto xl:mx-0">
+            <div className="max-w-3xl mx-auto xl:mx-0 bg-white/90 rounded-3xl p-6 md:p-10 shadow-lg">
               <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground text-center xl:text-left mb-16">
                 Povestea Oradea Music Lab
               </h2>
