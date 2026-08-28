@@ -753,6 +753,18 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
   pt Donate), cu o mască CSS (`mask-image`/`-webkit-mask-image`, gradient liniar) aplicată
   atât pe imaginea de fundal cât și pe overlay-ul de contrast — identic cu tehnica folosită la
   video-ul Hero din `Index.tsx`. Nicio schimbare de conținut/text, doar tranziția la bază.
+- [x] **Fix: titlul de pe pagini se suprapunea cu header-ul plutitor** (FĂCUT 2026-08-28):
+  raportat de client ("textul e overlayed cu meniul") — clearance-ul dintre header (top-3/4 +
+  h-16/20, ~76-112px) și titlul din Hero (`pt-24 md:py-32` ≈ 96-128px de la vârful secțiunii,
+  care acum urcă la y=0 datorită `-mt-24/-32`) era prea strâns, se suprapuneau efectiv la
+  randare reală (calculul teoretic din auditul de responsivitate anterior arăta o marjă
+  minimă, dar insuficientă în practică). Decizie: NU s-a revenit la header-ul vechi
+  edge-to-edge (varianta plutitoare a fost gândită special pt armonie cu restul site-ului,
+  vezi mai sus) — în schimb, `pt-24 md:pt-32` → `pt-32 md:pt-40` (păstrat `pb-24 md:pb-32`
+  neschimbat) pe toate cele 6 Hero-uri cu poză (Event/About/Contact/Donate/Register/Team) —
+  clearance real, nu doar teoretic, sub header. `Index.tsx` (Hero video, conținut centrat
+  vertical într-o cutie `min-h-[90vh]`) neatins — geometric departe de header, nu avea
+  problema asta.
 - [ ] Restul asset-urilor discutate: fundal video pt "Cum funcționează"/"Edițiile noastre"
   (opțional), variantă de logo pt fundal închis (footer + eventual header transparent peste
   Hero) — de continuat.

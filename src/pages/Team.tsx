@@ -106,7 +106,7 @@ const Team = () => {
           plutitor transparent (vezi Layout.tsx/Header.tsx), fără gol vizibil dedesubt. Se
           estompează spre transparent la bază — aceeași mască CSS ca la video-ul Hero de pe
           homepage (Index.tsx), ca poza să se dizolve organic în fundalul ambiental de mai jos. */}
-      <section className="relative py-24 md:py-32 -mt-24 md:-mt-32 overflow-hidden">
+      <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 -mt-24 md:-mt-32 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-no-repeat [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]"
           style={{ backgroundImage: `url(${teamBackground})`, backgroundPosition: "center 30%" }}
