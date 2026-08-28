@@ -392,7 +392,7 @@ const Index = () => {
                         {nextEvent.guestArtist ? ` — cu ${nextEvent.guestArtist}` : ""}
                       </h3>
                       <p className="text-white/70">{getEventSummary(nextEvent)}</p>
-                      <div className="flex items-center gap-4 text-sm text-white/60 pt-2">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-white/60 pt-2">
                         <span className="flex items-center gap-1">
                           <MapPin className="w-4 h-4" /> {nextEvent.location}
                         </span>

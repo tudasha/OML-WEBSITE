@@ -103,7 +103,7 @@ const Event = () => {
                   <p key={i}>{renderWithHighlights(paragraph, getHighlightTerms(nextEvent))}</p>
                 ))}
 
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm pt-2">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-primary shrink-0" />
                     <span>{nextEvent.dateDisplay}</span>

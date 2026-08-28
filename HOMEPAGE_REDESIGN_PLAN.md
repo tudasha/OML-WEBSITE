@@ -790,6 +790,32 @@ câștigată în Fazele 3 și 5):
 - Decorul nu trebuie să acopere sau să distragă de la text/CTA-uri (z-index, opacitate scăzută
   unde e cazul).
 
+## Audit responsivitate (2026-08-28)
+
+Client a întrebat dacă layout-ul (panelurile, textul etc.) e adaptiv pe orice ecran. Nu există
+browser/Playwright în acest mediu, deci verificarea a fost la nivel de cod (nu screenshot-uri
+reale pe diverse rezoluții) — a acoperit: toate elementele decorative absolute-poziționate
+(blob-uri, note/panglică/granule) sunt conținute în părinți `overflow-hidden`, niciun grid nu
+are coloane multiple fără breakpoint pe mobil (excepție găsită și reparată, vezi jos), nicio
+lățime fixă în px care să nu scaleze, fără `whitespace-nowrap` care ar putea forța overflow,
+elementele `sticky` (poza membrilor din Team.tsx, posterul din Event.tsx) dezactivate explicit
+pe mobil (`md:sticky`), header-ul plutitor testat la lățimea de tranziție lg (1024px) — logo-ul
+e pătrat/mic (48px), nu un wordmark lat, deci încape confortabil lângă cele 5 linkuri + CTA.
+
+**2 corectări reale găsite și reparate:**
+- `Event.tsx` — rândul cu data + locația din cardul "Următorul eveniment" folosea
+  `grid-cols-2` fără variantă pe mobil; pe un telefon îngust (~320-360px lățime), textele
+  lungi (ex. "Sâmbătă, 9 Mai") nu încăpeau în ~100px pe coloană. Corectat: `grid-cols-1
+  sm:grid-cols-2` (stivuit pe mobil, 2 coloane abia de la 640px în sus).
+- `Index.tsx` — rândul echivalent din panoul "Următorul eveniment" de pe homepage folosea
+  `flex` fără `flex-wrap`; adăugat `flex-wrap` + `gap-x-4 gap-y-1`, defensiv (nu era o
+  problemă vizibil demonstrată, dar risca aceeași categorie de bug pe ecrane foarte înguste).
+
+**Notă onestă**: verificarea de mai sus e la nivel de cod, nu o testare vizuală reală pe
+device-uri fizice sau chiar emulate — recomand un test rapid manual (`npm run dev` + DevTools
+responsive mode, sau un telefon real) înainte de lansare, mai ales pe cele mai înguste
+rezoluții folosite azi (~320-360px) și pe tranziția md/lg a header-ului (768-1024px).
+
 ## Ce NU trebuie schimbat
 - Textele existente (misiune, descrierea evenimentelor, structura evenimentului) — pot fi
   REFORMATATE (mutate în componente/date), dar nu reformulate sau prescurtate fără aprobare.
