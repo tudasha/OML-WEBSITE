@@ -739,6 +739,20 @@ predau ca fișiere gata făcute (imagini/video/SVG) pe care Antigravity le integ
   tot conținutul secțiunii (titlu + grid + fallback + buton) stă acum într-un singur card
   (`bg-white/90 rounded-3xl p-8 md:p-12 shadow-lg`), la fel ca panoul "Următorul eveniment" —
   se citește ca un panel de sine stătător, nu mai e "topită" în fluxul continuu al paginii.
+- [x] **Pozele Hero de pe celelalte pagini — estompare la bază, ca video-ul de pe homepage**
+  (FĂCUT 2026-08-28): client a cerut ca pozele de sus de pe Event/About/Contact/Donate/
+  Register/Team să se dizolve organic în fundalul ambiental de mai jos, la fel ca video-ul
+  Hero de pe homepage. **Iterat de 2 ori pe drum**: prima variantă a încercat poze NECROPATE
+  (bg-contain în loc de bg-cover, cu bg-hero-bg umplând spațiul din jur) — clientul a clarificat
+  că vrea marginile stânga/dreapta să atingă marginile paginii, adaptiv; a doua variantă a
+  scos complet fundalul CSS și a folosit un `<img>` real (`w-full h-auto`, fără cutie fixă,
+  text mutat sub poză într-un card) — apoi clientul a cerut să revenim la layout-ul ORIGINAL
+  (poză `bg-cover` + text suprapus peste ea, alb, cu overlay întunecat), păstrând DOAR
+  efectul de estompare. Varianta finală, aplicată pe toate cele 6 pagini: layout-ul original
+  neschimbat (`bg-cover`, text suprapus, overlay `bg-black/60-70` sau `bg-hero-overlay/80`
+  pt Donate), cu o mască CSS (`mask-image`/`-webkit-mask-image`, gradient liniar) aplicată
+  atât pe imaginea de fundal cât și pe overlay-ul de contrast — identic cu tehnica folosită la
+  video-ul Hero din `Index.tsx`. Nicio schimbare de conținut/text, doar tranziția la bază.
 - [ ] Restul asset-urilor discutate: fundal video pt "Cum funcționează"/"Edițiile noastre"
   (opțional), variantă de logo pt fundal închis (footer + eventual header transparent peste
   Hero) — de continuat.

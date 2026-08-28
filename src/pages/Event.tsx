@@ -49,13 +49,15 @@ const Event = () => {
   return (
     <Layout>
       {/* Hero Section — urcă până la marginea reală de sus (-mt), în spatele header-ului
-          plutitor transparent (vezi Layout.tsx/Header.tsx), fără gol vizibil dedesubt. */}
+          plutitor transparent (vezi Layout.tsx/Header.tsx), fără gol vizibil dedesubt. Se
+          estompează spre transparent la bază — aceeași mască CSS ca la video-ul Hero de pe
+          homepage (Index.tsx), ca poza să se dizolve organic în fundalul ambiental de mai jos. */}
       <section className="relative py-24 md:py-32 -mt-24 md:-mt-32 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-top bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-top bg-no-repeat [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]"
           style={{ backgroundImage: `url(${heroConcert})` }}
         />
-        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-black/70 [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]" />
 
         <div className="relative z-10 container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4">

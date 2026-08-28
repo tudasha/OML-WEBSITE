@@ -23,12 +23,14 @@ const Donate = () => {
   const shouldReduceMotion = useReducedMotion();
   return <Layout>
       {/* Hero Section — urcă până la marginea reală de sus (-mt), în spatele header-ului
-          plutitor transparent (vezi Layout.tsx/Header.tsx), fără gol vizibil dedesubt. */}
-      <section className="relative py-24 md:py-32 -mt-24 md:-mt-32">
-        <div className="absolute inset-0 bg-cover bg-center" style={{
+          plutitor transparent (vezi Layout.tsx/Header.tsx), fără gol vizibil dedesubt. Se
+          estompează spre transparent la bază — aceeași mască CSS ca la video-ul Hero de pe
+          homepage (Index.tsx), ca poza să se dizolve organic în fundalul ambiental de mai jos. */}
+      <section className="relative py-24 md:py-32 -mt-24 md:-mt-32 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]" style={{
         backgroundImage: `url(${donateHeroImage})`
       }} />
-        <div className="absolute inset-0 bg-hero-overlay/80" />
+        <div className="absolute inset-0 bg-hero-overlay/80 [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]" />
         <div className="container mx-auto px-4 text-center relative z-10">
           <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-medium border border-primary/30 mb-6">Susține-ne!</span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white">
