@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic, MessageCircle, Star, Users, Trophy, Heart, Music, Lightbulb, Calendar, MapPin } from "lucide-react";
 import Layout from "@/components/Layout";
-import InstagramFeed from "@/components/InstagramFeed";
 import ScrollReveal from "@/components/ScrollReveal";
 import SectionHeading from "@/components/SectionHeading";
 import ProcessStepCard, { IconBlob } from "@/components/ProcessStepCard";
@@ -415,9 +414,6 @@ const Index = () => {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* Instagram Feed */}
-      <InstagramFeed />
 
       {/* Sticky CTA — doar mobil, apare după ce utilizatorul a trecut de Hero (Faza 3) */}
       <div
