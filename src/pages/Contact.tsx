@@ -88,11 +88,13 @@ const Contact = () => {
 
   return (
     <Layout>
-      {/* Hero Section — urcă până la marginea reală de sus (-mt), în spatele header-ului
-          plutitor transparent (vezi Layout.tsx/Header.tsx), fără gol vizibil dedesubt. Se
-          estompează spre transparent la bază — aceeași mască CSS ca la video-ul Hero de pe
-          homepage (Index.tsx), ca poza să se dizolve organic în fundalul ambiental de mai jos. */}
-      <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 -mt-24 md:-mt-32 overflow-hidden">
+      {/* Hero Section — pornește deja de la marginea reală de sus (main-ul din Layout.tsx nu
+          are padding-top, header-ul e plutitor/nu ocupă spațiu în flux), în spatele header-ului
+          transparent. FĂRĂ -mt (o margine negativă suplimentară ar împinge secțiunea DEASUPRA
+          ecranului — bug găsit: titlul ajungea să se suprapună cu header-ul). `pt-32 md:pt-40`
+          dă clearance real sub header. Se estompează spre transparent la bază — aceeași mască
+          CSS ca la video-ul Hero de pe homepage (Index.tsx). */}
+      <section className="relative pt-32 md:pt-40 pb-24 md:pb-32 overflow-hidden">
         {/* Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]"

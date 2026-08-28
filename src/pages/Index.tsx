@@ -107,13 +107,16 @@ const Index = () => {
           spre transparent în ultimii ~20% din înălțime (mască CSS, vezi mai jos + .hero-gradient
           din index.css) — Hero-ul se "dizolvă" organic în fundalul ambiental de dedesubt, nu se
           taie brusc într-un dreptunghi (client: pozele/videoul de sus să se blenduiască mai bine
-          cu restul design-ului site-ului). `-mt-24 md:-mt-32` + `pt-24 md:pt-32`: secțiunea
-          urcă până la marginea reală de sus a ecranului (în spatele header-ului plutitor,
-          transparent — vezi Layout.tsx/Header.tsx), nu se mai oprește puțin mai jos, lăsând un
-          gol vizibil între fundalul ambiental și video (feedback client). */}
+          cu restul design-ului site-ului). Fără `-mt` — `<main>` din Layout.tsx nu mai are
+          padding-top deloc (header-ul e plutitor, nu ocupă spațiu în flux), deci secțiunea
+          pornește deja de la marginea reală de sus fără să fie nevoie s-o "tragem" acolo cu o
+          margine negativă (o margine negativă suplimentară ar fi împins secțiunea DEASUPRA
+          ecranului — exact bug-ul găsit pe celelalte pagini, unde titlul ajungea să se
+          suprapună cu header-ul). `pt-24 md:pt-32` rămâne — doar ca să împingă conținutul
+          centrat vertical puțin mai jos de zona header-ului, nu ca să compenseze un -mt. */}
       <section
         ref={heroRef}
-        className="relative min-h-[90vh] -mt-24 md:-mt-32 pt-24 md:pt-32 flex items-center justify-center overflow-hidden"
+        className="relative min-h-[90vh] pt-24 md:pt-32 flex items-center justify-center overflow-hidden"
       >
         <div
           className="absolute inset-0 w-full h-full bg-hero-bg [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]"
