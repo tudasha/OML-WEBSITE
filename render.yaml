@@ -7,7 +7,7 @@ services:
     branch: main
     envVars:
       - key: VITE_API_URL
-        value: https://event-backend.onrender.com
+        value: https://event-backend-u3jp.onrender.com
     routes:
       - type: rewrite
         source: /*
