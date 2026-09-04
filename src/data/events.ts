@@ -70,20 +70,34 @@ export function formatEventDate(isoDate: string): string {
   return `${weekday}, ${date.getDate()} ${month}`;
 }
 
-// Următorul eveniment confirmat: OML V, 12 Septembrie 2026, Lokal — dată și locație date de
-// client (2026-08-26). Tema, artistul invitat, descrierea completă și posterul NU sunt încă
-// confirmate — rămân opționale/placeholder onest, nu se inventează. Vezi Faza 11.
+// Următorul eveniment confirmat: OML V, 12 Septembrie 2026, Lokal, invitat special Reverse
+// The Moment — text complet + poster primite de la client (2026-09-04). Liniile "📍 Unde?" /
+// "🕕 Când?" din textul original au fost omise din descriere (nu rescrise) fiindcă dublau
+// location/dateDisplay de mai jos, deja afișate separat cu iconițe pe pagină. `extras` combină
+// tombola (vizibilă pe poster) cu creditul Black Wolf din text, urmând tiparul de la OML IV.
+// highlightTerms acoperă ambele variante de casing ale numelui trupei din textul original
+// ("Reverse The Moment" / "Reverse the Moment") — netrecut la un singur casing, ca să nu se
+// modifice textul.
 export const nextEvent: EventInfo = {
   id: "oml-v",
   edition: "V",
   title: "Oradea Music Lab V",
+  guestArtist: "Reverse The Moment",
+  highlightTerms: ["Reverse The Moment", "Reverse the Moment"],
   dateDisplay: formatEventDate("2026-09-12"),
   isoDate: "2026-09-12",
   day: "12",
   month: "Septembrie",
   location: "Lokal, Oradea",
+  extras: "Tombolă & pizza din partea Black Wolf",
+  poster: "/oml5-poster.jpg",
+  posterAlt: "Afiș Oradea Music Lab V — Reverse The Moment, 12 Septembrie, Lokal Oradea",
   description: [
-    "Detaliile complete despre această ediție (tema serii, artiștii invitați, programul) urmează să fie confirmate de echipă — reveniți în curând pentru actualizări!",
+    "Asociația Oradea Music Lab vă așteaptă alături de invitații noștri speciali, formația metalcore Reverse The Moment, pentru a ne distra și a învăța împreună la cea de-a cincea ediție a evenimentului emblematic OML V.",
+    "De-a lungul activității, Reverse the Moment a susținut numeroase concerte în România, a ajuns în finala Wacken Metal Battle Romania & Moldova 2024 și a urcat pe Main Stage la Rockstadt Extreme Fest 2026, unul dintre cele mai importante festivaluri de muzică extremă din Europa. Prin show-uri energice și o viziune artistică bine definită, trupa se conturează ca una dintre cele mai promițătoare prezențe din noul val al scenei modern metal din România.",
+    "Alături de invitații noștri speciali, vom purta o discuție despre cariera lor muzicală, provocările din industrie și vom oferi sfaturi muzicienilor emergenți și aspiranți.",
+    "Atmosfera se va transforma odată cu startul open mic-ului „Scena Tinerilor\", unde tineri până în 21 de ani vor interpreta momente artistice scurte și vor primi feedback constructiv de la Reverse The Moment.",
+    "Nu în ultimul rând, vom încheia seara cu un concert energic al formației, pizza din partea restaurantului Black Wolf pentru toți participanții și voie bună împreună. Vă așteptăm!",
   ],
   registerLink: "/inregistrare",
 };
