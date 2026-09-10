@@ -70,8 +70,9 @@ export function formatEventDate(isoDate: string): string {
   return `${weekday}, ${date.getDate()} ${month}`;
 }
 
-// Următorul eveniment confirmat: OML V, 12 Septembrie 2026, Lokal, invitat special Reverse
-// The Moment — text complet + poster primite de la client (2026-09-04). Liniile "📍 Unde?" /
+// Următorul eveniment confirmat: OML V, 12 Septembrie 2026, Gekko Pub, invitat special Reverse
+// The Moment — text complet + poster primite de la client (2026-09-04, locație actualizată la
+// Gekko Pub pe 2026-09-10 — posterul original avea Lokal). Liniile "📍 Unde?" /
 // "🕕 Când?" din textul original au fost omise din descriere (nu rescrise) fiindcă dublau
 // location/dateDisplay de mai jos, deja afișate separat cu iconițe pe pagină. `extras` combină
 // tombola (vizibilă pe poster) cu creditul Black Wolf din text, urmând tiparul de la OML IV.
@@ -88,10 +89,10 @@ export const nextEvent: EventInfo = {
   isoDate: "2026-09-12",
   day: "12",
   month: "Septembrie",
-  location: "Lokal, Oradea",
+  location: "Gekko Pub, Oradea",
   extras: "Tombolă & pizza din partea Black Wolf",
   poster: "/oml5-poster.jpg",
-  posterAlt: "Afiș Oradea Music Lab V — Reverse The Moment, 12 Septembrie, Lokal Oradea",
+  posterAlt: "Afiș Oradea Music Lab V — Reverse The Moment, 12 Septembrie, Gekko Pub Oradea",
   description: [
     "Asociația Oradea Music Lab vă așteaptă alături de invitații noștri speciali, formația metalcore Reverse The Moment, pentru a ne distra și a învăța împreună la cea de-a cincea ediție a evenimentului emblematic OML V.",
     "De-a lungul activității, Reverse the Moment a susținut numeroase concerte în România, a ajuns în finala Wacken Metal Battle Romania & Moldova 2024 și a urcat pe Main Stage la Rockstadt Extreme Fest 2026, unul dintre cele mai importante festivaluri de muzică extremă din Europa. Prin show-uri energice și o viziune artistică bine definită, trupa se conturează ca una dintre cele mai promițătoare prezențe din noul val al scenei modern metal din România.",
