@@ -85,11 +85,6 @@ const Footer = () => {
               >
                 @oradeamusiclab
               </a>
-              <address className="not-italic text-white/70 leading-relaxed">
-                Mun. Oradea, str. Evreilor Deportați nr. 4A,
-                <br />
-                sc. A, parter, ap. 6, jud. Bihor, România
-              </address>
             </div>
           </div>
         </div>
