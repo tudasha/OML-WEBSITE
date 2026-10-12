@@ -85,16 +85,26 @@ const Footer = () => {
               >
                 @oradeamusiclab
               </a>
-              <p className="text-white/50">
-                Oradea, România
-              </p>
+              <address className="not-italic text-white/70 leading-relaxed">
+                Mun. Oradea, str. Evreilor Deportați nr. 4A,
+                <br />
+                sc. A, parter, ap. 6, jud. Bihor, România
+              </address>
             </div>
           </div>
         </div>
 
+        {/* Date oficiale asociație (cerute la verificarea Google for Nonprofits) */}
+        <div className="mt-10 pt-6 border-t border-white/10 text-xs text-white/70 leading-relaxed space-y-1">
+          <p className="font-semibold text-white/90">ASOCIAȚIA ORADEA MUSIC LAB</p>
+          <p>CUI / CIF (Charity ID): 54592076</p>
+          <p>Nr. Registrul Asociațiilor și Fundațiilor: 30/A/15.04.2026</p>
+          <p>Sediu: Mun. Oradea, str. Evreilor Deportați nr. 4A, sc. A, parter, ap. 6, jud. Bihor</p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/50">
-          <p>© {currentYear} Oradea Music Lab. Toate drepturile rezervate.</p>
+        <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/50">
+          <p>© {currentYear} Asociația Oradea Music Lab. Toate drepturile rezervate.</p>
           <p className="flex items-center gap-1">
             Făcut cu <Heart className="w-4 h-4 text-primary fill-primary" /> de tineri pentru tineri
           </p>
